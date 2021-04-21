@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="style" rel="stylesheet" href="css/style.light.css">
+    <title>RuPaul's Drag Race Simulator</title>
+</head>
+<body>
+    <div id="MainBlock">
+        <h1>RuPaul's Drag Race Simulator!</h1>
+        <p><big>Simulate a fictional Drag Race season and see what happens!</big></p>
+        <p>
+            How many queens do you want on your cast?
+            <br>
+            <input type="number" min="3" max="20" id="castSize">
+            <button onclick="generateSpace()">Select</button>
+        </p>
+        
+        <p id="castSelection"></p>
+
+        <button onclick="startSimulation()">Simulate now!</button>
+
+        <hr>
+
+        <h1>Predefinitions</h1>
+        <p>Go here if you wanna simulate a season with these pre-defined casts!</p>
+        <button onclick="predefCast(us_season1)">US Season 1</button>
+        <button onclick="predefCast(us_season2)">US Season 2</button>
+        <button onclick="predefCast(us_season3)">US Season 3</button>
+        <button onclick="predefCast(us_season4)">US Season 4</button>
+        <button onclick="predefCast(allstars_1)">All Stars Season 1</button>
+        <button onclick="predefCast(us_season5)">US Season 5</button>
+        <button onclick="predefCast(us_season6)">US Season 6</button>
+        <button onclick="predefCast(us_season7)">US Season 7</button>
+        <button onclick="predefCast(us_season8)">US Season 8</button>
+        <button onclick="predefCast(allstars_2)">All Stars Season 2</button>
+        <button onclick="predefCast(us_season9)">US Season 9</button>
+        <button onclick="predefCast(allstars_3)">All Stars Season 3</button>
+        <button onclick="predefCast(us_season10)">US Season 10</button>
+        <button onclick="predefCast(allstars_4)">All Stars Season 4</button>
+        <button onclick="predefCast(us_season11)">US Season 11</button>
+    </div>
+</body>
+
+<script src="javascript/index.js"></script>
+
+</html>

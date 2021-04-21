@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+html {
+    height: 100%;
+}
+
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    background-color: #78A2CC;
+    background-image: linear-gradient(to bottom right, #78A2CC, #88AED0, #96B9D0);
+    height: 100%;
+    margin: 0;
+    background-repeat: 0;
+    background-attachment: fixed;
+}
+
+#MainBlock {
+    text-align: center;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.877);
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px #65829e91;
+    width: 800px;
+    padding: 5px;
+}
+
+h1 {
+    color: #FB928E;
+}
+
+big {
+    color: #3A5874;
+}
+
+select {
+    margin-top: 5px;
+}
+
+button {
+    margin-top: 5px;
+}
