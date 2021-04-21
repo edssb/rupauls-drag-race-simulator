@@ -86,7 +86,7 @@ function miniChallenge() {
     else if (currentCast.length == 6) {
         miniChallengeScreen.createButton("Proceed", "designChallenge()");
     }
-    else if (currentCast.length == 4 && !ballCounter) {
+    else if (currentCast.length == 4 && !ballCounter || currentCast.length == totalCastSize - 2 && top4 && !ballCounter || currentCast.length == 5 && top4 && !ballCounter) {
         miniChallengeScreen.createButton("Proceed", "ball()");
         ballCounter = true;
     }
@@ -476,10 +476,84 @@ function newEpisode() {
     for (var i = 0; i < currentCast.length; i++) {
         queensRemainingScreen.createBold(currentCast[i].getName());
     }
-    if (currentCast.length > 3)
+    if (currentCast.length > 4)
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");
+    else if (currentCast.length == 4 && top3)
+        queensRemainingScreen.createButton("Proceed", "miniChallenge()");
+    else if (currentCast.length == 4 && top4)
+        queensRemainingScreen.createButton("Proceed", "finaleLS()");
     else
         queensRemainingScreen.createButton("Proceed", "finale()");
+}
+var firstLS = [];
+var secondLS = [];
+var finalLS = [];
+function finaleLS() {
+    var screen = new Scene();
+    screen.clean();
+    screen.createHeader("The grande finale!");
+    screen.createParagraph("Our Top 4 will participate in a lip-sync smackdown for the crown! The preliminaries will now be decided...");
+    screen.createHorizontalLine();
+    for (var i = 0; i < 2; i++) {
+        var q1 = currentCast[randomNumber(0, currentCast.length - 1)];
+        firstLS.push(q1);
+        currentCast.splice(currentCast.indexOf(q1), 1);
+        var q2 = currentCast[randomNumber(0, currentCast.length - 1)];
+        secondLS.push(q2);
+        currentCast.splice(currentCast.indexOf(q2), 1);
+    }
+    screen.createBigText("The preliminaries will be: ");
+    screen.createBold(firstLS[0].getName() + " vs. " + firstLS[1].getName());
+    screen.createParagraph("and");
+    screen.createBold(secondLS[0].getName() + " vs. " + secondLS[1].getName());
+    screen.createButton("Proceed", "finaleLipSyncs()");
+}
+function finaleLipSyncs() {
+    var screen = new Scene();
+    screen.clean();
+    screen.createHeader("The Lip-Syncs...");
+    screen.createParagraph(firstLS[0].getName() + " and " + firstLS[1].getName() + " lip-sync...");
+    for (var i = 0; i < firstLS.length; i++) {
+        firstLS[i].getLipsync();
+    }
+    firstLS.sort(function (a, b) { return (b.lipsyncScore - a.lipsyncScore); });
+    finalLS.push(firstLS[0]);
+    firstLS[1].addToTrackRecord("ELIMINATED");
+    eliminatedCast.unshift(firstLS[1]);
+    screen.createBold(firstLS[0].getName() + ", shantay you stay.");
+    screen.createBold(firstLS[1].getName() + ", sashay away...");
+    screen.createHorizontalLine();
+    screen.createParagraph(secondLS[0].getName() + " and " + secondLS[1].getName() + " lip-sync...");
+    for (var i = 0; i < secondLS.length; i++) {
+        secondLS[i].getLipsync();
+    }
+    secondLS.sort(function (a, b) { return (b.lipsyncScore - a.lipsyncScore); });
+    finalLS.push(secondLS[0]);
+    secondLS[1].addToTrackRecord("ELIMINATED");
+    eliminatedCast.unshift(secondLS[1]);
+    screen.createBold(secondLS[0].getName() + ", shantay you stay.");
+    screen.createBold(secondLS[1].getName() + ", sashay away...");
+    screen.createButton("Proceed", "finalLipSync()");
+}
+function finalLipSync() {
+    var screen = new Scene();
+    screen.clean();
+    screen.createHeader("The end...");
+    screen.createBold(finalLS[0].getName() + " and " + finalLS[1].getName() + " will lip-sync for the crown...!");
+    screen.createHorizontalLine();
+    screen.createBold("Ladies, I've made my decision. The Next Drag Superstar is...");
+    var winner = randomNumber(0, 1);
+    screen.createBigText(finalLS[winner].getName() + "!!");
+    screen.createBold("Now prance, my queen!");
+    finalLS[winner].addToTrackRecord("WINNER");
+    for (var i = 0; i < finalLS.length; i++) {
+        if (!(finalLS.indexOf(finalLS[i]) == winner)) {
+            finalLS[i].addToTrackRecord("RUNNER UP");
+            eliminatedCast.unshift(finalLS[i]);
+            finalLS.splice(i, 1);
+        }
+    }
+    screen.createButton("Proceed", "contestantProgress()");
 }
 function finale() {
     //sort queens by finale score:
@@ -511,22 +585,34 @@ function finaleFinale() {
     screen.clean();
     screen.createHeader("The end.");
     screen.createBold("Ladies, I've made my decision. The Next Drag Superstar is...");
-    screen.createBigText(currentCast[0].getName() + "!!");
+    var winner = randomNumber(0, 1);
+    screen.createBigText(currentCast[winner].getName() + "!!");
     screen.createBold("Now prance, my queen!");
-    currentCast[0].addToTrackRecord("WINNER");
-    currentCast[1].addToTrackRecord("RUNNER UP");
-    eliminatedCast.unshift(currentCast[1]);
-    currentCast.splice(1, 1);
+    currentCast[winner].addToTrackRecord("WINNER");
+    for (var i = 0; i < currentCast.length; i++) {
+        if (!(currentCast.indexOf(currentCast[i]) == winner)) {
+            currentCast[i].addToTrackRecord("RUNNER UP");
+            eliminatedCast.unshift(currentCast[i]);
+            currentCast.splice(i, 1);
+        }
+    }
     screen.createButton("Proceed", "contestantProgress()");
 }
 function contestantProgress() {
     var screen = new Scene();
     screen.clean();
     screen.createHeader("Contestant Progress");
-    screen.createBold(currentCast[0].getName() + ": ", "winTR");
+    if (top3)
+        screen.createBold(currentCast[0].getName() + ": ", "winTR");
+    else if (top4)
+        screen.createBold(finalLS[0].getName() + ": ", "winTR");
     var winTR = document.querySelector("b#winTR");
-    for (var i = 0; i < currentCast[0].trackRecord.length; i++)
-        winTR.innerHTML += currentCast[0].trackRecord[i] + " ";
+    if (top3)
+        for (var i = 0; i < currentCast[0].trackRecord.length; i++)
+            winTR.innerHTML += currentCast[0].trackRecord[i] + " ";
+    else if (top4)
+        for (var i = 0; i < finalLS[0].trackRecord.length; i++)
+            winTR.innerHTML += finalLS[0].trackRecord[i] + " ";
     for (var i = 0; i < eliminatedCast.length; i++) {
         screen.createBold(eliminatedCast[i].getName() + ": ", "TR" + i);
         var TR = document.querySelector("b#TR" + i);
@@ -556,6 +642,7 @@ function generateSpace() {
     else
         for (var i = 0; i < castSize; i++) {
             var select = document.createElement("select");
+            select.setAttribute("class", "queenList");
             select.setAttribute("id", i.toString());
             for (var k = 0; k < allQueens.length; k++) {
                 var option = document.createElement("option");
@@ -567,14 +654,23 @@ function generateSpace() {
             castSelection.appendChild(br);
         }
 }
-function predefCast(cast) {
+function predefCast(cast, format) {
     currentCast = cast;
     totalCastSize = cast.length;
+    if (format == "top3")
+        top3 = true;
+    else if (format == "top4")
+        top4 = true;
+    else if (format == "all-stars")
+        all_stars = true;
     newEpisode();
 }
+var top3 = false;
+var top4 = false;
+var all_stars = false;
 function startSimulation() {
     //get selected names and compare them to the all queens list:
-    for (var i = 0; i < document.getElementsByTagName("select").length; i++) {
+    for (var i = 0; i < document.getElementsByClassName("queenList").length; i++) {
         var select = document.getElementById(i.toString());
         var value = select.options[select.selectedIndex].text;
         for (var k = 0; k < allQueens.length; k++) {
@@ -582,12 +678,18 @@ function startSimulation() {
                 currentCast.push(allQueens[k]);
         }
     }
-    //DEBUG:
-    console.log(currentCast);
     if (duplicateQueens(currentCast))
         window.alert("Please, only use one of each queen on your cast!");
-    else
+    else {
+        var select = document.getElementById("format");
+        if (select.options[select.selectedIndex].value == "top3")
+            top3 = true;
+        else if (select.options[select.selectedIndex].value == "top4")
+            top4 = true;
+        else if (select.options[select.selectedIndex].value == "all-stars")
+            all_stars = true;
         newEpisode();
+    }
 }
 //see if there is two of the same queens:
 function duplicateQueens(cast) {

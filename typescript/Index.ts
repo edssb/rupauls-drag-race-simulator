@@ -25,6 +25,7 @@ function generateSpace() {
     else
         for (let i = 0; i < castSize; i++) {
             let select = document.createElement("select");
+            select.setAttribute("class", "queenList")
             select.setAttribute("id", i.toString());
             
             for (let k = 0; k < allQueens.length; k++) {
@@ -41,16 +42,28 @@ function generateSpace() {
         }
 }
 
-function predefCast(cast: Array<Queen>) {
+function predefCast(cast: Array<Queen>, format: string) {
     currentCast = cast;
     totalCastSize = cast.length;
+
+    if (format == "top3")
+        top3 = true;
+    else if (format == "top4")
+        top4 = true;
+    else if (format == "all-stars")
+        all_stars = true;
 
     newEpisode();
 }
 
+let top3: boolean = false;
+let top4: boolean = false;
+let all_stars: boolean = false;
+
+
 function startSimulation() {
     //get selected names and compare them to the all queens list:
-    for (let i = 0; i < document.getElementsByTagName("select").length; i++) {
+    for (let i = 0; i < document.getElementsByClassName("queenList").length; i++) {
         let select: HTMLSelectElement = (<HTMLSelectElement>document.getElementById(i.toString()));
         let value: string = select.options[select.selectedIndex].text;
 
@@ -59,26 +72,34 @@ function startSimulation() {
                 currentCast.push(allQueens[k]);
         }
     }
-    //DEBUG:
-    console.log(currentCast);
-
+    
     if (duplicateQueens(currentCast))
         window.alert("Please, only use one of each queen on your cast!");
-    else
+    else {
+        let select = (<HTMLSelectElement>document.getElementById("format"));
+
+        if (select.options[select.selectedIndex].value == "top3")
+            top3 = true;
+        else if (select.options[select.selectedIndex].value == "top4")
+            top4 = true;
+        else if (select.options[select.selectedIndex].value == "all-stars")
+            all_stars = true;
+
         newEpisode();
+    }
 }
 
 //see if there is two of the same queens:
 function duplicateQueens(cast: Array<Queen>) {
-    let valuesAlreadySeen = []
+    let valuesAlreadySeen = [];
 
     for (let i = 0; i < cast.length; i++) {
-    let value = cast[i]
+    let value = cast[i];
     if (valuesAlreadySeen.indexOf(value) !== -1) {
       currentCast = [];
-      return true
+      return true;
     }
-    valuesAlreadySeen.push(value)
+    valuesAlreadySeen.push(value);
   }
-  return false
+  return false;
 }

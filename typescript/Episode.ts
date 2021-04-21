@@ -22,8 +22,12 @@ function newEpisode() {
         queensRemainingScreen.createBold(currentCast[i].getName());
     }
 
-    if (currentCast.length > 3)
+    if (currentCast.length > 4)
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");
+    else if (currentCast.length == 4 && top3)
+        queensRemainingScreen.createButton("Proceed", "miniChallenge()");
+    else if (currentCast.length == 4 && top4)
+        queensRemainingScreen.createButton("Proceed", "finaleLS()")
     else
         queensRemainingScreen.createButton("Proceed", "finale()");
 }

@@ -19,27 +19,34 @@
         
         <p id="castSelection"></p>
 
-        <button onclick="startSimulation()">Simulate now!</button>
+        <p>Now select your format: </p>
+        <select id="format">
+            <option value="top3">Top 3 Format</option>
+            <option value="top4">Lip-Sync For The Crown</option>
+            <option value="all-stars">All Stars Format</option>
+        </select>
+
+        <p><button onclick="startSimulation()">Simulate now!</button></p>
 
         <hr>
 
         <h1>Predefinitions</h1>
         <p>Go here if you wanna simulate a season with these pre-defined casts!</p>
-        <button onclick="predefCast(us_season1)">US Season 1</button>
-        <button onclick="predefCast(us_season2)">US Season 2</button>
-        <button onclick="predefCast(us_season3)">US Season 3</button>
-        <button onclick="predefCast(us_season4)">US Season 4</button>
-        <button onclick="predefCast(allstars_1)">All Stars Season 1</button>
-        <button onclick="predefCast(us_season5)">US Season 5</button>
-        <button onclick="predefCast(us_season6)">US Season 6</button>
-        <button onclick="predefCast(us_season7)">US Season 7</button>
-        <button onclick="predefCast(us_season8)">US Season 8</button>
+        <button onclick="predefCast(us_season1, 'top3')">US Season 1</button>
+        <button onclick="predefCast(us_season2, 'top3')">US Season 2</button>
+        <button onclick="predefCast(us_season3, 'top3')">US Season 3</button>
+        <button onclick="predefCast(us_season4, 'top3')">US Season 4</button>
+        <button onclick="predefCast(allstars_1, 'top3')">All Stars Season 1</button>
+        <button onclick="predefCast(us_season5, 'top3')">US Season 5</button>
+        <button onclick="predefCast(us_season6, 'top3')">US Season 6</button>
+        <button onclick="predefCast(us_season7, 'top3')">US Season 7</button>
+        <button onclick="predefCast(us_season8, 'top3')">US Season 8</button>
         <button onclick="predefCast(allstars_2)">All Stars Season 2</button>
-        <button onclick="predefCast(us_season9)">US Season 9</button>
+        <button onclick="predefCast(us_season9, 'top4')">US Season 9</button>
         <button onclick="predefCast(allstars_3)">All Stars Season 3</button>
-        <button onclick="predefCast(us_season10)">US Season 10</button>
+        <button onclick="predefCast(us_season10, 'top4')">US Season 10</button>
         <button onclick="predefCast(allstars_4)">All Stars Season 4</button>
-        <button onclick="predefCast(us_season11)">US Season 11</button>
+        <button onclick="predefCast(us_season11, 'top4')">US Season 11</button>
     </div>
 </body>
 

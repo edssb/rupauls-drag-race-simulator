@@ -95,7 +95,7 @@ function miniChallenge(): void {
         rusicalCounter = true;
     } else if (currentCast.length == 6) {
         miniChallengeScreen.createButton("Proceed", "designChallenge()");
-    } else if (currentCast.length == 4 && !ballCounter) {
+    } else if (currentCast.length == 4 && !ballCounter || currentCast.length == totalCastSize - 2 && top4 && !ballCounter || currentCast.length == 5 && top4 && !ballCounter) {
         miniChallengeScreen.createButton("Proceed", "ball()");
         ballCounter = true;
     }
