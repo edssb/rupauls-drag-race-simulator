@@ -21,7 +21,7 @@ class MiniChallenge implements Challenge {
             "noodles."
         }
         //reading and puppet challenges:
-        if (totalCastSize != 8 && currentCast.length == 8) {
+        if (totalCastSize >= 10 && currentCast.length == 7 && !all_stars || currentCast.length == totalCastSize && all_stars) {
             description!.innerHTML = "The library is open! In today's mini-challenge, the queens will read eachother!";
         } else if (totalCastSize != 5 && currentCast.length == 5) {
             description!.innerHTML = "Bring in the puppets! The queens will parody eachother using puppets!";
@@ -475,7 +475,7 @@ function runway() {
 
     if (currentCast.length > 3)
         runwayScreen.createParagraph("The theme is: " + desc[randomNumber(0, 1)]);
-    else if (currentCast.length == 3)
+    else if (currentCast.length == 3 && top3 || currentCast.length == 5 && top4 || currentCast.length == 4 && all_stars)
         runwayScreen.createParagraph("The theme is... best drag!");
 
     for (let i = 0; i < currentCast.length; i++) {
@@ -498,8 +498,12 @@ function runway() {
             currentCast[i].runwayScore = -5;
         }
     }
-    if (currentCast.length > 3)
+    if (currentCast.length > 4)
         runwayScreen.createButton("Proceed", "judging()");
-    else if (currentCast.length == 3)
+    else if (currentCast.length == 4 && top3)
+        runwayScreen.createButton("Proceed", "judging()");
+    else if (currentCast.length == 3 && top3)
         runwayScreen.createButton("Proceed", "finaleJudging()");
+    else if (currentCast.length == 4 && all_stars)
+        runwayScreen.createButton("Proceed", "finaleASJudging()");
 }

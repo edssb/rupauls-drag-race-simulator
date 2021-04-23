@@ -4,6 +4,8 @@ let safeQueens: Array<Queen> = [];
 let topQueens: Array<Queen> = [];
 let bottomQueens: Array<Queen> = [];
 
+let top2: Array<Queen> = [];
+
 let doubleShantay = false;
 let doubleSashay = false;
 
@@ -11,6 +13,7 @@ function newEpisode() {
     safeQueens = [];
     topQueens = [];
     bottomQueens = [];
+    top2 = [];
 
     //queens remaining screen:
 
@@ -28,6 +31,8 @@ function newEpisode() {
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");
     else if (currentCast.length == 4 && top4)
         queensRemainingScreen.createButton("Proceed", "finaleLS()")
+    else if (currentCast.length == 4 && all_stars)
+        queensRemainingScreen.createButton("Proceed", "finaleAS()");
     else
         queensRemainingScreen.createButton("Proceed", "finale()");
 }

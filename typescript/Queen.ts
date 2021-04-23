@@ -17,6 +17,8 @@ class Queen {
     public favoritism: number = 0;
     public unfavoritism: number = 0;
 
+    public lipstick: Queen;
+
     constructor(name: string, acting: number, comedy: number, dance: number, design: number, improv: number, runway: number, lipsync: number) {
         this._name = name;
         this._actingStat = acting;

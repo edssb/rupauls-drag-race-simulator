@@ -76,7 +76,7 @@ function finalLipSync() {
 	screen.createHorizontalLine();
 	screen.createBold("Ladies, I've made my decision. The Next Drag Superstar is...");
 
-	let winner = randomNumber(0, 1);
+	let winner = 0;
 
 	screen.createBigText(finalLS[winner].getName() + "!!");
 	screen.createBold("Now prance, my queen!");
@@ -129,22 +129,50 @@ function finaleFinale() {
 	screen.createHeader("The end.");
 	screen.createBold("Ladies, I've made my decision. The Next Drag Superstar is...");
 
-	let winner = randomNumber(0, 1);
-
-	screen.createBigText(currentCast[winner].getName() + "!!");
+	screen.createBigText(currentCast[0].getName() + "!!");
 	screen.createBold("Now prance, my queen!");
 
-	currentCast[winner].addToTrackRecord("WINNER");
-	
-	for (let i = 0; i < currentCast.length; i++) {
-		if (!(currentCast.indexOf(currentCast[i]) == winner)) {
-			currentCast[i].addToTrackRecord("RUNNER UP");
-			eliminatedCast.unshift(currentCast[i]);
-			currentCast.splice(i, 1);
-		}
-	}
+	currentCast[0].addToTrackRecord("WINNER");
 
+	currentCast[1].addToTrackRecord("RUNNER UP");
+	eliminatedCast.unshift(currentCast[1]);
+	currentCast.splice(1, 1);
+	if (all_stars) {
+		currentCast[1].addToTrackRecord("RUNNER UP");
+		eliminatedCast.unshift(currentCast[1]);
+		currentCast.splice(1, 1);
+	}
+	
 	screen.createButton("Proceed", "contestantProgress()");
+}
+
+function finaleAS() {
+	//sort queens by finale score:
+	for (let i = 0; i < currentCast.length; i ++) {
+		currentCast[i].getFinale()
+	}
+	currentCast.sort((a, b) => (b.finaleScore - a.finaleScore));
+
+	let screen = new Scene();
+	screen.clean();
+	screen.createHeader("The grande finale!");
+	screen.createParagraph("Our Top 4 will create verses and coreography for a new original song!");
+	screen.createButton("Proceed", "runway()", "button2");
+}
+
+function finaleASJudging() {
+	let screen = new Scene();
+	screen.clean();
+	screen.createHeader("The final minutes...");
+	screen.createBold("Ladies, it's time to decide The Next Drag Superstar, and...");
+	screen.createBold(currentCast[3].getName() + ", I'm sorry my dear but it's not your time. I must ask you to sashay away...");
+	currentCast[3].addToTrackRecord("ELIMINATED");
+	eliminatedCast.unshift(currentCast[3]);
+	currentCast.splice(3, 1);
+	screen.createHorizontalLine();
+
+	screen.createBold(currentCast[0].getName() + ", " + currentCast[1].getName() + ", " + currentCast[2].getName() + ", this is your last chance to prove yourself. It's time for you to lipsync.. for the CROWN!!");
+	screen.createButton("Proceed", "finaleFinale()");
 }
 
 function contestantProgress() {
@@ -152,14 +180,14 @@ function contestantProgress() {
 	screen.clean();
 	screen.createHeader("Contestant Progress");
 
-	if (top3)
+	if (top3 || all_stars)
 		screen.createBold(currentCast[0].getName() + ": ", "winTR");
 	else if (top4)
 		screen.createBold(finalLS[0].getName() + ": ", "winTR");
 
 	let winTR = document.querySelector("b#winTR");
 	
-	if (top3)
+	if (top3 || all_stars)
 		for (let i = 0; i < currentCast[0].trackRecord.length; i++) 
 			winTR!.innerHTML += currentCast[0].trackRecord[i] + " ";
 	else if (top4)
