@@ -56,23 +56,32 @@ class Queen {
     }
     //special 'gets':
     public getSnatch(): void {
-        this.performanceScore = this._calculateScores(25, 45, this._improvStat + this._comedyStat)
+        this.performanceScore = this._calculateScores(25, 45, this._improvStat + this._comedyStat);
     }
     public getRusical(): void {
-        this.performanceScore = this._calculateScores(25, 45, this._danceStat + this._lipsyncStat)
+        this.performanceScore = this._calculateScores(25, 45, this._danceStat + this._lipsyncStat);
     }
     public getBall(): void {
-        this.performanceScore = this._calculateScores(25, 45, this._designStat + this._runwayStat)
+        this.performanceScore = this._calculateScores(25, 45, this._designStat + this._runwayStat);
+    }
+    public getRumix(): void {
+        this.performanceScore = this._calculateScores(25, 45, this._danceStat + this._improvStat);
+    }
+    public getTalentShow(): void {
+        this.performanceScore = this._calculateScores(40, 70, this._actingStat + this._comedyStat + this._danceStat + this._designStat + this._improvStat + this._lipsyncStat);
     }
     public getFinale():void {
         this.finaleScore = this.favoritism - this.unfavoritism;
     }
 
     public getRunway(): void {
-        this.runwayScore = this._calculateScores(15, 35, this._runwayStat);
+        this.runwayScore = this._calculateScores(12, 35, this._runwayStat);
     }
     public getLipsync(): void {
         this.lipsyncScore = this._calculateScores(0, this._lipsyncStat, this.unfavoritism) + this.favoritism;
+    }
+    public getASLipsync(): void {
+        this.lipsyncScore = this._calculateScores(0, this._lipsyncStat);
     }
     public addToTrackRecord(placement: string): void {
         this.trackRecord.push(placement);
@@ -163,7 +172,7 @@ let us_season5 = [alaska, alyssa, coco, detox, honey, ivy, jadejolie, jinkx, lin
 //SEASON 6:
 let adore = new Queen("Adore Delano", 9, 8, 8, 5, 9, 7, 9);
 let april = new Queen("April Carrión", 6, 5, 7, 9, 5, 9, 8);
-let bendelacreme = new Queen("BenDeLaCreme", 10, 7, 7, 8, 9, 9, 7);
+let bendelacreme = new Queen("BenDeLaCreme", 10, 8, 7, 8, 10, 9, 7);
 let bianca = new Queen("Bianca Del Rio", 11, 11, 8, 10, 10, 9, 9);
 let courtney = new Queen("Courtney Act", 8, 8, 9, 8, 8, 9, 9);
 let darienne = new Queen("Darienne Lake", 9, 9, 7, 4, 8, 7, 11);
@@ -172,7 +181,7 @@ let joslyn = new Queen("Joslyn Fox", 7, 9, 9, 5, 9, 6, 9);
 let kelly = new Queen("Kelly Mantle", 8, 8, 7, 5, 7, 7, 7);
 let laganja = new Queen("Laganja Estranja", 8, 5, 8, 7, 4, 8, 9);
 let magnolia = new Queen("Magnolia Crawford", 7, 7, 6, 4, 5, 7, 4);
-let milk = new Queen("Milk", 9, 8, 5, 7, 6, 7, 6);
+let milk = new Queen("Milk", 9, 8, 5, 7, 6, 7, 5);
 let trinityk = new Queen("Trinity K. Bonet", 5, 9, 8, 10, 6, 9, 12);
 let vivacious = new Queen("Vivacious", 4, 5, 5, 4, 4, 7, 7);
 let us_season6 = [adore, april, bendelacreme, bianca, courtney, darienne, gia, joslyn, kelly, laganja, magnolia, milk, trinityk, vivacious];

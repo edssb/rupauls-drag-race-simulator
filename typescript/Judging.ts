@@ -141,7 +141,7 @@ function winAndBtm2() {
 		topQueens[i].addToTrackRecord("HIGH");
 	}
 
-	if (!(topQueens == []))
+	if (topQueens.length > 0)
 		highs!.innerHTML += "good work this week, you're safe.";
 
 	screen.createHorizontalLine();
@@ -208,9 +208,6 @@ function top2AndBtm() {
 	top2.push(topQueens[0]);
 	top2.push(topQueens[1]);
 
-	top2[0].favoritism += 5;
-	top2[0].favoritism += 5;
-
 	topQueens.splice(0, 2);
 
 	screen.createBold(top2[0].getName() + ", " + top2[1].getName() + ", condragulations, you're the Top 2 of the week!");
@@ -222,7 +219,7 @@ function top2AndBtm() {
 		topQueens[i].addToTrackRecord("HIGH");
 	}
 
-	if (!(topQueens == []))
+	if (topQueens.length > 0)
 		highs!.innerHTML += "good work this week, you're safe.";
 
 	screen.createHorizontalLine();
@@ -263,7 +260,7 @@ function lipSync() {
 	let score1 = bottomQueens[0].lipsyncScore;
 	let score2 = bottomQueens[1].lipsyncScore;
 
-	if (score1 > 7 && score2 > 7 && randomNumber(0, 5) == 5 && !doubleShantay && currentCast.length < 8){
+	if (score1 > 7 && score2 > 7 && randomNumber(0, 100) <= 50 && !doubleShantay){
 		screen.createBold("Condragulations, shantay you both stay!!");
 		bottomQueens[0].addToTrackRecord("BTM2");
 		bottomQueens[0].unfavoritism += 8;
@@ -272,7 +269,7 @@ function lipSync() {
 		bottomQueens[1].unfavoritism += 8;
 
 		doubleShantay = true;
-	} else if (score1 < 3 && score2 < 3 && randomNumber(0, 20) == 20 && !doubleSashay && currentCast.length > 4) {
+	} else if (score1 < 3 && score2 < 3 && randomNumber(0, 100) <= 20 && !doubleSashay && currentCast.length > 5) {
 		screen.createBold("I'm sorry but none of you showed the fire it takes to stay. You must both... sashay away.");
 		doubleSashay = true;
 
@@ -283,6 +280,21 @@ function lipSync() {
 		bottomQueens[1].addToTrackRecord("ELIM");
 		eliminatedCast.unshift(bottomQueens[1]);
 		currentCast.splice(currentCast.indexOf(bottomQueens[1]), 1);
+	} else if (randomNumber(0, 1000) >= 999) {
+		let disqualifiedQueen: Queen = currentCast[randomNumber(0, currentCast.length - 1)];
+
+		screen.createBold(disqualifiedQueen.getName() + ", it has come to my attention that you have broken the rules of this competition. I must ask you to sashay away.");
+
+		bottomQueens[0].addToTrackRecord("BTM2");
+		bottomQueens[0].unfavoritism += 8;
+
+		bottomQueens[1].addToTrackRecord("BTM2");
+		bottomQueens[1].unfavoritism += 8;
+
+		disqualifiedQueen.trackRecord[disqualifiedQueen.trackRecord.length - 1] += "+DISQ";
+		eliminatedCast.unshift(disqualifiedQueen);
+		currentCast.splice(currentCast.indexOf(disqualifiedQueen), 1);
+
 	} else {
 		screen.createBold(bottomQueens[0].getName() + ", shantay you stay.");
 		bottomQueens[0].addToTrackRecord("BTM2");
@@ -299,7 +311,7 @@ function lipSync() {
 
 function asLipSync() {
 	for (let i = 0; i < top2.length; i++) {
-		top2[i].getLipsync();
+		top2[i].getASLipsync();
 	}
 	top2.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
 
@@ -312,10 +324,12 @@ function asLipSync() {
 	screen.createBold("Ladies, I've made my decision...");
 
 	top2[0].addToTrackRecord("WIN");
+	top2[0].favoritism += 8;
 
 	screen.createBold(top2[0].getName() + ", you're a winner, baby!");
 
 	top2[1].addToTrackRecord("TOP2");
+	top2[1].favoritism += 4;
 
 	screen.createParagraph(top2[1].getName() + ", you are safe.");
 
@@ -336,7 +350,7 @@ function asLipSync() {
 		else
 			bottomQueens[i].addToTrackRecord("BTM2");
 
-		bottomQueens[i].unfavoritism += 5;
+		bottomQueens[i].unfavoritism += 3;
 	}
 
 	screen.createButton("Proceed", "newEpisode()");

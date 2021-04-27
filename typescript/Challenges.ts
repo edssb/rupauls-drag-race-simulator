@@ -58,8 +58,6 @@ let ballCounter = false;
 
 let lastChallenge: string = '';
 
-
-
 function miniChallenge(): void {
     let miniChallengeScreen = new Scene();
 
@@ -88,19 +86,24 @@ function miniChallenge(): void {
     if (improvChallengeCounter == 3)
         challenges.splice(challenges.indexOf("improvChallenge()"), 1);
 
-    if (currentCast.length == 8 && totalCastSize >= 10)
+    if (currentCast.length == totalCastSize && top3 || currentCast.length == totalCastSize && top4)
+        miniChallengeScreen.createButton("Proceed", "designChallenge()")
+    else if (currentCast.length == totalCastSize && totalCastSize)
+        miniChallengeScreen.createButton("Proceed", "talentshow()");
+    else if (totalCastSize <= 10 && currentCast.length == 9)
         miniChallengeScreen.createButton("Proceed", "snatchGame()");
-    else if (currentCast.length > 8 && totalCastSize >= 10 && rusicalCounter == false && randomNumber(0, 5) == 5 && currentCast.length != totalCastSize) {
-        miniChallengeScreen.createButton("Proceed", "rusical()");
-        rusicalCounter = true;
-    } else if (currentCast.length == 6) {
-        miniChallengeScreen.createButton("Proceed", "designChallenge()");
-    } else if (currentCast.length == 4 && !ballCounter || currentCast.length == totalCastSize - 2 && top4 && !ballCounter || currentCast.length == 5 && top4 && !ballCounter) {
+    else if (currentCast.length == totalCastSize - 3 && top4 && !ballCounter)
         miniChallengeScreen.createButton("Proceed", "ball()");
-        ballCounter = true;
-    }
-    else if (currentCast.length == totalCastSize)
+    else if (currentCast.length == totalCastSize - 4 && top4 && !ballCounter)
+        miniChallengeScreen.createButton("Proceed", "ball()");
+    else if (currentCast.length > 6 && randomNumber(0, 20) == 20 && !rusicalCounter)
+        miniChallengeScreen.createButton("Proceed", "rusical()");
+    else if (currentCast.length == 6 && randomNumber(0, 15) == 15)
         miniChallengeScreen.createButton("Proceed", "designChallenge()");
+    else if (currentCast.length == 5 && top4)
+        miniChallengeScreen.createButton("Proceed", "rumix()");
+    else if (currentCast.length == 4 && top3)
+        miniChallengeScreen.createButton("Proceed", "ball()");
     else {
         let currentChallenge: string = challenges[randomNumber(0, challenges.length - 1)];
 
@@ -112,7 +115,7 @@ function miniChallenge(): void {
             lastChallenge = currentChallenge;
             miniChallengeScreen.createButton("Proceed", currentChallenge);
         }
-    } 
+    }
 }
 
 //challenges:
@@ -405,6 +408,66 @@ function ball() {
 
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     isDesignChallenge = true;
+    ballCounter = true;
+}
+
+class Rumix implements Challenge {
+    generateDescription() {
+        let description = document.querySelector("p#Description");
+
+        enum desc1 {
+            "one of RuPaul's singles!",
+            "an original song!"
+        }
+
+        description!.innerHTML = "Today's challenge is... the rumix! The queens will make a verse and a coreography for " + desc1[randomNumber(0, 1)];
+    }
+
+    rankPerformances() {
+        for (let i = 0; i < currentCast.length; i++)
+            currentCast[i].getRumix();
+    }
+}
+
+function rumix() {
+    let challengeScreen = new Scene();
+    challengeScreen.clean();
+    challengeScreen.createHeader("Maxi-challenge!");
+    challengeScreen.createParagraph("", "Description");
+
+    let challenge = new Rumix();
+    challenge.generateDescription();
+    challenge.rankPerformances();
+
+    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    isDesignChallenge = false;
+}
+
+class TalentShow implements Challenge {
+    generateDescription() {
+        let description = document.querySelector("p#Description");
+
+        description!.innerHTML = "In this first challenge, the queens will prove themselves in a talent show, where they bring all they've got!";
+    }
+
+    rankPerformances() {
+        for (let i = 0; i < currentCast.length; i++)
+            currentCast[i].getTalentShow();
+    }
+}
+
+function talentshow() {
+    let challengeScreen = new Scene();
+    challengeScreen.clean();
+    challengeScreen.createHeader("Maxi-challenge!");
+    challengeScreen.createParagraph("", "Description");
+
+    let challenge = new TalentShow();
+    challenge.generateDescription();
+    challenge.rankPerformances();
+
+    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    isDesignChallenge = true;
 }
 
 //performance:
@@ -473,7 +536,7 @@ function runway() {
 
     runwayScreen.createParagraph("The queens will bring it to the runway!");
 
-    if (currentCast.length > 3)
+    if (currentCast.length > 4)
         runwayScreen.createParagraph("The theme is: " + desc[randomNumber(0, 1)]);
     else if (currentCast.length == 3 && top3 || currentCast.length == 5 && top4 || currentCast.length == 4 && all_stars)
         runwayScreen.createParagraph("The theme is... best drag!");

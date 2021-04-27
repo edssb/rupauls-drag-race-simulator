@@ -35,7 +35,7 @@ function finaleLipSyncs() {
 	screen.createParagraph(firstLS[0].getName() + " and " + firstLS[1].getName() + " lip-sync...");
 
 	for (let i = 0; i < firstLS.length; i++) {
-		firstLS[i].getLipsync();
+		firstLS[i].getASLipsync();
 	}
 	firstLS.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
 
@@ -52,7 +52,7 @@ function finaleLipSyncs() {
 	screen.createParagraph(secondLS[0].getName() + " and " + secondLS[1].getName() + " lip-sync...");
 
 	for (let i = 0; i < secondLS.length; i++) {
-		secondLS[i].getLipsync();
+		secondLS[i].getASLipsync();
 	}
 	secondLS.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
 
@@ -76,6 +76,10 @@ function finalLipSync() {
 	screen.createHorizontalLine();
 	screen.createBold("Ladies, I've made my decision. The Next Drag Superstar is...");
 
+	for (let i = 0; i < finalLS.length; i++)
+		finalLS[i].getFinale();
+
+	finalLS.sort((a, b) => b.finaleScore - a.finaleScore);
 	let winner = 0;
 
 	screen.createBigText(finalLS[winner].getName() + "!!");
