@@ -10,14 +10,19 @@ var MiniChallenge = /** @class */ (function () {
             desc1[desc1["a quiz about "] = 1] = "a quiz about ";
             desc1[desc1["nails with "] = 2] = "nails with ";
             desc1[desc1["a competition about "] = 3] = "a competition about ";
-            desc1[desc1["lip-sync a song about "] = 4] = "lip-sync a song about ";
-            desc1[desc1["a song about "] = 5] = "a song about ";
+            desc1[desc1["a song about "] = 4] = "a song about ";
+            desc1[desc1["make-up tutorials with "] = 5] = "make-up tutorials with ";
+            desc1[desc1["make a quick look about "] = 6] = "make a quick look about ";
+            desc1[desc1["a photoshoot about "] = 7] = "a photoshoot about ";
         })(desc1 || (desc1 = {}));
         var desc2;
         (function (desc2) {
             desc2[desc2["the pitcrew."] = 0] = "the pitcrew.";
             desc2[desc2["a partner."] = 1] = "a partner.";
             desc2[desc2["noodles."] = 2] = "noodles.";
+            desc2[desc2["hip pads."] = 3] = "hip pads.";
+            desc2[desc2["balls."] = 4] = "balls.";
+            desc2[desc2["past Drag Race contestants"] = 5] = "past Drag Race contestants";
         })(desc2 || (desc2 = {}));
         //reading and puppet challenges:
         if (totalCastSize >= 10 && currentCast.length == 7 && !all_stars || currentCast.length == totalCastSize && all_stars) {
@@ -27,7 +32,7 @@ var MiniChallenge = /** @class */ (function () {
             description.innerHTML = "Bring in the puppets! The queens will parody eachother using puppets!";
         }
         else {
-            description.innerHTML = "In today's mini-challenge, the queens will do " + desc1[randomNumber(0, 5)] + desc2[randomNumber(0, 2)];
+            description.innerHTML = "In today's mini-challenge, the queens will do " + desc1[randomNumber(0, 7)] + desc2[randomNumber(0, 5)];
         }
     };
     MiniChallenge.prototype.rankPerformances = function () {
@@ -117,14 +122,22 @@ var ActingChallenge = /** @class */ (function () {
         var desc1;
         (function (desc1) {
             desc1[desc1["theather piece about "] = 0] = "theather piece about ";
-            desc1[desc1["a parody film about "] = 1] = "a parody film about ";
+            desc1[desc1["parody film about "] = 1] = "parody film about ";
+            desc1[desc1["commercial about "] = 2] = "commercial about ";
+            desc1[desc1["60's inspired film about"] = 3] = "60's inspired film about";
+            desc1[desc1["80's inspired film about"] = 4] = "80's inspired film about";
         })(desc1 || (desc1 = {}));
         var desc2;
         (function (desc2) {
             desc2[desc2["crime."] = 0] = "crime.";
-            desc2[desc2["idk something."] = 1] = "idk something.";
+            desc2[desc2["phone apps."] = 1] = "phone apps.";
+            desc2[desc2["social media."] = 2] = "social media.";
+            desc2[desc2["cancel culture."] = 3] = "cancel culture.";
+            desc2[desc2["gayness."] = 4] = "gayness.";
+            desc2[desc2["celebrities."] = 5] = "celebrities.";
+            desc2[desc2["the future."] = 6] = "the future.";
         })(desc2 || (desc2 = {}));
-        description.innerHTML = "The queens will act in a " + desc1[randomNumber(0, 1)] + desc2[randomNumber(0, 1)];
+        description.innerHTML = "The queens will act in a " + desc1[randomNumber(0, 4)] + desc2[randomNumber(0, 6)];
     };
     ActingChallenge.prototype.rankPerformances = function () {
         for (var i = 0; i < currentCast.length; i++) {
@@ -155,13 +168,21 @@ var ComedyChallenge = /** @class */ (function () {
         (function (desc1) {
             desc1[desc1["a comedy routine about "] = 0] = "a comedy routine about ";
             desc1[desc1["a roast about "] = 1] = "a roast about ";
+            desc1[desc1["a parody commercial about "] = 2] = "a parody commercial about ";
+            desc1[desc1["a parody trailer about "] = 3] = "a parody trailer about ";
         })(desc1 || (desc1 = {}));
         var desc2;
         (function (desc2) {
-            desc2[desc2["love"] = 0] = "love";
-            desc2[desc2["sex"] = 1] = "sex";
+            desc2[desc2["love."] = 0] = "love.";
+            desc2[desc2["sex."] = 1] = "sex.";
+            desc2[desc2["crime."] = 2] = "crime.";
+            desc2[desc2["school."] = 3] = "school.";
+            desc2[desc2["a popular TV series."] = 4] = "a popular TV series.";
+            desc2[desc2["Drag Race."] = 5] = "Drag Race.";
+            desc2[desc2["Past Drag Race Contestants."] = 6] = "Past Drag Race Contestants.";
+            desc2[desc2["comedy."] = 7] = "comedy.";
         })(desc2 || (desc2 = {}));
-        description.innerHTML = "The queens will participate in " + desc1[randomNumber(0, 1)] + desc2[randomNumber(0, 1)];
+        description.innerHTML = "The queens will participate in " + desc1[randomNumber(0, 3)] + desc2[randomNumber(0, 7)];
     };
     ComedyChallenge.prototype.rankPerformances = function () {
         for (var i = 0; i < currentCast.length; i++)
@@ -189,15 +210,12 @@ var DanceChallenge = /** @class */ (function () {
         var description = document.querySelector("p#Description");
         var desc1;
         (function (desc1) {
-            desc1[desc1["dance number about "] = 0] = "dance number about ";
-            desc1[desc1["idk about "] = 1] = "idk about ";
+            desc1[desc1["the history of disco."] = 0] = "the history of disco.";
+            desc1[desc1["RuPaul's biography."] = 1] = "RuPaul's biography.";
+            desc1[desc1["rival dance clubs."] = 2] = "rival dance clubs.";
+            desc1[desc1["Drag Race."] = 3] = "Drag Race.";
         })(desc1 || (desc1 = {}));
-        var desc2;
-        (function (desc2) {
-            desc2[desc2["the history of disco."] = 0] = "the history of disco.";
-            desc2[desc2["RuPaul's biography."] = 1] = "RuPaul's biography.";
-        })(desc2 || (desc2 = {}));
-        description.innerHTML = "The queens will participate in " + desc1[randomNumber(0, 1)] + desc2[randomNumber(0, 1)];
+        description.innerHTML = "The queens will participate in a dance number about " + desc1[randomNumber(0, 3)];
     };
     DanceChallenge.prototype.rankPerformances = function () {
         for (var i = 0; i < currentCast.length; i++)
@@ -227,11 +245,18 @@ var DesignChallenge = /** @class */ (function () {
         (function (desc1) {
             desc1[desc1["trash."] = 0] = "trash.";
             desc1[desc1["random items."] = 1] = "random items.";
+            desc1[desc1["dollar store items."] = 2] = "dollar store items.";
+            desc1[desc1["a specific color scheme."] = 3] = "a specific color scheme.";
+            desc1[desc1["items inspired by past Drag Race contestants."] = 4] = "items inspired by past Drag Race contestants.";
+            desc1[desc1["bags."] = 5] = "bags.";
+            desc1[desc1["wigs."] = 6] = "wigs.";
+            desc1[desc1["winter items."] = 7] = "winter items.";
+            desc1[desc1["summer items."] = 8] = "summer items.";
         })(desc1 || (desc1 = {}));
         if (currentCast.length == 6)
             description.innerHTML = "It's the makeover challenge! The queens will make everyday people their drag sisters!";
         else
-            description.innerHTML = "The queens will do outfits with " + desc1[randomNumber(0, 1)];
+            description.innerHTML = "The queens will do outfits with " + desc1[randomNumber(0, 8)];
     };
     DesignChallenge.prototype.rankPerformances = function () {
         for (var i = 0; i < currentCast.length; i++)
@@ -261,8 +286,12 @@ var ImprovChallenge = /** @class */ (function () {
         (function (desc1) {
             desc1[desc1["political debate."] = 0] = "political debate.";
             desc1[desc1["celebrity interview."] = 1] = "celebrity interview.";
+            desc1[desc1["modern morning TV show."] = 2] = "modern morning TV show.";
+            desc1[desc1["late-night TV show."] = 3] = "late-night TV show.";
+            desc1[desc1["new Bossy Rossy episode."] = 4] = "new Bossy Rossy episode.";
+            desc1[desc1["suggestive kids TV show."] = 5] = "suggestive kids TV show.";
         })(desc1 || (desc1 = {}));
-        description.innerHTML = "The queens will improvise in a " + desc1[randomNumber(0, 1)];
+        description.innerHTML = "The queens will improvise in a " + desc1[randomNumber(0, 5)];
     };
     ImprovChallenge.prototype.rankPerformances = function () {
         for (var i = 0; i < currentCast.length; i++)
@@ -318,8 +347,12 @@ var Rusical = /** @class */ (function () {
         (function (desc) {
             desc[desc["social media."] = 0] = "social media.";
             desc[desc["a pop celebrity."] = 1] = "a pop celebrity.";
+            desc[desc["a political figure."] = 2] = "a political figure.";
+            desc[desc["past Drag Race contestans."] = 3] = "past Drag Race contestans.";
+            desc[desc["cancel culture."] = 4] = "cancel culture.";
+            desc[desc["RuPaul's music carreer."] = 5] = "RuPaul's music carreer.";
         })(desc || (desc = {}));
-        description.innerHTML = "Today's challenge is... THE RUSICAL!! The queens will do a musical about " + desc[randomNumber(0, 1)];
+        description.innerHTML = "Today's challenge is... THE RUSICAL!! The queens will do a musical about " + desc[randomNumber(0, 5)];
     };
     Rusical.prototype.rankPerformances = function () {
         for (var i = 0; i < currentCast.length; i++)
@@ -347,18 +380,31 @@ var Ball = /** @class */ (function () {
         (function (desc1) {
             desc1[desc1["Executive realness, "] = 0] = "Executive realness, ";
             desc1[desc1["Party night, "] = 1] = "Party night, ";
+            desc1[desc1["Summer, "] = 2] = "Summer, ";
+            desc1[desc1["Elegant, "] = 3] = "Elegant, ";
+            desc1[desc1["Sweet 16"] = 4] = "Sweet 16";
+            desc1[desc1["Black and white"] = 5] = "Black and white";
+            desc1[desc1["Winter"] = 6] = "Winter";
         })(desc1 || (desc1 = {}));
         var desc2;
         (function (desc2) {
             desc2[desc2["Antique, "] = 0] = "Antique, ";
             desc2[desc2["Rainbown, "] = 1] = "Rainbown, ";
+            desc2[desc2["Rich, "] = 2] = "Rich, ";
+            desc2[desc2["Space, "] = 3] = "Space, ";
+            desc2[desc2["Wild, "] = 4] = "Wild, ";
+            desc2[desc2["Water, "] = 5] = "Water, ";
         })(desc2 || (desc2 = {}));
         var desc3;
         (function (desc3) {
-            desc3[desc3["Ice."] = 0] = "Ice.";
-            desc3[desc3["Summer."] = 1] = "Summer.";
+            desc3[desc3["Ice queen."] = 0] = "Ice queen.";
+            desc3[desc3["Futuristic."] = 1] = "Futuristic.";
+            desc3[desc3["Fire."] = 2] = "Fire.";
+            desc3[desc3["Princess."] = 3] = "Princess.";
+            desc3[desc3["Jewels."] = 4] = "Jewels.";
+            desc3[desc3["Flowers"] = 5] = "Flowers";
         })(desc3 || (desc3 = {}));
-        description.innerHTML = "Today's challenge is... THE BALL! The queens will bring three looks to the runway! The themes are: " + desc1[randomNumber(0, 1)] + desc2[randomNumber(0, 1)] + desc3[randomNumber(0, 1)];
+        description.innerHTML = "Today's challenge is... THE BALL! The queens will bring three looks to the runway! The themes are: " + desc1[randomNumber(0, 6)] + desc2[randomNumber(0, 5)] + desc3[randomNumber(0, 5)];
     };
     Ball.prototype.rankPerformances = function () {
         for (var i = 0; i < currentCast.length; i++)
@@ -484,11 +530,31 @@ function runway() {
     var desc;
     (function (desc) {
         desc[desc["feathers."] = 0] = "feathers.";
-        desc[desc["idkkk."] = 1] = "idkkk.";
+        desc[desc["fascinator."] = 1] = "fascinator.";
+        desc[desc["pink."] = 2] = "pink.";
+        desc[desc["purple."] = 3] = "purple.";
+        desc[desc["caftan."] = 4] = "caftan.";
+        desc[desc["trains."] = 5] = "trains.";
+        desc[desc["yellow."] = 6] = "yellow.";
+        desc[desc["white."] = 7] = "white.";
+        desc[desc["black."] = 8] = "black.";
+        desc[desc["ugly dress."] = 9] = "ugly dress.";
+        desc[desc["naughty."] = 10] = "naughty.";
+        desc[desc["crazy sexy cool."] = 11] = "crazy sexy cool.";
+        desc[desc["country."] = 12] = "country.";
+        desc[desc["phoenix."] = 13] = "phoenix.";
+        desc[desc["silver."] = 14] = "silver.";
+        desc[desc["2 in 1."] = 15] = "2 in 1.";
+        desc[desc["surprise!"] = 16] = "surprise!";
+        desc[desc["gold."] = 17] = "gold.";
+        desc[desc["blue."] = 18] = "blue.";
+        desc[desc["fish"] = 19] = "fish";
+        desc[desc["butch."] = 20] = "butch.";
+        desc[desc["amazon"] = 21] = "amazon";
     })(desc || (desc = {}));
     runwayScreen.createParagraph("The queens will bring it to the runway!");
     if (currentCast.length > 4)
-        runwayScreen.createParagraph("The theme is: " + desc[randomNumber(0, 1)]);
+        runwayScreen.createParagraph("The theme is: " + desc[randomNumber(0, 21)]);
     else if (currentCast.length == 3 && top3 || currentCast.length == 5 && top4 || currentCast.length == 4 && all_stars)
         runwayScreen.createParagraph("The theme is... best drag!");
     for (var i = 0; i < currentCast.length; i++) {

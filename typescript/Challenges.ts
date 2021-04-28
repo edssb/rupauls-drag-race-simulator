@@ -12,13 +12,18 @@ class MiniChallenge implements Challenge {
             "a quiz about ",
             "nails with ",
             "a competition about ",
-            "lip-sync a song about ",
-            "a song about "
+            "a song about ",
+            "make-up tutorials with ",
+            "make a quick look about ",
+            "a photoshoot about "
         }
         enum desc2 {
             "the pitcrew.",
             "a partner.",
-            "noodles."
+            "noodles.",
+            "hip pads.",
+            "balls.",
+            "past Drag Race contestants"
         }
         //reading and puppet challenges:
         if (totalCastSize >= 10 && currentCast.length == 7 && !all_stars || currentCast.length == totalCastSize && all_stars) {
@@ -26,7 +31,7 @@ class MiniChallenge implements Challenge {
         } else if (totalCastSize != 5 && currentCast.length == 5) {
             description!.innerHTML = "Bring in the puppets! The queens will parody eachother using puppets!";
         } else {
-            description!.innerHTML = "In today's mini-challenge, the queens will do " + desc1[randomNumber(0, 5)] + desc2[randomNumber(0, 2)];
+            description!.innerHTML = "In today's mini-challenge, the queens will do " + desc1[randomNumber(0, 7)] + desc2[randomNumber(0, 5)];
         }
     }
 
@@ -125,14 +130,22 @@ class ActingChallenge implements Challenge {
 
         enum desc1 {
             "theather piece about ",
-            "a parody film about ",
+            "parody film about ",
+            "commercial about ",
+            "60's inspired film about",
+            "80's inspired film about"
         }
         enum desc2 {
             "crime.",
-            "idk something."
+            "phone apps.",
+            "social media.",
+            "cancel culture.",
+            "gayness.",
+            "celebrities.",
+            "the future."
         }
 
-        description!.innerHTML = "The queens will act in a " + desc1[randomNumber(0, 1)] + desc2[randomNumber(0, 1)]; 
+        description!.innerHTML = "The queens will act in a " + desc1[randomNumber(0, 4)] + desc2[randomNumber(0, 6)]; 
     }
 
     rankPerformances() {
@@ -164,14 +177,22 @@ class ComedyChallenge implements Challenge {
 
         enum desc1 {
             "a comedy routine about ",
-            "a roast about "
+            "a roast about ",
+            "a parody commercial about ",
+            "a parody trailer about "
         }
         enum desc2 {
-            "love",
-            "sex"
+            "love.",
+            "sex.",
+            "crime.",
+            "school.",
+            "a popular TV series.",
+            "Drag Race.",
+            "Past Drag Race Contestants.",
+            "comedy."
         }
 
-        description!.innerHTML = "The queens will participate in " + desc1[randomNumber(0, 1)] + desc2[randomNumber(0, 1)];
+        description!.innerHTML = "The queens will participate in " + desc1[randomNumber(0, 3)] + desc2[randomNumber(0, 7)];
     }
 
     rankPerformances() {
@@ -202,15 +223,13 @@ class DanceChallenge implements Challenge {
         let description = document.querySelector("p#Description");
 
         enum desc1 {
-            "dance number about ",
-            "idk about "
-        }
-        enum desc2 {
             "the history of disco.",
-            "RuPaul's biography."
+            "RuPaul's biography.",
+            "rival dance clubs.",
+            "Drag Race."
         }
 
-        description!.innerHTML = "The queens will participate in " + desc1[randomNumber(0, 1)] + desc2[randomNumber(0, 1)];
+        description!.innerHTML = "The queens will participate in a dance number about " + desc1[randomNumber(0, 3)];
     }
 
     rankPerformances() {
@@ -242,12 +261,19 @@ class DesignChallenge implements Challenge {
 
         enum desc1 {
             "trash.",
-            "random items."
+            "random items.",
+            "dollar store items.",
+            "a specific color scheme.",
+            "items inspired by past Drag Race contestants.",
+            "bags.",
+            "wigs.",
+            "winter items.",
+            "summer items."
         }
         if (currentCast.length == 6)
             description!.innerHTML = "It's the makeover challenge! The queens will make everyday people their drag sisters!"
         else
-            description!.innerHTML = "The queens will do outfits with " + desc1[randomNumber(0, 1)];
+            description!.innerHTML = "The queens will do outfits with " + desc1[randomNumber(0, 8)];
     }
 
     rankPerformances() {
@@ -279,10 +305,14 @@ class ImprovChallenge implements Challenge {
 
         enum desc1 {
             "political debate.",
-            "celebrity interview."
+            "celebrity interview.",
+            "modern morning TV show.",
+            "late-night TV show.",
+            "new Bossy Rossy episode.",
+            "suggestive kids TV show."
         }
 
-        description!.innerHTML = "The queens will improvise in a " + desc1[randomNumber(0, 1)];
+        description!.innerHTML = "The queens will improvise in a " + desc1[randomNumber(0, 5)];
     }
 
     rankPerformances() {
@@ -344,10 +374,14 @@ class Rusical implements Challenge {
 
         enum desc {
             "social media.",
-            "a pop celebrity."
+            "a pop celebrity.",
+            "a political figure.",
+            "past Drag Race contestans.",
+            "cancel culture.",
+            "RuPaul's music carreer."
         }
 
-        description!.innerHTML = "Today's challenge is... THE RUSICAL!! The queens will do a musical about " + desc[randomNumber(0, 1)];
+        description!.innerHTML = "Today's challenge is... THE RUSICAL!! The queens will do a musical about " + desc[randomNumber(0, 5)];
     }
 
     rankPerformances() {
@@ -376,18 +410,31 @@ class Ball implements Challenge {
 
         enum desc1 {
             "Executive realness, ",
-            "Party night, "
+            "Party night, ",
+            "Summer, ",
+            "Elegant, ",
+            "Sweet 16",
+            "Black and white",
+            "Winter"
         }
         enum desc2 {
             "Antique, ",
-            "Rainbown, "
+            "Rainbown, ",
+            "Rich, ",
+            "Space, ",
+            "Wild, ",
+            "Water, "
         }
         enum desc3 {
-            "Ice.",
-            "Summer."
+            "Ice queen.",
+            "Futuristic.",
+            "Fire.",
+            "Princess.",
+            "Jewels.",
+            "Flowers"
         }
 
-        description!.innerHTML = "Today's challenge is... THE BALL! The queens will bring three looks to the runway! The themes are: " + desc1[randomNumber(0, 1)] + desc2[randomNumber(0, 1)] + desc3[randomNumber(0, 1)];
+        description!.innerHTML = "Today's challenge is... THE BALL! The queens will bring three looks to the runway! The themes are: " + desc1[randomNumber(0, 6)] + desc2[randomNumber(0, 5)] + desc3[randomNumber(0, 5)];
     }
 
     rankPerformances() {
@@ -531,13 +578,33 @@ function runway() {
 
     enum desc {
         "feathers.",
-        "idkkk."
+        "fascinator.",
+        "pink.",
+        "purple.",
+        "caftan.",
+        "trains.",
+        "yellow.",
+        "white.",
+        "black.",
+        "ugly dress.",
+        "naughty.",
+        "crazy sexy cool.",
+        "country.",
+        "phoenix.",
+        "silver.",
+        "2 in 1.",
+        "surprise!",
+        "gold.",
+        "blue.",
+        "fish",
+        "butch.",
+        "amazon"
     }
 
     runwayScreen.createParagraph("The queens will bring it to the runway!");
 
     if (currentCast.length > 4)
-        runwayScreen.createParagraph("The theme is: " + desc[randomNumber(0, 1)]);
+        runwayScreen.createParagraph("The theme is: " + desc[randomNumber(0, 21)]);
     else if (currentCast.length == 3 && top3 || currentCast.length == 5 && top4 || currentCast.length == 4 && all_stars)
         runwayScreen.createParagraph("The theme is... best drag!");
 
