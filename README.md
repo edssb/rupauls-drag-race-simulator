@@ -8,8 +8,6 @@ Currently only at the [project's GitHub page](https://edssb.github.io/rupauls-dr
 ## How does it work?
 For a short description, every contestant has seven mains skills (Acting, Comedy, Dance, Design, Improv, Runway and Lip-Sync). Challenges and other occurences will use these skills to determine with more accuracy how each contestant does in a specific challenge, although there's still a random element to it.
 
-If you want to know more, it's recommended to check the project's [Wiki page](https://github.com/edssb/rupauls-drag-race-simulator/wiki).
-
 ## Any planned features?
 
 There's still some features that will be included on the project, as of now, these are:
