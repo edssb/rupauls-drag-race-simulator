@@ -413,9 +413,9 @@ class Ball implements Challenge {
             "Party night, ",
             "Summer, ",
             "Elegant, ",
-            "Sweet 16",
-            "Black and white",
-            "Winter"
+            "Sweet 16, ",
+            "Black and white, ",
+            "Winter, "
         }
         enum desc2 {
             "Antique, ",

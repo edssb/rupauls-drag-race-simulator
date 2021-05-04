@@ -116,9 +116,9 @@ function winAndBtm2() {
 
 	if (topQueens[0].performanceScore == topQueens[1].runwayScore) {
 		topQueens[0].addToTrackRecord("WIN");
-		topQueens[0].favoritism += 5;
+		topQueens[0].favoritism += 3;
 		topQueens[1].addToTrackRecord("WIN");
-		topQueens[1].favoritism += 5;
+		topQueens[1].favoritism += 3;
 
 
 		screen.createBold(topQueens[0].getName() + ", " + topQueens[1].getName() + ", condragulations, you're the winners of today's challenge!");
@@ -126,7 +126,7 @@ function winAndBtm2() {
 		topQueens.splice(0, 2);
 	} else {
 		topQueens[0].addToTrackRecord("WIN");
-		topQueens[0].favoritism += 5;
+		topQueens[0].favoritism += 3;
 
 		screen.createBold(topQueens[0].getName() + ", condragulations, you're the winner of today's challenge!");
 

@@ -35,7 +35,7 @@ function finaleLipSyncs() {
 	screen.createParagraph(firstLS[0].getName() + " and " + firstLS[1].getName() + " lip-sync...");
 
 	for (let i = 0; i < firstLS.length; i++) {
-		firstLS[i].getASLipsync();
+		firstLS[i].getLipsync();
 	}
 	firstLS.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
 

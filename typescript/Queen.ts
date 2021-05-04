@@ -275,6 +275,43 @@ let silky = new Queen("Silky Nutmeg Ganache", 8, 9, 7, 6, 9, 7, 7);
 let yvie = new Queen("Yvie Oddly", 10, 5, 8, 9, 5, 8, 11);
 let us_season11 = [akeria, ariel, brooke, honeyd, kahanna, mercedes, ninaw, plastique, rajah, scarlet, shuga, silky, vanessa, yvie];
 
+//SEASON 12
+let aiden = new Queen("Aiden Zhane", 9, 3, 6, 4, 3, 8, 7);
+let brita = new Queen("Brita Filter", 7, 6, 7, 4, 3, 7, 9);
+let crystal = new Queen("Crystal Methyd", 8, 7, 7, 8, 5, 9, 5);
+let dahlia = new Queen("Dahlia Sin", 4, 4, 8, 7, 6, 10, 3);
+let gigi = new Queen("Gigi Goode", 8, 7, 9, 8, 9, 9, 5);
+let heidi = new Queen("Heidi N Closet", 9, 10, 5, 6, 9, 7, 12);
+let jackie = new Queen("Jackie Cox", 8, 9, 5, 7, 10, 8, 11);
+let jaida = new Queen("Jaida Essence Hall", 7, 9, 9, 11, 9, 10, 12);
+let jan = new Queen("Jan", 8, 7, 9, 7, 8, 8, 7);
+let nicky = new Queen("Nicky Doll", 4, 4, 7, 10, 3, 10, 5);
+let rock = new Queen("Rock M. Sakura", 6, 8, 6, 7, 8, 8, 6);
+let widow = new Queen("Widow Von'Du", 8, 9, 7, 7, 9, 8, 9);
+let us_season12 =  [aiden, brita, crystal, dahlia, gigi, heidi, jackie, jaida, jan, nicky, rock, widow];
+
+//ALL STARS 5
+let allstars_5 = [alexis, blair, derrick, india, jujubee, mariah, mayhem, miz, ongina, shea];
+
+//SEASON 13
+let denali = new Queen("Denali", 5, 8, 11, 8, 9, 9, 12);
+let elliott = new Queen("Elliott With 2 Ts", 4, 5, 10, 7, 3, 7, 10);
+let mik = new Queen("GottMik", 8, 9, 6, 10, 9, 10, 6)
+let joey = new Queen("Joey Jay", 5, 5, 8, 6, 4, 6, 4);
+let kahmora = new Queen("Kahmora Hall", 3, 4, 3, 9, 3, 10, 4);
+let kandym = new Queen("Kandy Muse", 9, 9, 7, 6, 9, 6, 11);
+let lala = new Queen("LaLa Ri", 4, 6, 10, 2, 5, 7, 10);
+let olivia = new Queen("Olivia Lux", 8, 5, 9, 8, 4, 9, 9);
+let rose = new Queen("Rosé", 10, 9, 9, 7, 9, 7, 5);
+let symone = new Queen("Symone", 10, 7, 8, 7,  10, 9, 12);
+let tamisha = new Queen("Tamisha Iman", 7, 6, 7, 6, 6, 7, 8);
+let tina = new Queen("Tina Burner", 7, 7, 8, 5, 8, 4, 8);
+let utica = new Queen("Utica Queen", 7, 4, 4, 13, 4, 10, 10);
+let us_season13 = [denali, elliott, mik, joey, kahmora, kandym, lala, olivia, rose, symone, tamisha, tina, utica];
+
+//ALL STARS 6
+let allstars_6 = [akeria, eureka, ginger, jan, jiggly, pandora, rajah, scarlet, serena, silky, sonique, trinityk, yara];
+
 //all possible queens:
 let allQueens: Array<Queen> = [
 akashia, bebe, jade, ninaf, ongina, rebecca, shannel, tammie, victoria,
@@ -287,5 +324,7 @@ ginger, jaidynn, jasmine, kandy, katya, kennedy, max, fame, kasha, pearl, sashab
 acid, bob, chichi, cynthia, dax, derrick, kim, laila, naomi, naysha, robbie, thorgy,
 aja, alexism, charlie, eureka, farrah, jaymes, kimora, ninab, peppermint, sasha, shea, trinity, valentina,
 aquaria, asia, blair, dusty, kalorie, kameron, mayhem, miz, monet, monique, vanessa, vixen, yuhua,
-akeria, ariel, brooke, honeyd, kahanna, ninaw, plastique, rajah, scarlet, shuga, silky, yvie
+akeria, ariel, brooke, honeyd, kahanna, ninaw, plastique, rajah, scarlet, shuga, silky, yvie,
+aiden, brita, crystal, dahlia, gigi, heidi, jackie, jaida, jan, nicky, rock, widow,
+denali, elliott, mik, joey, kahmora, kandym, lala, olivia, rose, symone, tamisha, tina, utica
 ];

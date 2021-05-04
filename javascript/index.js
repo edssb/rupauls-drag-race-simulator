@@ -382,9 +382,9 @@ var Ball = /** @class */ (function () {
             desc1[desc1["Party night, "] = 1] = "Party night, ";
             desc1[desc1["Summer, "] = 2] = "Summer, ";
             desc1[desc1["Elegant, "] = 3] = "Elegant, ";
-            desc1[desc1["Sweet 16"] = 4] = "Sweet 16";
-            desc1[desc1["Black and white"] = 5] = "Black and white";
-            desc1[desc1["Winter"] = 6] = "Winter";
+            desc1[desc1["Sweet 16, "] = 4] = "Sweet 16, ";
+            desc1[desc1["Black and white, "] = 5] = "Black and white, ";
+            desc1[desc1["Winter, "] = 6] = "Winter, ";
         })(desc1 || (desc1 = {}));
         var desc2;
         (function (desc2) {
@@ -645,7 +645,7 @@ function finaleLipSyncs() {
     screen.createHeader("The Lip-Syncs...");
     screen.createParagraph(firstLS[0].getName() + " and " + firstLS[1].getName() + " lip-sync...");
     for (var i = 0; i < firstLS.length; i++) {
-        firstLS[i].getASLipsync();
+        firstLS[i].getLipsync();
     }
     firstLS.sort(function (a, b) { return (b.lipsyncScore - a.lipsyncScore); });
     finalLS.push(firstLS[0]);
@@ -959,15 +959,15 @@ function winAndBtm2() {
     //double win:
     if (topQueens[0].performanceScore == topQueens[1].runwayScore) {
         topQueens[0].addToTrackRecord("WIN");
-        topQueens[0].favoritism += 5;
+        topQueens[0].favoritism += 3;
         topQueens[1].addToTrackRecord("WIN");
-        topQueens[1].favoritism += 5;
+        topQueens[1].favoritism += 3;
         screen.createBold(topQueens[0].getName() + ", " + topQueens[1].getName() + ", condragulations, you're the winners of today's challenge!");
         topQueens.splice(0, 2);
     }
     else {
         topQueens[0].addToTrackRecord("WIN");
-        topQueens[0].favoritism += 5;
+        topQueens[0].favoritism += 3;
         screen.createBold(topQueens[0].getName() + ", condragulations, you're the winner of today's challenge!");
         topQueens.splice(0, 1);
     }
@@ -1384,6 +1384,39 @@ var shuga = new Queen("Shuga Cain", 8, 7, 7, 5, 7, 10, 7);
 var silky = new Queen("Silky Nutmeg Ganache", 8, 9, 7, 6, 9, 7, 7);
 var yvie = new Queen("Yvie Oddly", 10, 5, 8, 9, 5, 8, 11);
 var us_season11 = [akeria, ariel, brooke, honeyd, kahanna, mercedes, ninaw, plastique, rajah, scarlet, shuga, silky, vanessa, yvie];
+//SEASON 12
+var aiden = new Queen("Aiden Zhane", 9, 3, 6, 4, 3, 8, 7);
+var brita = new Queen("Brita Filter", 7, 6, 7, 4, 3, 7, 9);
+var crystal = new Queen("Crystal Methyd", 8, 7, 7, 8, 5, 9, 5);
+var dahlia = new Queen("Dahlia Sin", 4, 4, 8, 7, 6, 10, 3);
+var gigi = new Queen("Gigi Goode", 8, 7, 9, 8, 9, 9, 5);
+var heidi = new Queen("Heidi N Closet", 9, 10, 5, 6, 9, 7, 12);
+var jackie = new Queen("Jackie Cox", 8, 9, 5, 7, 10, 8, 11);
+var jaida = new Queen("Jaida Essence Hall", 7, 9, 9, 11, 9, 10, 12);
+var jan = new Queen("Jan", 8, 7, 9, 7, 8, 8, 7);
+var nicky = new Queen("Nicky Doll", 4, 4, 7, 10, 3, 10, 5);
+var rock = new Queen("Rock M. Sakura", 6, 8, 6, 7, 8, 8, 6);
+var widow = new Queen("Widow Von'Du", 8, 9, 7, 7, 9, 8, 9);
+var us_season12 = [aiden, brita, crystal, dahlia, gigi, heidi, jackie, jaida, jan, nicky, rock, widow];
+//ALL STARS 5
+var allstars_5 = [alexis, blair, derrick, india, jujubee, mariah, mayhem, miz, ongina, shea];
+//SEASON 13
+var denali = new Queen("Denali", 5, 8, 11, 8, 9, 9, 12);
+var elliott = new Queen("Elliott With 2 Ts", 4, 5, 10, 7, 3, 7, 10);
+var mik = new Queen("GottMik", 8, 9, 6, 10, 9, 10, 6);
+var joey = new Queen("Joey Jay", 5, 5, 8, 6, 4, 6, 4);
+var kahmora = new Queen("Kahmora Hall", 3, 4, 3, 9, 3, 10, 4);
+var kandym = new Queen("Kandy Muse", 9, 9, 7, 6, 9, 6, 11);
+var lala = new Queen("LaLa Ri", 4, 6, 10, 2, 5, 7, 10);
+var olivia = new Queen("Olivia Lux", 8, 5, 9, 8, 4, 9, 9);
+var rose = new Queen("Rosé", 10, 9, 9, 7, 9, 7, 5);
+var symone = new Queen("Symone", 10, 7, 8, 7, 10, 9, 12);
+var tamisha = new Queen("Tamisha Iman", 7, 6, 7, 6, 6, 7, 8);
+var tina = new Queen("Tina Burner", 7, 7, 8, 5, 8, 4, 8);
+var utica = new Queen("Utica Queen", 7, 4, 4, 13, 4, 10, 10);
+var us_season13 = [denali, elliott, mik, joey, kahmora, kandym, lala, olivia, rose, symone, tamisha, tina, utica];
+//ALL STARS 6
+var allstars_6 = [akeria, eureka, ginger, jan, jiggly, pandora, rajah, scarlet, serena, silky, sonique, trinityk, yara];
 //all possible queens:
 var allQueens = [
     akashia, bebe, jade, ninaf, ongina, rebecca, shannel, tammie, victoria,
@@ -1396,7 +1429,9 @@ var allQueens = [
     acid, bob, chichi, cynthia, dax, derrick, kim, laila, naomi, naysha, robbie, thorgy,
     aja, alexism, charlie, eureka, farrah, jaymes, kimora, ninab, peppermint, sasha, shea, trinity, valentina,
     aquaria, asia, blair, dusty, kalorie, kameron, mayhem, miz, monet, monique, vanessa, vixen, yuhua,
-    akeria, ariel, brooke, honeyd, kahanna, ninaw, plastique, rajah, scarlet, shuga, silky, yvie
+    akeria, ariel, brooke, honeyd, kahanna, ninaw, plastique, rajah, scarlet, shuga, silky, yvie,
+    aiden, brita, crystal, dahlia, gigi, heidi, jackie, jaida, jan, nicky, rock, widow,
+    denali, elliott, mik, joey, kahmora, kandym, lala, olivia, rose, symone, tamisha, tina, utica
 ];
 var Scene = /** @class */ (function () {
     function Scene() {
@@ -1445,6 +1480,3 @@ var Scene = /** @class */ (function () {
     };
     return Scene;
 }());
-
-
-
