@@ -18,6 +18,7 @@ class Queen {
     public unfavoritism: number = 0;
 
     public lipstick: Queen;
+    public votes: number = 0;
 
     constructor(name: string, acting: number, comedy: number, dance: number, design: number, improv: number, runway: number, lipsync: number) {
         this._name = name;
@@ -39,6 +40,10 @@ class Queen {
     public getName(): string {
         return this._name;
     }
+    public getLipSyncStat(): number {
+        return this._lipsyncStat;
+    }
+
     public getActing(): void {
         this.performanceScore = this._calculateScores(15, 35, this._actingStat);
     }

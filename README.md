@@ -14,7 +14,6 @@ There's still some features that will be included on the project, as of now, the
 
 * Team Challenges
 * Thailand's Runway Challenge Format
-* Lip-Sync Assassin Format
 * Untucked
 
 There are no predictions of when these features will come, so don't hold your breath.

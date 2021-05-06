@@ -27,7 +27,7 @@ function newEpisode() {
 
     if (currentCast.length > 4)
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");
-    else if (currentCast.length == 4 && top3)
+    else if (currentCast.length == 4 && (top3 || lipsync_assassin))
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");
     else if (currentCast.length == 4 && top4)
         queensRemainingScreen.createButton("Proceed", "finaleLS()")

@@ -184,14 +184,14 @@ function contestantProgress() {
 	screen.clean();
 	screen.createHeader("Contestant Progress");
 
-	if (top3 || all_stars)
+	if (top3 || all_stars || lipsync_assassin)
 		screen.createBold(currentCast[0].getName() + ": ", "winTR");
 	else if (top4)
 		screen.createBold(finalLS[0].getName() + ": ", "winTR");
 
 	let winTR = document.querySelector("b#winTR");
 	
-	if (top3 || all_stars)
+	if (top3 || all_stars || lipsync_assassin)
 		for (let i = 0; i < currentCast[0].trackRecord.length; i++) 
 			winTR!.innerHTML += currentCast[0].trackRecord[i] + " ";
 	else if (top4)

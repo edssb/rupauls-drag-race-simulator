@@ -42,6 +42,11 @@ function generateSpace() {
         }
 }
 
+let top3: boolean = false;
+let top4: boolean = false;
+let all_stars: boolean = false;
+let lipsync_assassin: boolean = false;
+
 function predefCast(cast: Array<Queen>, format: string) {
     currentCast = cast;
     totalCastSize = cast.length;
@@ -52,14 +57,13 @@ function predefCast(cast: Array<Queen>, format: string) {
         top4 = true;
     else if (format == "all-stars")
         all_stars = true;
-
+    else if (format == "lipsync-assassin") {
+        lipsync_assassin = true;
+        allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 8});
+    }
+    
     newEpisode();
 }
-
-let top3: boolean = false;
-let top4: boolean = false;
-let all_stars: boolean = false;
-
 
 function startSimulation() {
     //get selected names and compare them to the all queens list:
@@ -68,12 +72,16 @@ function startSimulation() {
         let value: string = select.options[select.selectedIndex].text;
 
         for (let k = 0; k < allQueens.length; k++) {
-            if (value == allQueens[k].getName())
+            if (value == allQueens[k].getName()) {
                 currentCast.push(allQueens[k]);
+                allQueens.splice(allQueens.indexOf(allQueens[k]), 1);
+            }
         }
     }
     
-    if (duplicateQueens(currentCast))
+    if (currentCast.length == 0)
+        window.alert("Your cast is empty!");
+    else if (duplicateQueens(currentCast))
         window.alert("Please, only use one of each queen on your cast!");
     else {
         let select = (<HTMLSelectElement>document.getElementById("format"));
@@ -84,8 +92,15 @@ function startSimulation() {
             top4 = true;
         else if (select.options[select.selectedIndex].value == "all-stars")
             all_stars = true;
+        else if (select.options[select.selectedIndex].value == "lipsync-assassin") {
+            lipsync_assassin = true;
+            allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 8});
+        }
 
-        newEpisode();
+        if (currentCast.length == 3 && top4 || currentCast.length == 3 && all_stars)
+            window.alert("Lip-Sync For The Crown and All Star formats needs at least 4 queens!");
+        else
+            newEpisode();
     }
 }
 

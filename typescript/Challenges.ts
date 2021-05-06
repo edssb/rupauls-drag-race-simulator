@@ -1,8 +1,10 @@
+//Challenge base:
 interface Challenge {
     generateDescription(): void;
     rankPerformances(): void;
 }
 
+//mini-challenge stuff:
 class MiniChallenge implements Challenge {
     generateDescription(): void {
         let description = document.querySelector("p#Description");
@@ -39,9 +41,9 @@ class MiniChallenge implements Challenge {
         let result = document.querySelector("b#mcWinner");
         let winner = currentCast[randomNumber(0, currentCast.length - 1)].getName();
 
-        if (totalCastSize != 8 && currentCast.length == 8) {
+        if (totalCastSize >= 10 && currentCast.length == 7) {
             result!.innerHTML = winner + " won the reading challenge!";
-        } else if (totalCastSize != 5 && currentCast.length == 5) {
+        } else if (totalCastSize >= 10 && currentCast.length == 5) {
             result!.innerHTML = winner + " won the puppet challenge!";
         } else {
             result!.innerHTML = winner + " won the mini-challenge!";
@@ -49,7 +51,7 @@ class MiniChallenge implements Challenge {
     } 
 }
 
-//make the mini-challenge:
+//challenge modifiers:
 var actingChallengeCounter: number = 0;
 var comedyChallengeCounter: number = 0;
 var danceChallengeCounter: number = 0;
@@ -80,6 +82,8 @@ function miniChallenge(): void {
 
     let challenges: Array<string> = ["actingChallenge()", "comedyChallenge()", "danceChallenge()", "designChallenge()", "improvChallenge()"]
 
+
+    //remove from possible challenges list:
     if (actingChallengeCounter == 3)
         challenges.splice(challenges.indexOf("actingChallenge()"), 1);
     if (comedyChallengeCounter == 3)
@@ -91,39 +95,10 @@ function miniChallenge(): void {
     if (improvChallengeCounter == 3)
         challenges.splice(challenges.indexOf("improvChallenge()"), 1);
 
-    if (currentCast.length == totalCastSize && top3 || currentCast.length == totalCastSize && top4)
-        miniChallengeScreen.createButton("Proceed", "designChallenge()")
-    else if (currentCast.length == totalCastSize && totalCastSize)
-        miniChallengeScreen.createButton("Proceed", "talentshow()");
-    else if (totalCastSize <= 10 && currentCast.length == 9)
-        miniChallengeScreen.createButton("Proceed", "snatchGame()");
-    else if (currentCast.length == totalCastSize - 3 && top4 && !ballCounter)
-        miniChallengeScreen.createButton("Proceed", "ball()");
-    else if (currentCast.length == totalCastSize - 4 && top4 && !ballCounter)
-        miniChallengeScreen.createButton("Proceed", "ball()");
-    else if (currentCast.length > 6 && randomNumber(0, 20) == 20 && !rusicalCounter)
-        miniChallengeScreen.createButton("Proceed", "rusical()");
-    else if (currentCast.length == 6 && randomNumber(0, 15) == 15)
-        miniChallengeScreen.createButton("Proceed", "designChallenge()");
-    else if (currentCast.length == 5 && top4)
-        miniChallengeScreen.createButton("Proceed", "rumix()");
-    else if (currentCast.length == 4 && top3)
-        miniChallengeScreen.createButton("Proceed", "ball()");
-    else {
-        let currentChallenge: string = challenges[randomNumber(0, challenges.length - 1)];
-
-        if (currentChallenge === lastChallenge && currentCast.length != totalCastSize) {
-            currentChallenge = challenges[randomNumber(0, challenges.length - 1)];
-            lastChallenge = currentChallenge;
-            miniChallengeScreen.createButton("Proceed", currentChallenge);
-        } else {
-            lastChallenge = currentChallenge;
-            miniChallengeScreen.createButton("Proceed", currentChallenge);
-        }
-    }
+    createChallenge(challenges, miniChallengeScreen);
 }
 
-//challenges:
+//GENERAL CHALLENGES:
 class ActingChallenge implements Challenge {
     generateDescription() {
         let description = document.querySelector("p#Description");
@@ -156,7 +131,7 @@ class ActingChallenge implements Challenge {
     }
 }
 
-function actingChallenge() {
+function actingChallenge(): void {
     let challengeScreen = new Scene();
     challengeScreen.clean();
     challengeScreen.createHeader("Maxi-challenge!");
@@ -203,7 +178,7 @@ class ComedyChallenge implements Challenge {
     }
 }
 
-function comedyChallenge() {
+function comedyChallenge(): void {
     let challengeScreen = new Scene();
     challengeScreen.clean();
     challengeScreen.createHeader("Maxi-challenge!");
@@ -240,7 +215,7 @@ class DanceChallenge implements Challenge {
     }
 }
 
-function danceChallenge() {
+function danceChallenge(): void {
     let challengeScreen = new Scene();
     challengeScreen.clean();
     challengeScreen.createHeader("Maxi-challenge!");
@@ -284,7 +259,7 @@ class DesignChallenge implements Challenge {
     }
 }
 
-function designChallenge() {
+function designChallenge(): void {
     let challengeScreen = new Scene();
     challengeScreen.clean();
     challengeScreen.createHeader("Maxi-challenge!");
@@ -323,7 +298,7 @@ class ImprovChallenge implements Challenge {
     }
 }
 
-function improvChallenge() {
+function improvChallenge(): void {
     let challengeScreen = new Scene();
     challengeScreen.clean();
     challengeScreen.createHeader("Maxi-challenge!");
@@ -340,7 +315,7 @@ function improvChallenge() {
 
 //TODO: team challenges here
 
-//special challenges
+//SPECIAL CHALLENGES:
 class SnatchGame implements Challenge {
     generateDescription() {
         let description = document.querySelector("p#Description");
@@ -354,7 +329,7 @@ class SnatchGame implements Challenge {
     }
 }
 
-function snatchGame() {
+function snatchGame(): void {
     let challengeScreen = new Scene();
     challengeScreen.clean();
     challengeScreen.createHeader("Maxi-challenge!");
@@ -390,7 +365,7 @@ class Rusical implements Challenge {
     }
 }
 
-function rusical() {
+function rusical(): void {
     let challengeScreen = new Scene();
     challengeScreen.clean();
     challengeScreen.createHeader("Maxi-challenge!");
@@ -443,7 +418,7 @@ class Ball implements Challenge {
     }
 }
 
-function ball() {
+function ball(): void {
     let challengeScreen = new Scene();
     challengeScreen.clean();
     challengeScreen.createHeader("Maxi-challenge!");
@@ -476,7 +451,7 @@ class Rumix implements Challenge {
     }
 }
 
-function rumix() {
+function rumix(): void {
     let challengeScreen = new Scene();
     challengeScreen.clean();
     challengeScreen.createHeader("Maxi-challenge!");
@@ -503,7 +478,7 @@ class TalentShow implements Challenge {
     }
 }
 
-function talentshow() {
+function talentshow(): void {
     let challengeScreen = new Scene();
     challengeScreen.clean();
     challengeScreen.createHeader("Maxi-challenge!");
@@ -518,7 +493,8 @@ function talentshow() {
 }
 
 //performance:
-function queensPerformances() {
+function queensPerformances(): void {
+    //remove description button:
     let button1 = document.querySelector("button#button1");
     button1!.remove();
 
@@ -570,7 +546,7 @@ function queensPerformances() {
 
 //runway:
 
-function runway() {
+function runway(): void {
     let runwayScreen = new Scene();
     let button2 = document.querySelector("button#button2");
     button2!.remove();
@@ -630,10 +606,57 @@ function runway() {
     }
     if (currentCast.length > 4)
         runwayScreen.createButton("Proceed", "judging()");
-    else if (currentCast.length == 4 && top3)
+    else if (currentCast.length == 4 && (top3 || lipsync_assassin))
         runwayScreen.createButton("Proceed", "judging()");
-    else if (currentCast.length == 3 && top3)
+    else if (currentCast.length == 3 && (top3 || lipsync_assassin))
         runwayScreen.createButton("Proceed", "finaleJudging()");
     else if (currentCast.length == 4 && all_stars)
         runwayScreen.createButton("Proceed", "finaleASJudging()");
+}
+
+//helper functions
+
+function createChallenge(challenges: Array<string>, miniChallengeScreen: Scene): void {
+    //check conditions for special challenges:
+
+    //first design challenge for normal seasons
+    if (currentCast.length == totalCastSize && top3 || currentCast.length == totalCastSize && top4)
+        miniChallengeScreen.createButton("Proceed", "designChallenge()")
+    //talent show for all stars
+    else if (currentCast.length == totalCastSize && (all_stars || lipsync_assassin))
+        miniChallengeScreen.createButton("Proceed", "talentshow()");
+    //snatch game
+    else if (totalCastSize >= 10 && currentCast.length == 9)
+        miniChallengeScreen.createButton("Proceed", "snatchGame()");
+    //the ball for the third competitive episode for lsftc seasons
+    else if (currentCast.length == totalCastSize - 3 && top4 && !ballCounter)
+        miniChallengeScreen.createButton("Proceed", "ball()");
+    //same but if above condition doesn't apply (example: snatch game needs to happen before the ball)
+    else if (currentCast.length == totalCastSize - 4 && (top4 || (all_stars || lipsync_assassin) && randomNumber(0, 100) < 30) && !ballCounter)
+        miniChallengeScreen.createButton("Proceed", "ball()");
+    //rusical
+    else if (currentCast.length > 6 && randomNumber(0, 20) == 20 && !rusicalCounter)
+        miniChallengeScreen.createButton("Proceed", "rusical()");
+    //makeover
+    else if (currentCast.length == 6 && randomNumber(0, 15) == 15)
+        miniChallengeScreen.createButton("Proceed", "designChallenge()");
+    //rumix
+    else if (currentCast.length == 5 && top4)
+        miniChallengeScreen.createButton("Proceed", "rumix()");
+    //ball for top3 seasons
+    else if (currentCast.length == 4 && top3)
+        miniChallengeScreen.createButton("Proceed", "ball()");
+    //if no conditions apply, create random challenge
+    else {
+        let currentChallenge: string = challenges[randomNumber(0, challenges.length - 1)];
+
+        if (currentChallenge === lastChallenge && currentCast.length != totalCastSize) {
+            currentChallenge = challenges[randomNumber(0, challenges.length - 1)];
+            lastChallenge = currentChallenge;
+            miniChallengeScreen.createButton("Proceed", currentChallenge);
+        } else {
+            lastChallenge = currentChallenge;
+            miniChallengeScreen.createButton("Proceed", currentChallenge);
+        }
+    }
 }
