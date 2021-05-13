@@ -59,7 +59,8 @@ function predefCast(cast: Array<Queen>, format: string) {
         all_stars = true;
     else if (format == "lipsync-assassin") {
         lipsync_assassin = true;
-        allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 8});
+        allQueens = allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 9});
+        allQueens = allQueens.filter(function (queen) {return currentCast.indexOf(queen) == -1});
     }
     
     newEpisode();
@@ -72,10 +73,8 @@ function startSimulation() {
         let value: string = select.options[select.selectedIndex].text;
 
         for (let k = 0; k < allQueens.length; k++) {
-            if (value == allQueens[k].getName()) {
-                currentCast.push(allQueens[k]);
-                allQueens.splice(allQueens.indexOf(allQueens[k]), 1);
-            }
+            if (value == allQueens[k].getName()) 
+                currentCast.push(allQueens[k]);      
         }
     }
     
@@ -94,7 +93,8 @@ function startSimulation() {
             all_stars = true;
         else if (select.options[select.selectedIndex].value == "lipsync-assassin") {
             lipsync_assassin = true;
-            allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 8});
+            allQueens = allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 8});
+            allQueens = allQueens.filter(function (queen) {return currentCast.indexOf(queen) == -1});
         }
 
         if (currentCast.length == 3 && top4 || currentCast.length == 3 && all_stars)
@@ -109,12 +109,12 @@ function duplicateQueens(cast: Array<Queen>) {
     let valuesAlreadySeen = [];
 
     for (let i = 0; i < cast.length; i++) {
-    let value = cast[i];
-    if (valuesAlreadySeen.indexOf(value) !== -1) {
-      currentCast = [];
-      return true;
+        let value = cast[i];
+        if (valuesAlreadySeen.indexOf(value) !== -1) {
+            currentCast = [];
+            return true;
+        }
+        valuesAlreadySeen.push(value);
     }
-    valuesAlreadySeen.push(value);
-  }
-  return false;
+    return false;
 }

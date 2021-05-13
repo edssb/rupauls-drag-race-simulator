@@ -46,3 +46,10 @@ select {
 button {
     margin-top: 5px;
 }
+
+table, th, td, tr {
+    border: black solid 1px;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 3px;
+}

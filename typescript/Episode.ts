@@ -9,6 +9,8 @@ let top2: Array<Queen> = [];
 let doubleShantay = false;
 let doubleSashay = false;
 
+let episodeChallenges: Array<string> = [];
+
 function newEpisode() {
     safeQueens = [];
     topQueens = [];

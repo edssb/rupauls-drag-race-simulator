@@ -24,6 +24,8 @@ function finaleLS() {
 	screen.createParagraph("and");
 	screen.createBold(secondLS[0].getName() + " vs. " + secondLS[1].getName());
 
+    episodeChallenges.push("Finale");
+
 	screen.createButton("Proceed", "finaleLipSyncs()");
 }
 
@@ -146,6 +148,8 @@ function finaleFinale() {
 		eliminatedCast.unshift(currentCast[1]);
 		currentCast.splice(1, 1);
 	}
+
+    episodeChallenges.push("Finale");
 	
 	screen.createButton("Proceed", "contestantProgress()");
 }
@@ -177,6 +181,7 @@ function finaleASJudging() {
 
 	screen.createBold(currentCast[0].getName() + ", " + currentCast[1].getName() + ", " + currentCast[2].getName() + ", this is your last chance to prove yourself. It's time for you to lipsync.. for the CROWN!!");
 	screen.createButton("Proceed", "finaleFinale()");
+
 }
 
 function contestantProgress() {
@@ -184,28 +189,112 @@ function contestantProgress() {
 	screen.clean();
 	screen.createHeader("Contestant Progress");
 
-	if (top3 || all_stars || lipsync_assassin)
-		screen.createBold(currentCast[0].getName() + ": ", "winTR");
-	else if (top4)
-		screen.createBold(finalLS[0].getName() + ": ", "winTR");
+	let main = document.querySelector("div#MainBlock");
 
-	let winTR = document.querySelector("b#winTR");
+	let trackRecords = document.createElement("table");
+
+	if (totalCastSize >= 15 && totalCastSize < 17)
+		trackRecords.setAttribute("style", "font-size: 85%;")
+	if (totalCastSize >= 17)
+		trackRecords.setAttribute("style", "font-size: 75%")
+
+	let header = document.createElement("tr");
+	trackRecords!.appendChild(header);
+
+	let th = document.createElement("th");
+	th.innerHTML = "Queen";
+	header.appendChild(th);
+
+	for (let i = 0; i < episodeChallenges.length; i++) {
+		let th = document.createElement("th");
+		th.innerHTML = episodeChallenges[i];
+		header.appendChild(th);
+	}
+
+	let winner = document.createElement("tr");
+
+	let name = document.createElement("td");
+	name.setAttribute("style", "font-weight: bold;");
+
+	let winnerQueen: Queen;
+
+	if (!top4)
+		winnerQueen = currentCast[0];
+	else
+		winnerQueen = finalLS[0];
 	
-	if (top3 || all_stars || lipsync_assassin)
-		for (let i = 0; i < currentCast[0].trackRecord.length; i++) 
-			winTR!.innerHTML += currentCast[0].trackRecord[i] + " ";
-	else if (top4)
-		for (let i = 0; i < finalLS[0].trackRecord.length; i++) 
-			winTR!.innerHTML += finalLS[0].trackRecord[i] + " ";
+	name.innerHTML = winnerQueen.getName().split(" ")[0];
+	winner.appendChild(name);
+
+	for (let i = 0; i < winnerQueen.trackRecord.length; i++) {
+		let placement = document.createElement("td");
+		placement.innerHTML = winnerQueen.trackRecord[i];
+
+		if (placement.innerHTML == "WIN") {
+			placement.setAttribute("style", "font-weight: bold; background-color: royalblue; color: white;");
+		} else if (placement.innerHTML == "TOP2") {
+			placement.setAttribute("style", "font-weight: bold; background-color: cyan;");
+		} else if (placement.innerHTML == "LOW") {
+			placement.setAttribute("style", "background-color: pink;");
+		} else if (placement.innerHTML == "HIGH") {
+			placement.setAttribute("style", "background-color: lightblue;");
+		} else if (placement.innerHTML == "BTM2" || placement.innerHTML ==  "BTM3" || placement.innerHTML == "BTM4") {
+			placement.setAttribute("style", "background-color: tomato;");
+		} else if (placement.innerHTML == "ELIM") {
+			placement.setAttribute("style", "font-weight: bold; background-color: red;");
+		} else if (placement.innerHTML == "WINNER") {
+			placement.setAttribute("style", "font-weight: bold; background-color: yellow;");
+		} else if (placement.innerHTML == "RUNNER-UP") {
+			placement.setAttribute("style", "font-weight: bold; background-color: silver;");
+		} else if (placement.innerHTML == "ELIMINATED") {
+			placement.setAttribute("style", "font-weight: bold; background-color: sienna;");
+		}
+		
+		winner.appendChild(placement);
+	}
+
+	trackRecords.appendChild(winner);
 
 	for (let i = 0; i < eliminatedCast.length; i++) {
-		screen.createBold(eliminatedCast[i].getName() + ": ", "TR" + i);
+		let contestant = document.createElement("tr");
 
-		let TR = document.querySelector("b#TR" + i);
+		let name = document.createElement("td");
+		name.setAttribute("style", "font-weight: bold;");
+		name.innerHTML = eliminatedCast[i].getName().split(" ")[0];
 
-		for (let k = 0; k < eliminatedCast[i].trackRecord.length; k++) 
-			TR!.innerHTML += eliminatedCast[i].trackRecord[k] + " ";
+		contestant.appendChild(name);
+
+		for (let k = 0; k < eliminatedCast[i].trackRecord.length; k++) {
+			let placement = document.createElement("td");
+			placement.innerHTML = eliminatedCast[i].trackRecord[k];
+	
+			if (placement.innerHTML == "WIN") {
+				placement.setAttribute("style", "font-weight: bold; background-color: royalblue; color: white;");
+			} else if (placement.innerHTML == "TOP2") {
+				placement.setAttribute("style", "font-weight: bold; background-color: cyan;");
+			} else if (placement.innerHTML == "LOW") {
+				placement.setAttribute("style", "background-color: pink;");
+			} else if (placement.innerHTML == "HIGH") {
+				placement.setAttribute("style", "background-color: lightblue;");
+			} else if (placement.innerHTML == "BTM2" || placement.innerHTML ==  "BTM3" || placement.innerHTML == "BTM4") {
+				placement.setAttribute("style", "background-color: tomato;");
+			} else if (placement.innerHTML == "ELIM") {
+				placement.setAttribute("style", "font-weight: bold; background-color: red;");
+			} else if (placement.innerHTML == "WINNER") {
+				placement.setAttribute("style", "font-weight: bold; background-color: yellow;");
+			} else if (placement.innerHTML == "RUNNER UP") {
+				placement.setAttribute("style", "font-weight: bold; background-color: silver;");
+			} else if (placement.innerHTML == "ELIMINATED") {
+				placement.setAttribute("style", "font-weight: bold; background-color: sienna;");
+			}
+			
+			contestant.appendChild(placement);
+		}
+	
+		trackRecords.appendChild(contestant);
 	}
+
+	main!.appendChild(trackRecords);
 
 	screen.createButton("Simulate again!", "location.reload()");
 }

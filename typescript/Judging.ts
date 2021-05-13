@@ -345,7 +345,7 @@ function lipSync() {
 		bottomQueens[1].unfavoritism += 8;
 
 		doubleShantay = true;
-	} else if (score1 < 3 && score2 < 3 && randomNumber(0, 100) <= 20 && !doubleSashay && currentCast.length > 5) {
+	} else if (score1 < 3 && score2 < 3 && randomNumber(0, 100) <= 10 && !doubleSashay && currentCast.length > 5) {
 		screen.createBold("I'm sorry but none of you showed the fire it takes to stay. You must both... sashay away.");
 		doubleSashay = true;
 
@@ -356,7 +356,7 @@ function lipSync() {
 		bottomQueens[1].addToTrackRecord("ELIM");
 		eliminatedCast.unshift(bottomQueens[1]);
 		currentCast.splice(currentCast.indexOf(bottomQueens[1]), 1);
-	} else if (randomNumber(0, 1000) >= 999) {
+	} else if (randomNumber(0, 1000) >= 998) {
 		let disqualifiedQueen: Queen = currentCast[randomNumber(0, currentCast.length - 1)];
 
 		screen.createBold(disqualifiedQueen.getName() + ", it has come to my attention that you have broken the rules of this competition. I must ask you to sashay away.");

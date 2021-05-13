@@ -28,7 +28,7 @@ class MiniChallenge implements Challenge {
             "past Drag Race contestants"
         }
         //reading and puppet challenges:
-        if (totalCastSize >= 10 && currentCast.length == 7 && !all_stars || currentCast.length == totalCastSize && all_stars) {
+        if (totalCastSize >= 10 && currentCast.length == 7 && !all_stars || currentCast.length == totalCastSize && (all_stars || lipsync_assassin)) {
             description!.innerHTML = "The library is open! In today's mini-challenge, the queens will read eachother!";
         } else if (totalCastSize != 5 && currentCast.length == 5) {
             description!.innerHTML = "Bring in the puppets! The queens will parody eachother using puppets!";
@@ -144,6 +144,7 @@ function actingChallenge(): void {
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     actingChallengeCounter++;
     isDesignChallenge = false;
+    episodeChallenges.push("Acting");
 }
 
 class ComedyChallenge implements Challenge {
@@ -191,6 +192,7 @@ function comedyChallenge(): void {
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     comedyChallengeCounter++;
     isDesignChallenge = false;
+    episodeChallenges.push("Comedy");
 }
 
 class DanceChallenge implements Challenge {
@@ -228,6 +230,7 @@ function danceChallenge(): void {
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     danceChallengeCounter++;
     isDesignChallenge = false;
+    episodeChallenges.push("Dance");
 }
 
 class DesignChallenge implements Challenge {
@@ -272,6 +275,10 @@ function designChallenge(): void {
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     designChallengeCounter++;
     isDesignChallenge = true;
+    if (currentCast.length == 6)
+        episodeChallenges.push("Makeover");
+    else
+        episodeChallenges.push("Design");
 }
 
 class ImprovChallenge implements Challenge {
@@ -311,6 +318,7 @@ function improvChallenge(): void {
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     improvChallengeCounter++;
     isDesignChallenge = false;
+    episodeChallenges.push("Improv");
 }
 
 //TODO: team challenges here
@@ -341,6 +349,7 @@ function snatchGame(): void {
 
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     isDesignChallenge = false;
+    episodeChallenges.push("Snatch");
 }
 
 class Rusical implements Challenge {
@@ -377,6 +386,7 @@ function rusical(): void {
 
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     isDesignChallenge = false;
+    episodeChallenges.push("Rusical");
 }
 
 class Ball implements Challenge {
@@ -431,6 +441,7 @@ function ball(): void {
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     isDesignChallenge = true;
     ballCounter = true;
+    episodeChallenges.push("Ball");
 }
 
 class Rumix implements Challenge {
@@ -463,6 +474,7 @@ function rumix(): void {
 
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     isDesignChallenge = false;
+    episodeChallenges.push("Rumix");
 }
 
 class TalentShow implements Challenge {
@@ -490,6 +502,7 @@ function talentshow(): void {
 
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     isDesignChallenge = true;
+    episodeChallenges.push("Talent");
 }
 
 //performance:
