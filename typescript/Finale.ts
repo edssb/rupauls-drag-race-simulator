@@ -223,7 +223,7 @@ function contestantProgress() {
 	else
 		winnerQueen = finalLS[0];
 	
-	if ( winnerQueen.getName().split(" ").length == 2)
+	if ( winnerQueen.getName().split(" ").length > 2)
 		name.innerHTML = winnerQueen.getName().split(" ")[0] + " " + winnerQueen.getName().split(" ")[1];
 	else
 		name.innerHTML = winnerQueen.getName().split(" ")[0];
@@ -272,7 +272,7 @@ function contestantProgress() {
 
 		let name = document.createElement("td");
 		name.setAttribute("style", "font-weight: bold;");
-		if (eliminatedCast[i].getName().split(" ").length == 2)
+		if (eliminatedCast[i].getName().split(" ").length > 2)
 			name.innerHTML = eliminatedCast[i].getName().split(" ")[0] + " " + eliminatedCast[i].getName().split(" ")[1];
 		else 
 			name.innerHTML = eliminatedCast[i].getName().split(" ")[0];
