@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RuPaul's Drag Race Simulator</title>
+    <link rel="icon" href="image/favicon.ico">
+    <link rel="stylesheet" href="css/style.light.css">
+</head>
+<body>
+    <div id="MainBlock">
+        <h1>Challenge seasons!</h1>
+        <big>Seasons with a specific theme, create your cast and then choose one of them below!</big>
+        <p>
+            How many queens do you want on your cast?
+            <br>
+            <input type="number" min="3" max="20" id="castSize">
+            <button onclick="generateSpace()">Select</button>
+        </p>
+        
+        <p id="castSelection"></p>
+        <p>Now select your format: </p>
+        <select id="format">
+            <option value="top3">Top 3 Format</option>
+            <option value="top4">Lip-Sync For The Crown</option>
+            <option value="all-stars">All Stars Format</option>
+            <option value="lipsync-assassin">Lip-Sync Assassin Format</option>
+        </select>
+
+        <hr>
+        
+        <p>
+            <button onclick="startSimulation('sweatshop')">RuPaul's Next Drag Sweatshop</button>
+            <p>Every challenge is a design challenge!</p>
+        </p>
+
+        <div>
+            <p>
+                <big><a href="index.html" id="inblock">Back to main page</a></big>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="javascript/index.js"></script>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RuPaul's Drag Race Simulator</title>
+    <link rel="icon" href="image/favicon.ico">
+    <link rel="stylesheet" href="css/style.light.css">
+</head>
+<body>
+    <div id="MainBlock">
+        <h1>Custom</h1>
+        <big>Go here if you want to create a cast with custom queens or create your own rendition of the show's queens!</big>
+        <p>
+            <b>Queen name: </b><input type="text" id="queenName">
+        </p>
+        <small>(Queens' stats must range from 0 to 15)</small>
+        <p>
+            <b>Acting stat: </b> <input type="number"  id="actingStat">
+        </p>
+        <p>
+            <b>Comedy stat: </b> <input type="number"  id="comedyStat">
+        </p>
+        <p>
+            <b>Dance stat: </b> <input type="number"  id="danceStat">
+        </p>
+        <p>
+            <b>Design stat: </b> <input type="number"  id="designStat">
+        </p>
+        <p>
+            <b>Improv stat: </b> <input type="number"  id="improvStat">
+        </p>
+        <p>
+            <b>Runway stat: </b> <input type="number"  id="runwayStat">
+        </p>
+        <p>
+            <b>Lip-Sync stat: </b> <input type="number"  id="lipsyncStat">
+        </p>
+        <button onclick="addQueen()">Add queen</button>
+
+        <p>
+            Your cast:
+        </p>
+    
+        <select id="cast" size="10"></select>  
+        <p>
+            <button onclick="removeQueen()">Remove queen</button>  
+        </p> 
+        <p>Now select your format: </p>
+        <select id="format">
+            <option value="top3">Top 3 Format</option>
+            <option value="top4">Lip-Sync For The Crown</option>
+            <option value="all-stars">All Stars Format</option>
+            <option value="lipsync-assassin">Lip-Sync Assassin Format</option>
+        </select>
+
+        <p>
+            <button onclick="customStartSimulation()">Start simulation!</button>
+        </p>
+
+        <div>
+            <p>
+                <big><a href="index.html" id="inblock">Back to main page</a></big>
+            </p>
+        </div>
+    </div>
+</body>
+<script src="javascript/index.js"></script>
+</html>
