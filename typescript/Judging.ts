@@ -1,5 +1,5 @@
 function judging(): void {
-	if (currentCast.length > 11 && currentCast.length == totalCastSize) {
+	if (currentCast.length > 13) {
 		//add 4 queens to the top and 4 queens to the bottom
 		currentCast.sort((a, b) => (a.performanceScore - b.performanceScore));
 		for (let i = 0; i < 4; i++) {
@@ -122,10 +122,10 @@ function winAndBtm2() {
 	
 	//double win:
 
-	if (topQueens[0].performanceScore == topQueens[1].runwayScore) {
-		topQueens[0].addToTrackRecord("WIN");
+	if (topQueens[0].performanceScore == topQueens[1].performanceScore && randomNumber(0, 100) < 60) {
+		topQueens[0].addToTrackRecord(" WIN");
 		topQueens[0].favoritism += 3;
-		topQueens[1].addToTrackRecord("WIN");
+		topQueens[1].addToTrackRecord(" WIN");
 		topQueens[1].favoritism += 3;
 
 
@@ -264,8 +264,6 @@ function topAndBtm() {
 
 	top2.push(topQueens[0]);
 
-	top2[0].addToTrackRecord("WIN");
-
 	top2[0].favoritism += 5;
 
 	topQueens.splice(0, 1);
@@ -399,13 +397,13 @@ function asLipSync() {
 	screen.createHorizontalLine();
 	screen.createBold("Ladies, I've made my decision...");
 
-	top2[0].addToTrackRecord("WIN");
 	top2[0].favoritism += 8;
+	top2[0].addToTrackRecord("WIN");
 
 	screen.createBold(top2[0].getName() + ", you're a winner, baby!");
 
 	top2[1].addToTrackRecord("TOP2");
-	top2[1].favoritism += 4;
+	top2[1].favoritism += 6;
 
 	screen.createParagraph(top2[1].getName() + ", you are safe.");
 
@@ -455,8 +453,10 @@ function lsaLipSync() {
 
 	if (top2[0] == assassin) {
 		screen.createParagraph(top2[1].getName() + ", you're safe.");
+		top2[1].addToTrackRecord("WIN ");
 	} else {
 		screen.createParagraph(top2[1].getName() + ", thanks for participating.");
+		top2[0].addToTrackRecord("WIN");
 	}
 
 	allQueens.splice(allQueens.indexOf(assassin), 1);

@@ -223,7 +223,11 @@ function contestantProgress() {
 	else
 		winnerQueen = finalLS[0];
 	
-	name.innerHTML = winnerQueen.getName().split(" ")[0];
+	if ( winnerQueen.getName().split(" ").length == 2)
+		name.innerHTML = winnerQueen.getName().split(" ")[0] + " " + winnerQueen.getName().split(" ")[1];
+	else
+		name.innerHTML = winnerQueen.getName().split(" ")[0];
+
 	winner.appendChild(name);
 
 	for (let i = 0; i < winnerQueen.trackRecord.length; i++) {
@@ -248,6 +252,14 @@ function contestantProgress() {
 			placement.setAttribute("style", "font-weight: bold; background-color: silver;");
 		} else if (placement.innerHTML == "ELIMINATED") {
 			placement.setAttribute("style", "font-weight: bold; background-color: sienna;");
+		} else if (placement.innerHTML == "") {
+			placement.setAttribute("style", "background-color: gray");
+		} else if (placement.innerHTML == "WIN ") {
+			placement.setAttribute("style", "background-color: yellow;");
+		} else if (placement.innerHTML == "SAFE") {
+			placement.setAttribute("style", "background-color: white;");
+		} else if (placement.innerHTML == " WIN") {
+			placement.setAttribute("style", "font-weight: bold; background-color: darkblue; color: white;");
 		}
 		
 		winner.appendChild(placement);
@@ -260,8 +272,11 @@ function contestantProgress() {
 
 		let name = document.createElement("td");
 		name.setAttribute("style", "font-weight: bold;");
-		name.innerHTML = eliminatedCast[i].getName().split(" ")[0];
-
+		if (eliminatedCast[i].getName().split(" ").length == 2)
+			name.innerHTML = eliminatedCast[i].getName().split(" ")[0] + " " + eliminatedCast[i].getName().split(" ")[1];
+		else 
+			name.innerHTML = eliminatedCast[i].getName().split(" ")[0];
+	
 		contestant.appendChild(name);
 
 		for (let k = 0; k < eliminatedCast[i].trackRecord.length; k++) {
@@ -286,8 +301,15 @@ function contestantProgress() {
 				placement.setAttribute("style", "font-weight: bold; background-color: silver;");
 			} else if (placement.innerHTML == "ELIMINATED") {
 				placement.setAttribute("style", "font-weight: bold; background-color: sienna;");
+			} else if (placement.innerHTML == "") {
+				placement.setAttribute("style", "background-color: gray"); 
+			} else if (placement.innerHTML == "WIN ") {
+				placement.setAttribute("style", "background-color: yellow;");
+			} else if (placement.innerHTML == "SAFE") {
+				placement.setAttribute("style", "background-color: white;");
+			} else if (placement.innerHTML == " WIN") {
+				placement.setAttribute("style", "font-weight: bold; background-color: darkblue; color: white;");
 			}
-			
 			contestant.appendChild(placement);
 		}
 	
@@ -296,5 +318,7 @@ function contestantProgress() {
 
 	main!.appendChild(trackRecords);
 
-	screen.createButton("Simulate again!", "location.reload()");
+	screen.createButton("Simulate again!", "reSimulate()");
+	screen.createHorizontalLine();
+	screen.createButton("Back to main page", "location.reload()");
 }

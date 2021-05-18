@@ -52,11 +52,11 @@ class MiniChallenge implements Challenge {
 }
 
 //challenge modifiers:
-var actingChallengeCounter: number = 0;
-var comedyChallengeCounter: number = 0;
-var danceChallengeCounter: number = 0;
-var designChallengeCounter: number = 0;
-var improvChallengeCounter: number = 0;
+let actingChallengeCounter: number = 0;
+let comedyChallengeCounter: number = 0;
+let danceChallengeCounter: number = 0;
+let designChallengeCounter: number = 0;
+let improvChallengeCounter: number = 0;
 
 var isDesignChallenge: boolean = false;
 
@@ -614,7 +614,7 @@ function runway(): void {
         }
         else {
             runwayScreen.createParagraph(currentCast[i].getName() + " had a bad runway...");
-            currentCast[i].runwayScore = -5;
+            currentCast[i].runwayScore = -3;
         }
     }
     if (currentCast.length > 4)
@@ -630,10 +630,8 @@ function runway(): void {
 //helper functions
 
 function createChallenge(challenges: Array<string>, miniChallengeScreen: Scene): void {
-    //check conditions for special challenges:
-
     //first design challenge for normal seasons
-    if (currentCast.length == totalCastSize && top3 || currentCast.length == totalCastSize && top4)
+    if (currentCast.length == totalCastSize && top3 || currentCast.length == totalCastSize && top4 || sweatshop)
         miniChallengeScreen.createButton("Proceed", "designChallenge()")
     //talent show for all stars
     else if (currentCast.length == totalCastSize && (all_stars || lipsync_assassin))
@@ -651,7 +649,7 @@ function createChallenge(challenges: Array<string>, miniChallengeScreen: Scene):
     else if (currentCast.length > 6 && randomNumber(0, 20) == 20 && !rusicalCounter)
         miniChallengeScreen.createButton("Proceed", "rusical()");
     //makeover
-    else if (currentCast.length == 6 && randomNumber(0, 15) == 15)
+    else if (currentCast.length == 6 && (top3 || top4) || currentCast.length == 6 && randomNumber(0, 15) == 15 && (all_stars || lipsync_assassin))
         miniChallengeScreen.createButton("Proceed", "designChallenge()");
     //rumix
     else if (currentCast.length == 5 && top4)

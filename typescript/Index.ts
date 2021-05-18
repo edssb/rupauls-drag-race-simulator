@@ -66,7 +66,11 @@ function predefCast(cast: Array<Queen>, format: string) {
     newEpisode();
 }
 
-function startSimulation() {
+function startSimulation(challenge: string = "") {
+    //set challenge seasons
+    if (challenge == "sweatshop")
+        sweatshop = true;
+
     //get selected names and compare them to the all queens list:
     for (let i = 0; i < document.getElementsByClassName("queenList").length; i++) {
         let select: HTMLSelectElement = (<HTMLSelectElement>document.getElementById(i.toString()));

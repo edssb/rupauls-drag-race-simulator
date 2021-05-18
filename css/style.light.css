@@ -9,8 +9,8 @@ html {
 }
 
 body {
-    background-color: #78A2CC;
-    background-image: linear-gradient(to bottom right, #78A2CC, #88AED0, #96B9D0);
+    background-color: #4d759e;
+    background-image: linear-gradient(to bottom right, #4d759e, #607e9c, #72869b);
     height: 100%;
     margin: 0;
     background-repeat: 0;
@@ -20,11 +20,12 @@ body {
 #MainBlock {
     text-align: center;
     margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.877);
+    background-color: rgba(255, 255, 255, 0.726);
     border-radius: 20px;
-    box-shadow: 5px 5px 15px #65829e91;
-    width: 800px;
+    box-shadow: 10px 10px 20px #00000091;
+    width: 900px;
     padding: 5px;
+    margin-top: 15px;
 }
 
 h1 {
@@ -52,4 +53,8 @@ table, th, td, tr {
     border-collapse: collapse;
     text-align: center;
     padding: 3px;
+}
+
+#inblock {
+    color: #4d759e;
 }

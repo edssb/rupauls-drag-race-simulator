@@ -9,6 +9,7 @@ All notable changes to the simulator will be documented here!
 - Custom and challenge modes added.
     - Only two challenge seasons added though. Suggestions welcome.
 - Drag Race Canada's Cast added to predefinitions and cast selection.
+- Cast selection now sorts all queens alphabetically.
 - Added button to re-do the season.
 
 ### Fixed
