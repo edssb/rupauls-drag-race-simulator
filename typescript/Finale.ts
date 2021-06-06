@@ -193,9 +193,9 @@ function contestantProgress() {
 
 	let trackRecords = document.createElement("table");
 
-	if (totalCastSize >= 15 && totalCastSize < 17)
+	if (totalCastSize >= 12 && totalCastSize < 15)
 		trackRecords.setAttribute("style", "font-size: 85%;")
-	if (totalCastSize >= 17)
+	if (totalCastSize >= 15)
 		trackRecords.setAttribute("style", "font-size: 75%")
 
 	let header = document.createElement("tr");
@@ -223,10 +223,7 @@ function contestantProgress() {
 	else
 		winnerQueen = finalLS[0];
 	
-	if ( winnerQueen.getName().split(" ").length > 2)
-		name.innerHTML = winnerQueen.getName().split(" ")[0] + " " + winnerQueen.getName().split(" ")[1];
-	else
-		name.innerHTML = winnerQueen.getName().split(" ")[0];
+	name.innerHTML = winnerQueen.getName();
 
 	winner.appendChild(name);
 
@@ -242,7 +239,7 @@ function contestantProgress() {
 			placement.setAttribute("style", "background-color: pink;");
 		} else if (placement.innerHTML == "HIGH") {
 			placement.setAttribute("style", "background-color: lightblue;");
-		} else if (placement.innerHTML == "BTM2" || placement.innerHTML ==  "BTM3" || placement.innerHTML == "BTM4") {
+		} else if (placement.innerHTML == "BTM2" || placement.innerHTML ==  "BTM3" || placement.innerHTML == "BTM4" || placement.innerHTML == "BTM5") {
 			placement.setAttribute("style", "background-color: tomato;");
 		} else if (placement.innerHTML == "ELIM") {
 			placement.setAttribute("style", "font-weight: bold; background-color: red;");
@@ -255,11 +252,15 @@ function contestantProgress() {
 		} else if (placement.innerHTML == "") {
 			placement.setAttribute("style", "background-color: gray");
 		} else if (placement.innerHTML == "WIN ") {
-			placement.setAttribute("style", "background-color: yellow;");
+			placement.setAttribute("style", "font-weight: bold; background-color: cyan;");
 		} else if (placement.innerHTML == "SAFE") {
 			placement.setAttribute("style", "background-color: white;");
 		} else if (placement.innerHTML == " WIN") {
 			placement.setAttribute("style", "font-weight: bold; background-color: darkblue; color: white;");
+		} else if (placement.innerHTML == "DISQ") {
+			placement.setAttribute("style", "font-weight: bold; background-color: black; color: white;");
+		} else if (placement.innerHTML == "RTRN") {
+			placement.setAttribute("style", "font-weight: bold; background-color: orange;");
 		}
 		
 		winner.appendChild(placement);
@@ -272,10 +273,8 @@ function contestantProgress() {
 
 		let name = document.createElement("td");
 		name.setAttribute("style", "font-weight: bold;");
-		if (eliminatedCast[i].getName().split(" ").length > 2)
-			name.innerHTML = eliminatedCast[i].getName().split(" ")[0] + " " + eliminatedCast[i].getName().split(" ")[1];
-		else 
-			name.innerHTML = eliminatedCast[i].getName().split(" ")[0];
+		
+		name.innerHTML = eliminatedCast[i].getName();
 	
 		contestant.appendChild(name);
 
@@ -291,7 +290,7 @@ function contestantProgress() {
 				placement.setAttribute("style", "background-color: pink;");
 			} else if (placement.innerHTML == "HIGH") {
 				placement.setAttribute("style", "background-color: lightblue;");
-			} else if (placement.innerHTML == "BTM2" || placement.innerHTML ==  "BTM3" || placement.innerHTML == "BTM4") {
+			} else if (placement.innerHTML == "BTM2" || placement.innerHTML ==  "BTM3" || placement.innerHTML == "BTM4" || placement.innerHTML == "BTM5") {
 				placement.setAttribute("style", "background-color: tomato;");
 			} else if (placement.innerHTML == "ELIM") {
 				placement.setAttribute("style", "font-weight: bold; background-color: red;");
@@ -304,11 +303,15 @@ function contestantProgress() {
 			} else if (placement.innerHTML == "") {
 				placement.setAttribute("style", "background-color: gray"); 
 			} else if (placement.innerHTML == "WIN ") {
-				placement.setAttribute("style", "background-color: yellow;");
+				placement.setAttribute("style", "font-weight: bold; background-color: cyan;");
 			} else if (placement.innerHTML == "SAFE") {
 				placement.setAttribute("style", "background-color: white;");
 			} else if (placement.innerHTML == " WIN") {
 				placement.setAttribute("style", "font-weight: bold; background-color: darkblue; color: white;");
+			} else if (placement.innerHTML == "DISQ") {
+				placement.setAttribute("style", "font-weight: bold; background-color: black; color: white;");
+			} else if (placement.innerHTML == "RTRN") {
+				placement.setAttribute("style", "font-weight: bold; background-color: orange;");
 			}
 			contestant.appendChild(placement);
 		}

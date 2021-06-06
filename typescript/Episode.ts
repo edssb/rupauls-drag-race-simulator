@@ -11,7 +11,19 @@ let doubleSashay = false;
 
 let episodeChallenges: Array<string> = [];
 
-let fastMode: boolean = false;
+let returningQueen: boolean = false;
+
+let noDouble: boolean = false;
+let noReturn: boolean = false;
+
+let s6Premiere: boolean = false;
+let s12Premiere: boolean = false;
+
+let firstPremiere: boolean = false;
+let secondPremiere: boolean = false;
+
+let firstPremiereCast: Array<Queen> = [];
+let secondPremiereCast: Array<Queen> = [];
 
 //challenge seasons
 let sweatshop: boolean = false;
@@ -31,8 +43,9 @@ function newEpisode() {
     for (let i = 0; i < currentCast.length; i++) {
         queensRemainingScreen.createBold(currentCast[i].getName());
     }
+
     if (currentCast.length > 4)
-    queensRemainingScreen.createButton("Proceed", "miniChallenge()");
+        queensRemainingScreen.createButton("Proceed", "miniChallenge()");
     else if (currentCast.length == 4 && (top3 || lipsync_assassin))
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");
     else if (currentCast.length == 4 && top4)
@@ -69,6 +82,7 @@ function reSimulate() {
         currentCast[i].favoritism = 0;
         currentCast[i].unfavoritism = 0;
         currentCast[i].finaleScore = 0;
+        currentCast[i].votes = 0;
     }
     //clean challenges
     episodeChallenges = [];
@@ -79,6 +93,8 @@ function reSimulate() {
     improvChallengeCounter = 0;
     rusicalCounter = false;
     ballCounter = false;
+    doubleShantay = false;
+    doubleSashay = false;
 
     newEpisode();
 }

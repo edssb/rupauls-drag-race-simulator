@@ -55,6 +55,7 @@ function customStartSimulation() {
     currentCast = customCast;
 
     let select = (<HTMLSelectElement>document.getElementById("format"));
+    let select2 = (<HTMLSelectElement>document.getElementById("premiere-format"));
 
         if (select.options[select.selectedIndex].value == "top3")
             top3 = true;
@@ -67,6 +68,16 @@ function customStartSimulation() {
             allQueens = allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 8});
             allQueens = allQueens.filter(function (queen) {return currentCast.indexOf(queen) == -1});
         }
+
+        if (select2.options[select2.selectedIndex].value == "s6-premiere")
+            s6Premiere = true;
+        else if (select2.options[select2.selectedIndex].value == "s12-premiere")
+            s12Premiere = true;
+
+        if ((<HTMLInputElement>document.getElementById("disableDouble")).checked == true)
+            noDouble = true;
+        if ((<HTMLInputElement>document.getElementById("disableReturn")).checked == true)
+            noReturn = true;
 
         if (currentCast.length == 3 && top4 || currentCast.length == 3 && all_stars)
             window.alert("Lip-Sync For The Crown and All Star formats needs at least 4 queens!");
