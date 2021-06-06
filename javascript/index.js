@@ -661,7 +661,7 @@ function customStartSimulation() {
     }
     currentCast = customCast;
     var select = document.getElementById("format");
-    var select2 = document.getElementById("premiere-format");
+    //let select2 = (<HTMLSelectElement>document.getElementById("premiere-format"));
     if (select.options[select.selectedIndex].value == "top3")
         top3 = true;
     else if (select.options[select.selectedIndex].value == "top4")
@@ -673,10 +673,10 @@ function customStartSimulation() {
         allQueens = allQueens.filter(function (queen) { return queen.getLipSyncStat() >= 8; });
         allQueens = allQueens.filter(function (queen) { return currentCast.indexOf(queen) == -1; });
     }
-    if (select2.options[select2.selectedIndex].value == "s6-premiere")
+    /*if (select2.options[select2.selectedIndex].value == "s6-premiere")
         s6Premiere = true;
     else if (select2.options[select2.selectedIndex].value == "s12-premiere")
-        s12Premiere = true;
+        s12Premiere = true;*/
     if (document.getElementById("disableDouble").checked == true)
         noDouble = true;
     if (document.getElementById("disableReturn").checked == true)
@@ -1130,7 +1130,7 @@ function startSimulation(challenge) {
         window.alert("Please, only use one of each queen on your cast!");
     else {
         var select = document.getElementById("format");
-        var select2 = document.getElementById("premiere-format");
+        //let select2 = (<HTMLSelectElement>document.getElementById("premiere-format"));
         if (select.options[select.selectedIndex].value == "top3")
             top3 = true;
         else if (select.options[select.selectedIndex].value == "top4")
@@ -1142,10 +1142,10 @@ function startSimulation(challenge) {
             allQueens = allQueens.filter(function (queen) { return queen.getLipSyncStat() >= 8; });
             allQueens = allQueens.filter(function (queen) { return currentCast.indexOf(queen) == -1; });
         }
-        if (select2.options[select2.selectedIndex].value == "s6-premiere")
+        /*if (select2.options[select2.selectedIndex].value == "s6-premiere")
             s6Premiere = true;
         else if (select2.options[select2.selectedIndex].value == "s12-premiere")
-            s12Premiere = true;
+            s12Premiere = true;*/
         if (document.getElementById("disableDouble").checked == true)
             noDouble = true;
         if (document.getElementById("disableReturn").checked == true)
