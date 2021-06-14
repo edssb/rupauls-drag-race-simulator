@@ -53,6 +53,7 @@ function customStartSimulation() {
     }
 
     currentCast = customCast;
+    totalCastSize = currentCast.length;
 
     let select = (<HTMLSelectElement>document.getElementById("format"));
     //let select2 = (<HTMLSelectElement>document.getElementById("premiere-format"));

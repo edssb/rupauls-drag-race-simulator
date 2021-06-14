@@ -1,6 +1,6 @@
 //checa por retornantes:
 function CheckForReturning(): boolean {
-    if (eliminatedCast.length == 0)
+    if (eliminatedCast.length == 0 || currentCast.length  != totalCastSize - 3)
         return false;
     
     if (doubleSashay == false) {
@@ -43,8 +43,6 @@ function queenReturns() {
     let queen = eliminatedCast[(randomNumber(0, eliminatedCast.length - 1))];
 
     currentCast.push(queen);
-    queen.trackRecord.pop();
-    queen.addToTrackRecord("RTRN");
     eliminatedCast.splice(eliminatedCast.indexOf(queen), 1);
 
     screen.createBold(queen.getName());
@@ -75,7 +73,5 @@ function queenReturnsVote() {
     screen.createBold(`${queen.getName()} returns to the competition!`);
 
     currentCast.push(queen);
-    queen.trackRecord.pop();
-    queen.addToTrackRecord("RTRN");
     eliminatedCast.splice(eliminatedCast.indexOf(queen), 1);
 }

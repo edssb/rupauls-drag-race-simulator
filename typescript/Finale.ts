@@ -35,6 +35,7 @@ function finaleLipSyncs() {
 
 	screen.createHeader("The Lip-Syncs...");
 	screen.createParagraph(firstLS[0].getName() + " and " + firstLS[1].getName() + " lip-sync...");
+	lsSong();
 
 	for (let i = 0; i < firstLS.length; i++) {
 		firstLS[i].getLipsync();
@@ -52,6 +53,7 @@ function finaleLipSyncs() {
 	screen.createHorizontalLine();
 
 	screen.createParagraph(secondLS[0].getName() + " and " + secondLS[1].getName() + " lip-sync...");
+	lsSong();
 
 	for (let i = 0; i < secondLS.length; i++) {
 		secondLS[i].getASLipsync();
@@ -75,6 +77,7 @@ function finalLipSync() {
 
 	screen.createHeader("The end...");
 	screen.createBold(finalLS[0].getName() + " and " + finalLS[1].getName() + " will lip-sync for the crown...!");
+	lsSong();
 	screen.createHorizontalLine();
 	screen.createBold("Ladies, I've made my decision. The Next Drag Superstar is...");
 
@@ -126,6 +129,7 @@ function finaleJudging() {
 	screen.createHorizontalLine();
 
 	screen.createBold(currentCast[0].getName() + " and " + currentCast[1].getName() + ", this is your last chance to prove yourself. It's time for you to lipsync.. for the CROWN!!");
+	lsSong();
 	screen.createButton("Proceed", "finaleFinale()");
 }
 
@@ -180,6 +184,7 @@ function finaleASJudging() {
 	screen.createHorizontalLine();
 
 	screen.createBold(currentCast[0].getName() + ", " + currentCast[1].getName() + ", " + currentCast[2].getName() + ", this is your last chance to prove yourself. It's time for you to lipsync.. for the CROWN!!");
+	lsSong();
 	screen.createButton("Proceed", "finaleFinale()");
 
 }

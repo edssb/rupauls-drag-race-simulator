@@ -2,6 +2,24 @@
 
 All notable changes to the simulator will be documented here!
 
+## Version 0.9.3-1 - 2021-06-14
+
+### Added
+
+- Added Drag Race Holland's and both of Drag Race Thailand's cast.
+- Added lip-sync song flavor text in lip-syncs.
+
+### Fixed
+
+- Fixed special challenges not happening on custom seasons.
+- ACTUALLY fixed special challenges happening twice due to a double shantay.
+- Fixed the lip-sync assassins pool not resetting after simulating a season again.
+- Double sashays should be less common
+- Queens should now only return after the third competitive episode
+- Removed the RTRN tile on track record sheets
+
+#
+
 ## Version 0.9.3 - 2021-06-06
 
 ### Added

@@ -60,6 +60,7 @@ var improvChallengeCounter = 0;
 var isDesignChallenge = false;
 var rusicalCounter = false;
 var ballCounter = false;
+var makeoverCounter = false;
 var lastChallenge = '';
 function miniChallenge() {
     var miniChallengeScreen = new Scene();
@@ -229,8 +230,10 @@ var DesignChallenge = /** @class */ (function () {
             desc1[desc1["winter items."] = 7] = "winter items.";
             desc1[desc1["summer items."] = 8] = "summer items.";
         })(desc1 || (desc1 = {}));
-        if (currentCast.length == 6)
+        if (currentCast.length == 6) {
             description.innerHTML = "It's the makeover challenge! The queens will make everyday people their drag sisters!";
+            makeoverCounter = true;
+        }
         else
             description.innerHTML = "The queens will do outfits with " + desc1[randomNumber(0, 8)];
     };
@@ -593,7 +596,7 @@ function createChallenge(challenges, miniChallengeScreen) {
     else if (currentCast.length > 6 && randomNumber(0, 20) == 20 && !rusicalCounter)
         miniChallengeScreen.createButton("Proceed", "rusical()");
     //makeover
-    else if (currentCast.length == 6 && (top3 || top4) || currentCast.length == 6 && randomNumber(0, 15) == 15 && (all_stars || lipsync_assassin))
+    else if (currentCast.length == 6 && (top3 || top4) || currentCast.length == 6 && randomNumber(0, 15) == 15 && (all_stars || lipsync_assassin) && makeoverCounter == false)
         miniChallengeScreen.createButton("Proceed", "designChallenge()");
     //rumix
     else if (currentCast.length == 5 && top4)
@@ -660,6 +663,7 @@ function customStartSimulation() {
         return;
     }
     currentCast = customCast;
+    totalCastSize = currentCast.length;
     var select = document.getElementById("format");
     //let select2 = (<HTMLSelectElement>document.getElementById("premiere-format"));
     if (select.options[select.selectedIndex].value == "top3")
@@ -764,6 +768,9 @@ function reSimulate() {
     ballCounter = false;
     doubleShantay = false;
     doubleSashay = false;
+    //refill lip-sync songs and lsa
+    lsSongs = allLsSongs;
+    allQueens = allQueensCopy;
     newEpisode();
 }
 var firstLS = [];
@@ -795,6 +802,7 @@ function finaleLipSyncs() {
     screen.clean();
     screen.createHeader("The Lip-Syncs...");
     screen.createParagraph(firstLS[0].getName() + " and " + firstLS[1].getName() + " lip-sync...");
+    lsSong();
     for (var i = 0; i < firstLS.length; i++) {
         firstLS[i].getLipsync();
     }
@@ -806,6 +814,7 @@ function finaleLipSyncs() {
     screen.createBold(firstLS[1].getName() + ", sashay away...");
     screen.createHorizontalLine();
     screen.createParagraph(secondLS[0].getName() + " and " + secondLS[1].getName() + " lip-sync...");
+    lsSong();
     for (var i = 0; i < secondLS.length; i++) {
         secondLS[i].getASLipsync();
     }
@@ -822,6 +831,7 @@ function finalLipSync() {
     screen.clean();
     screen.createHeader("The end...");
     screen.createBold(finalLS[0].getName() + " and " + finalLS[1].getName() + " will lip-sync for the crown...!");
+    lsSong();
     screen.createHorizontalLine();
     screen.createBold("Ladies, I've made my decision. The Next Drag Superstar is...");
     for (var i = 0; i < finalLS.length; i++)
@@ -863,6 +873,7 @@ function finaleJudging() {
     currentCast.splice(2, 1);
     screen.createHorizontalLine();
     screen.createBold(currentCast[0].getName() + " and " + currentCast[1].getName() + ", this is your last chance to prove yourself. It's time for you to lipsync.. for the CROWN!!");
+    lsSong();
     screen.createButton("Proceed", "finaleFinale()");
 }
 function finaleFinale() {
@@ -907,6 +918,7 @@ function finaleASJudging() {
     currentCast.splice(3, 1);
     screen.createHorizontalLine();
     screen.createBold(currentCast[0].getName() + ", " + currentCast[1].getName() + ", " + currentCast[2].getName() + ", this is your last chance to prove yourself. It's time for you to lipsync.. for the CROWN!!");
+    lsSong();
     screen.createButton("Proceed", "finaleFinale()");
 }
 function contestantProgress() {
@@ -1053,6 +1065,11 @@ function contestantProgress() {
     screen.createHorizontalLine();
     screen.createButton("Back to main page", "location.reload()");
 }
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
 var totalCastSize;
 function randomNumber(min, max) {
     var randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -1141,6 +1158,7 @@ function startSimulation(challenge) {
             lipsync_assassin = true;
             allQueens = allQueens.filter(function (queen) { return queen.getLipSyncStat() >= 8; });
             allQueens = allQueens.filter(function (queen) { return currentCast.indexOf(queen) == -1; });
+            allQueensCopy = __spreadArray([], allQueens);
         }
         /*if (select2.options[select2.selectedIndex].value == "s6-premiere")
             s6Premiere = true;
@@ -1152,8 +1170,9 @@ function startSimulation(challenge) {
             noReturn = true;
         if (currentCast.length == 3 && top4 || currentCast.length == 3 && all_stars)
             window.alert("Lip-Sync For The Crown and All Star formats needs at least 4 queens!");
-        else
+        else {
             newEpisode();
+        }
     }
 }
 //see if there is two of the same queens:
@@ -1461,11 +1480,12 @@ function lipSync() {
     screen.clean();
     screen.createHeader("It's time...");
     screen.createBold("For you to lip-sync... for your lives! Good luck, and don't fuck it up.");
+    lsSong();
     screen.createHorizontalLine();
     screen.createBold("I've made my decision.");
     var score1 = bottomQueens[0].lipsyncScore - bottomQueens[0].favoritism + bottomQueens[0].unfavoritism;
     var score2 = bottomQueens[1].lipsyncScore - bottomQueens[0].favoritism + bottomQueens[0].unfavoritism;
-    if (score1 > 7 && score2 > 7 && randomNumber(0, 100) <= 50 && !doubleShantay && noDouble == false) {
+    if (score1 > 7 && score2 > 7 && randomNumber(0, 100) <= 50 && !doubleShantay && noDouble == false && currentCast.length > 5) {
         screen.createBold("Condragulations, shantay you both stay!!");
         bottomQueens[0].addToTrackRecord("BTM2");
         bottomQueens[0].unfavoritism += 5;
@@ -1473,7 +1493,7 @@ function lipSync() {
         bottomQueens[1].unfavoritism += 5;
         doubleShantay = true;
     }
-    else if (score1 < 5 && score2 < 5 && randomNumber(0, 100) <= 10 && !doubleSashay && currentCast.length > 5 && noDouble == false) {
+    else if (score1 < 4 && score2 < 4 && randomNumber(0, 100) <= 10 && !doubleSashay && currentCast.length > 5 && noDouble == false) {
         screen.createBold("I'm sorry but none of you showed the fire it takes to stay. You must both... sashay away.");
         doubleSashay = true;
         bottomQueens[0].addToTrackRecord("ELIM");
@@ -1518,6 +1538,7 @@ function asLipSync() {
     screen.clean();
     screen.createHeader("It's time...");
     screen.createBold("For you to lip-sync... for your legacy! Good luck, and don't fuck it up.");
+    lsSong();
     screen.createHorizontalLine();
     screen.createBold("Ladies, I've made my decision...");
     top2[0].favoritism += 5;
@@ -1553,6 +1574,7 @@ function lsaLipSync() {
     top2.push(assassin);
     screen.createBold("The lip-sync assassin is... " + assassin.getName() + "!");
     screen.createParagraph("Now, it's time for you to lip-sync... for your legacy!");
+    lsSong();
     screen.createHorizontalLine();
     for (var i = 0; i < top2.length; i++) {
         top2[i].getASLipsync();
@@ -1911,6 +1933,49 @@ var rita = new Queen("Rita Baga", 10, 9, 5, 10, 9, 12, 13);
 var bobo = new Queen("Scarlett BoBo", 9, 9, 9, 9, 9, 10, 12);
 var tynomi = new Queen("Tynomi Banks", 5, 7, 7, 8, 5, 9, 12);
 var can_season1 = [anastarzia, boa, ilona, jimbo, juice, kiara, kyne, lemon, priyanka, rita, bobo, tynomi];
+//DRAG RACE HOLLAND
+var chelsea = new Queen("Chelsea Boy", 8, 9, 6, 9, 9, 11, 5);
+var envy = new Queen("Envy Peru", 10, 10, 9, 10, 9, 13, 12);
+var janey = new Queen("Janey Jacké", 7, 8, 7, 11, 9, 12, 9);
+var madamem = new Queen("Madame Madness", 6, 6, 6, 8, 5, 8, 7);
+var mama = new Queen("Ma'Ma Queen", 7, 7, 5, 6, 8, 10, 7);
+var megan = new Queen("Megan Schoonbrood", 7, 8, 7, 5, 6, 9, 11);
+var abby = new Queen("Miss Abby OMG", 9, 8, 12, 8, 7, 8, 11);
+var patty = new Queen("Patty Pam-Pam", 8, 6, 6, 8, 8, 9, 7);
+var roem = new Queen("Roem", 8, 8, 5, 5, 7, 6, 5);
+var sederginne = new Queen("Sederginne", 8, 6, 6, 10, 7, 13, 5);
+var hol_season1 = [chelsea, envy, janey, madamem, mama, megan, abby, patty, roem, sederginne];
+//DRT SEASON 1
+var amadiva = new Queen("Amadiva", 9, 6, 7, 9, 3, 13, 6);
+var annee = new Queen("Anneé Maywong", 9, 9, 7, 13, 4, 14, 9);
+var b = new Queen("B Ella", 7, 9, 6, 8, 11, 7, 7);
+var bunny = new Queen("Bunny Be Fly", 7, 5, 5, 8, 5, 8, 6);
+var dearis = new Queen("Dearis Doll", 7, 7, 7, 10, 10, 11, 10);
+var jaja = new Queen("JAJA", 8, 6, 7, 9, 5, 11, 9);
+var meannie = new Queen("Meannie Minaj", 7, 5, 5, 6, 5, 5, 5);
+var morrigan = new Queen("Morrigan", 5, 6, 7, 5, 7, 7, 7);
+var natalia = new Queen("Natalia Pliacam", 9, 9, 7, 13, 9, 14, 12);
+var petchra = new Queen("Petchra", 7, 7, 6, 7, 8, 7, 9);
+var drt_season1 = [amadiva, annee, b, bunny, dearis, jaja, meannie, morrigan, natalia, petchra];
+//DRT SEASON 2
+var angele = new Queen("Angele Anang", 9, 9, 9, 12, 8, 14, 10);
+var bandit = new Queen("Bandit", 7, 7, 7, 10, 6, 14, 9);
+var genie = new Queen("Genie", 9, 8, 9, 9, 7, 9, 8);
+var kana = new Queen("Kana Warrior", 8, 8, 8, 7, 7, 9, 13);
+var kandyz = new Queen("Kandy Zyanide", 9, 9, 9, 9, 9, 12, 7);
+var katy = new Queen("Katy Killer", 7, 8, 7, 8, 7, 10, 8);
+var m = new Queen("M Stranger Fox", 5, 6, 5, 6, 6, 8, 8);
+var maya = new Queen("Maya B'haro", 9, 8, 6, 9, 9, 10, 7);
+var mocha = new Queen("Mocha Diva", 9, 9, 6, 10, 9, 7, 9);
+var gimhuay = new Queen("Miss Gimhuay", 8, 9, 7, 11, 10, 12, 8);
+var silver = new Queen("Silver Sonic", 5, 5, 7, 6, 7, 7, 8);
+var srimala = new Queen("Srimala", 7, 7, 8, 7, 8, 11, 12);
+var tormai = new Queen("Tormai", 8, 8, 7, 7, 6, 8, 9);
+var vanda = new Queen("Vanda Miss Joaquim", 9, 8, 9, 7, 7, 11, 10);
+var drt_season2 = [angele, bandit, genie, kana, kandyz, katy, m, maya, mocha, gimhuay, silver, srimala, tormai, vanda];
+//SPECIAL
+var pangina = new Queen("Pangina Heals", 10, 10, 9, 12, 9, 13, 11);
+var international_as = [baga, blu, cheryl, janey, jimbo, jujubee, lemon, monique, pangina];
 //all possible queens:
 var allQueens = [
     akashia, bebe, jade, ninaf, ongina, rebecca, shannel, tammie, victoria,
@@ -1928,16 +1993,16 @@ var allQueens = [
     denali, elliott, mik, joey, kahmora, kandym, lala, olivia, rose, symone, tamisha, tina, utica,
     baga, blu, cheryl, crystaluk, divina, gothy, scaredy, sumting, viv, vinegar,
     awhora, asttina, bimini, cherry, ellie, ginny, joe, lawrence, sister, tayce, tia, veronica,
-    anastarzia, boa, ilona, jimbo, juice, kiara, kyne, lemon, priyanka, rita, bobo, tynomi
+    anastarzia, boa, ilona, jimbo, juice, kiara, kyne, lemon, priyanka, rita, bobo, tynomi,
+    chelsea, envy, janey, madamem, mama, megan, abby, patty, roem, sederginne,
+    amadiva, annee, b, bunny, dearis, jaja, meannie, morrigan, natalia, petchra,
+    angele, bandit, genie, kana, kandyz, katy, m, maya, mocha, gimhuay, silver, srimala, tormai, vanda,
+    pangina
 ].sort(function (a, b) { return a.getName().toLowerCase().localeCompare(b.getName().toLowerCase()); });
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
-};
+var allQueensCopy = [];
 //checa por retornantes:
 function CheckForReturning() {
-    if (eliminatedCast.length == 0)
+    if (eliminatedCast.length == 0 || currentCast.length != totalCastSize - 3)
         return false;
     if (doubleSashay == false) {
         if (randomNumber(0, 100) <= 5 && returningQueen == false) {
@@ -1969,8 +2034,6 @@ function queenReturns() {
     screen.createParagraph("I've decided that one of my queens have gone a bit too soon... I'd like to welcome back...");
     var queen = eliminatedCast[(randomNumber(0, eliminatedCast.length - 1))];
     currentCast.push(queen);
-    queen.trackRecord.pop();
-    queen.addToTrackRecord("RTRN");
     eliminatedCast.splice(eliminatedCast.indexOf(queen), 1);
     screen.createBold(queen.getName());
 }
@@ -1991,8 +2054,6 @@ function queenReturnsVote() {
     var queen = __spreadArray([], eliminatedCast).sort(function (a, b) { return b.votes - a.votes; })[0];
     screen.createBold(queen.getName() + " returns to the competition!");
     currentCast.push(queen);
-    queen.trackRecord.pop();
-    queen.addToTrackRecord("RTRN");
     eliminatedCast.splice(eliminatedCast.indexOf(queen), 1);
 }
 var Scene = /** @class */ (function () {
@@ -2042,3 +2103,291 @@ var Scene = /** @class */ (function () {
     };
     return Scene;
 }());
+function lsSong() {
+    var screen = new Scene();
+    var song = randomNumber(0, lsSongs.length - 1);
+    screen.createBold("The lip-sync song is... " + lsSongs[song] + "!");
+    lsSongs.splice(song, 1);
+}
+var allLsSongs = [
+    "Supermodel by RuPaul",
+    "We Break The Dawn by Michelle Williams",
+    "The Greatest Love Of All by Whitney Houstoun",
+    "Would I Lie to You by Eurythmics",
+    "Stronger by Britney Spears",
+    "Shackles (Praise You) by Mary Mary",
+    "Cover Girl (Put The Bass In Your Walk) by RuPaul",
+    "My Lovin' (You're Never Gonna Get It) by En Vogue",
+    "I Hear You Knocking by Wynnona Judd",
+    "Two of Hearts by Stacey Q",
+    "Carry On by Martha Wash",
+    "Black Velvet by Alannah Myles",
+    "He's The Greatest Dancer by Sister Sledge",
+    "Shake Your Love by Debbie Gibson",
+    "Something He Can Feel by Aretha Franklin",
+    "Jealous of My Boogie by RuPaul",
+    "The Right Stuff by Vanessa Williams",
+    "Bad Romance by Lady Gaga",
+    "Don't Leave Me This Way by Thelma Houston",
+    "Meeting in the Ladies Room by Klymaxx",
+    "Looking For A New Love by Jody Watley",
+    "Knock On Wood by Amii Stewart",
+    "MacArthur Park by Donna Summer",
+    "Hey Mickey by Toni Basil",
+    "Believe by Cher",
+    "Even Angels by Fantasia",
+    "Straight Up by Paula Abdul",
+    "I Think About You by Patti LaBelle",
+    "Champion by RuPaul",
+    "Toxic by Britney Spears",
+    "Bad Girls by Donna Summer",
+    "This Will Be (An Everlasting Love) by Natalie Cole",
+    "Trouble by P!nk",
+    "Vogue by Madonna",
+    "Born This Way by Lady Gaga",
+    "Mi Vida Loca by Pam Tillis",
+    "It's Raining Men (The Sequel) by Martha Wash and RuPaul",
+    "I've Got To Use My Imagination by Gladys Knight",
+    "(You Make Me Feel Like) A Natural Woman by Aretha Franklin",
+    "No One Else On Earth by Wynnona Judd",
+    "Glamazon by RuPaul",
+    "Party in the U.S.A by Miley Cyrus",
+    "Only Girl (In The World) by Rihanna",
+    "When I Grow Up by Pussycat Dolls",
+    "Oops!...I Did It Again by Britney Spears",
+    "Take Me Home by Cher",
+    "I'm So Excited by The Pointer Sisters",
+    "Whip My Hair by Willow Smith",
+    "Ain't Nothin' Going on but the Rent by Gwen Guthrie",
+    "Cold Hearted by Paula Abdul",
+    "(It Takes) Two To Make It Right by Seduction",
+    "Malambo No. 1 by Yma Sumac",
+    "The Beginning by RuPaul",
+    "Express Yourself by Madonna",
+    "Turn The Beat Around by Vicky Sue Robinson",
+    "Shake it Up by Selena Gomez",
+    "I'm Every Woman by Chaka Khan",
+    "Head to Toe by Lisa Lisa & Cult Jam",
+    "Whatta Man by Salt-n-Pepa feat. En Vogue",
+    "Point of No Return by Exposé",
+    "Stupid Girls by P!nk",
+    "Vibeology by Paula Abdul",
+    "Think by Aretha Franklin",
+    "Stronger (What Doesn't Kill You) by Kelly Clarkson",
+    "Sissy That Walk by RuPaul",
+    "Geronimo by RuPaul",
+    "Twist of Fate by Olivia Newton-John",
+    "I Was Gonna Cancel by Kylie Minogue",
+    "Dreaming by Blondie",
+    "Lovergirl by Teena Marie",
+    "Break Free by Ariana Grande",
+    "No More Lies by Michel'le",
+    "I Think We're Alone Now by Tiffany",
+    "Really Don't Care by Demi Lovato",
+    "Show Me Love by Robin S.",
+    "Roar by Katy Perry",
+    "Born Naked by RuPaul",
+    "Applause by Lady Gaga",
+    "I Will Survive by Gloria Gaynor",
+    "Mesmerized by Faith Evans",
+    "Call Me by Blondie",
+    "Causing A Commotion by Madonna",
+    "I Don't Care by Icona Pop",
+    "And I Am Telling You I'm Not Going by Jennifer Holliday",
+    "You Make Me Feel (Mighty Real) by Sylvester",
+    "The Realness by RuPaul",
+    "Love Shack by The B-52's",
+    "Holding Out For A Hero by Bonnie Tyler",
+    "I Wanna Go by Britney Spears",
+    "Woman Up by Meghan Trainor",
+    "Music by Madonna",
+    "Finally by Cece Peniston",
+    "Baby I'm Burnin' by Dolly Parton",
+    "Greedy by Ariana Grande",
+    "Cool For The Summer by Demi Lovato",
+    "Macho Man by The Village People",
+    "U Wear It Well by RuPaul",
+    "So Emotional by Whitney Houston",
+    "It's Not Right But It's Okay by Whitney Houston",
+    "Ain't No Other Man by Christina Aguilera",
+    "Best Of My Love by The Emotions",
+    "Celebrity Skin by Hole",
+    "Pound The Alarm by Nicki Minaj",
+    "Man! I Feel Like A Woman by Shania Twain",
+    "I'm Coming Out by Diana Ross",
+    "Cut To The Feeling by Carly Rae Jepsen",
+    "Groove Is In The Heart by Deee-Lite",
+    "New Attitude by Patti LaBelle",
+    "Good As Hell by Lizzo",
+    "Nasty Girl by Vanity 6",
+    "Call Me Mother by RuPaul",
+    "Nasty by Janet Jackson",
+    "If by Janet Jackson",
+    "Bang Bang by Jessie J, Ariana Grande and Nicki Minaj",
+    "Best of Both Worlds by Hannah Montana",
+    "Work Bitch by Britney Spears",
+    "Waiting For Tonight by Jennifer Lopez",
+    "Living in America by James Brown",
+    "I'm Your Baby Tonight by Whitney Houston",
+    "Last Dance by Donna Summer",
+    "Strut by Sheena Easton",
+    "Sorry Not Sorry by Demi Lovato",
+    "Hood Boy by Fantasia",
+    "No More Drama by Mary J. Blige",
+    "No Scrubs by TLC",
+    "Pride: A Deeper Love by Aretha Franklin",
+    "Bootylicious by Destiny's Child",
+    "SOS by Rihanna",
+    "The Edge of Glory by Lady Gaga",
+    "Starships by Nicki Minaj",
+    "Call Your Girlfriend by Robyn",
+    "Problem by Ariana Grande and Iggy Azalea",
+    "S&M by Rihanna",
+    "Heart to Break by Kim Petras",
+    "Let It Go by Caissie Levy",
+    "Burning Up by Madonna",
+    "This Is My Night by Chaka Khan",
+    "Firework by Katy Perry",
+    "Kill The Lights by Alex Newell",
+    "1999 by Prince",
+    "On The Floor by Jennifer Lopez and Pitbull",
+    "Bring Back My Girls by RuPaul",
+    "Survivor by Destiny's Child",
+    "Call Me Maybe by Carly Rae Jepsen",
+    "The Pleasure Principle by Janet Jackson",
+    "Rumors by Lindsay Lohan",
+    "Ex's & Oh's by Elle King",
+    "Lady Marmalade by Christina Aguilera, Lil' Kim, Mya & Pink",
+    "Break My Heart by Dua Lipa",
+    "If U Seek Amy by Britney Spears",
+    "100% Pure Love by Crystal Waters",
+    "Fancy by Iggy Azalea and Charli XCX",
+    "Hit 'Em Up Style (Oops!) by Blue Cantrell",
+    "Whole Lotta Woman by Kelly Clarkson",
+    "BO$$ by Fifth Harmony",
+    "Fascinated by Company B",
+    "My Humps by Black Eyed Peas",
+    "No Tears Left To Cry by Ariana Grande",
+    "Strong Enough by Cher",
+    "I Learned from the Best by Whitney Houston",
+    "Gimme More by Britney Spears",
+    "Till the World Ends by Britney Spears",
+    "Turn Me On by David Guetta and Nicki Minaj",
+    "Ignorance by Paramore",
+    "Tightrope by Janelle Monae",
+    "In The Next Life by Kim Petras",
+    "Dancing Queen by ABBA",
+    "Bring Me To Life by Evanescence",
+    "Sk8er Boi by Avril Lavigne",
+    "Kiss by Prince",
+    "Hung Up by Madonna",
+    "Cannibal by Kesha",
+    "Candyman by Christina Aguilera",
+    "Bohemian Rhapsody by Queen",
+    "Venus by Lady Gaga",
+    "Hair by Lady Gaga",
+    "Dancing Queen by ABBA",
+    "STFU by Rina Sawayama",
+    "HOT HOT by Bree Runway",
+    "I Can Love You by Mary J. Blige and Lil Kim",
+    "Superbass by Nicki Minaj",
+    "Can't Get You Out of My Head by Kylie Minogue",
+    "Misery Business by Paramore",
+    "The Promise by Girls Aloud",
+    "Star Love by Cheryl Lynn",
+    "Freeway of Love by Aretha Franklin",
+    "Tell It To My Heart by Taylor Dayne",
+    "Don't Rush Me by Taylor Dayne",
+    "Dirrty by Christina Aguilera",
+    "34+35 by Ariana Grande",
+    "Barbie Girl by Aqua",
+    "Va Va Voom by Nicki Minaj",
+    "Hallucinate by Dua Lipa",
+    "Bubblegum Bitch by MARINA",
+    "Boss Bitch by Doja Cat",
+    "Hopelessly Devote to You by Olivia Newton John",
+    "Your Disco Needs You by Kylie Minogue",
+    "Froot by MARINA",
+    "She Works Hard For The Money by Donna Summer",
+    "Supernova by Carly Rae Jepsen",
+    "Detention by Melanie Martinez",
+    "Complicated by Avril Lavigne",
+    "So What by P!nk",
+    "Good 4 U by Olivia Rodrigo",
+    "Take A Chance On Me by ABBA",
+    "Casanova by Allie X",
+    "TIk Tok by Kesha",
+    "Telefone by Lady Gaga ft. Beyoncé",
+    "Heart of Glass by Blondie",
+    "When I Think of You by Janet Jackson",
+    "Prisoner by Miley Cyrus (ft. Dua Lipa)",
+    "Homemade Dynamite by Lorde",
+    "claws by Charli XCX",
+    "NASA by Ariana Grande",
+    "Say So by Doja Cat",
+    "Captain Hook by Megan Thee Stallion",
+    "Pynk by Janelle Monaé (ft. Grimes)",
+    "Into the Groove by Madonna",
+    "Cool Girl by Tove Lo",
+    "Break The Ice by Britney Spears",
+    "Still Into You by Paramore",
+    "Vroom Vroom by Charlie XCX",
+    "XS by Rina Sawayama",
+    "Teenage Dream by Katy Perry",
+    "Unwritten by Natasha Bedingfield",
+    "Hollaback Girl by Gwen Stefani",
+    "Miss You Much by Janet Jackson",
+    "I Feel Love by Donna Summer",
+    "Don't Stop The Music by Rihanna",
+    "Love On The Brain by Rihanna",
+    "Valerie by Amy Winehouse",
+    "Killer Queen by Queen",
+    "Ribs by Lorde",
+    "Solar Power by Lorde",
+    "Jerome by Lizzo",
+    "Kinky by Kesha",
+    "G.U.Y by Lady Gaga",
+    "Waka Waka (This Time For Africa) by Shakira",
+    "Dangerous Woman by Ariana Grande",
+    "Whenever, Whenever by Shakira",
+    "Lowlife by Poppy",
+    "Conqueror by Estelle",
+    "Dynasty by Rina Sawayama",
+    "Fergalicious by Fergie",
+    "Meet Me Halfway by Black Eyed Peas",
+    "I Say A Little Prayer by Aretha Franklin",
+    "Aura by Lady Gaga",
+    "Now That You Got It by Gwen Stefani",
+    "Skyfall by Adele",
+    "Back To Black by Amy Winehouse",
+    "Tears Dry On Their Own by Amy Winehouse",
+    "Seven Wonders by Fleetwood Mac",
+    "Baby One More Time by Britney Spears",
+    "Naked by Ava Max",
+    "A Little Party Never Killed Nobody by Fergie",
+    "Tears by Clean Bandit",
+    "Work by Kelly Rowland",
+    "Say My Name by Tove Styrke",
+    "Do It by Chloe X Halle",
+    "Like A Virgin by Madonna",
+    "Chun Li by Nicki Minaj",
+    "ATM by Bree Runway",
+    "Star Love by Cheryl Lynn",
+    "Express by Christina Aguillera",
+    "Kill V. Main by Grimes",
+    "Taki Taki by DJ Snake (ft. Selena Gomez, Cardi B)",
+    "Black Cat by Janet Jackson",
+    "Tainted Love by Gloria Jones",
+    "Private Dancer by Tina Turner",
+    "Sweet Dreams by Beyoncé",
+    "Kiss Me More by Doja Cat (ft. SZA)",
+    "Take A Chance On Me by ABBA",
+    "Mine by Slayyyter",
+    "Baby One More Time by Britney Spears",
+    "Troubled Paradise by Slayyyter",
+    "Swine by Lady Gaga",
+    "Vacation by GRL",
+    "Alive by SIA",
+    "Now That I Found You by Carly Rae Jepsen",
+];
+var lsSongs = __spreadArray([], allLsSongs);

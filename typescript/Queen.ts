@@ -361,6 +361,58 @@ let bobo = new Queen("Scarlett BoBo", 9, 9, 9, 9, 9, 10, 12);
 let tynomi = new Queen("Tynomi Banks", 5, 7, 7, 8, 5, 9, 12);
 let can_season1 = [anastarzia, boa, ilona, jimbo, juice, kiara, kyne, lemon, priyanka, rita, bobo, tynomi];
 
+//DRAG RACE HOLLAND
+let chelsea = new Queen("Chelsea Boy", 8, 9, 6, 9, 9, 11, 5);
+let envy = new Queen("Envy Peru", 10, 10, 9, 10, 9, 13, 12);
+let janey = new Queen("Janey Jacké", 7, 8, 7, 11, 9, 12, 9);
+let madamem = new Queen("Madame Madness", 6, 6, 6, 8, 5, 8, 7);
+let mama = new Queen("Ma'Ma Queen", 7, 7, 5, 6, 8, 10, 7);
+let megan = new Queen("Megan Schoonbrood", 7, 8, 7, 5, 6, 9, 11);
+let abby = new Queen("Miss Abby OMG", 9, 8, 12, 8, 7, 8, 11);
+let patty = new Queen("Patty Pam-Pam", 8, 6, 6, 8, 8, 9, 7);
+let roem = new Queen("Roem", 8, 8, 5, 5, 7, 6, 5);
+let sederginne = new Queen("Sederginne", 8, 6, 6, 10, 7, 13, 5);
+
+let hol_season1 = [chelsea, envy, janey, madamem, mama, megan, abby, patty, roem, sederginne];
+
+//DRT SEASON 1
+let amadiva = new Queen("Amadiva", 9, 6, 7, 9, 3, 13, 6);
+let annee = new Queen("Anneé Maywong", 9, 9, 7, 13, 4, 14, 9);
+let b = new Queen("B Ella", 7, 9, 6, 8, 11, 7, 7);
+let bunny = new Queen("Bunny Be Fly", 7, 5, 5, 8, 5, 8, 6);
+let dearis = new Queen("Dearis Doll", 7, 7, 7, 10, 10, 11, 10);
+let jaja = new Queen("JAJA", 8, 6, 7, 9, 5, 11, 9);
+let meannie = new Queen("Meannie Minaj", 7, 5, 5, 6, 5, 5, 5);
+let morrigan = new Queen("Morrigan", 5, 6, 7, 5, 7, 7, 7);
+let natalia = new Queen("Natalia Pliacam", 9, 9, 7, 13, 9, 14, 12);
+let petchra = new Queen("Petchra", 7, 7, 6, 7, 8, 7, 9);
+
+let drt_season1 = [amadiva, annee, b, bunny, dearis, jaja, meannie, morrigan, natalia, petchra];
+
+//DRT SEASON 2
+let angele = new Queen("Angele Anang", 9, 9, 9, 12, 8, 14, 10);
+let bandit = new Queen("Bandit", 7, 7, 7, 10, 6, 14, 9);
+let genie = new Queen("Genie", 9, 8, 9, 9, 7, 9, 8);
+let kana = new Queen("Kana Warrior", 8, 8, 8, 7, 7, 9, 13);
+let kandyz = new Queen("Kandy Zyanide", 9, 9, 9, 9, 9, 12, 7);
+let katy = new Queen("Katy Killer", 7, 8, 7, 8, 7, 10, 8);
+let m = new Queen("M Stranger Fox", 5, 6, 5, 6, 6, 8, 8);
+let maya = new Queen("Maya B'haro", 9, 8, 6, 9, 9, 10, 7);
+let mocha = new Queen("Mocha Diva", 9, 9, 6, 10, 9, 7, 9);
+let gimhuay = new Queen("Miss Gimhuay", 8, 9, 7, 11, 10, 12, 8);
+let silver = new Queen("Silver Sonic", 5, 5, 7, 6, 7, 7, 8);
+let srimala = new Queen("Srimala", 7, 7, 8, 7, 8, 11, 12);
+let tormai = new Queen("Tormai", 8, 8, 7, 7, 6, 8, 9);
+let vanda = new Queen("Vanda Miss Joaquim", 9, 8, 9, 7, 7, 11, 10);
+
+let drt_season2 = [angele, bandit, genie, kana, kandyz, katy, m, maya, mocha, gimhuay, silver, srimala, tormai, vanda];
+
+//SPECIAL
+
+let pangina = new Queen("Pangina Heals", 10, 10, 9, 12, 9, 13, 11);
+
+let international_as = [baga, blu, cheryl, janey, jimbo, jujubee, lemon, monique, pangina];
+
 //all possible queens:
 let allQueens: Array<Queen> = [
 akashia, bebe, jade, ninaf, ongina, rebecca, shannel, tammie, victoria,
@@ -378,5 +430,11 @@ aiden, brita, crystal, dahlia, gigi, heidi, jackie, jaida, jan, nicky, rock, wid
 denali, elliott, mik, joey, kahmora, kandym, lala, olivia, rose, symone, tamisha, tina, utica,
 baga, blu, cheryl, crystaluk, divina, gothy, scaredy, sumting, viv, vinegar,
 awhora, asttina, bimini, cherry, ellie, ginny, joe, lawrence, sister, tayce, tia, veronica,
-anastarzia, boa, ilona, jimbo, juice, kiara, kyne, lemon, priyanka, rita, bobo, tynomi
+anastarzia, boa, ilona, jimbo, juice, kiara, kyne, lemon, priyanka, rita, bobo, tynomi,
+chelsea, envy, janey, madamem, mama, megan, abby, patty, roem, sederginne,
+amadiva, annee, b, bunny, dearis, jaja, meannie, morrigan, natalia, petchra,
+angele, bandit, genie, kana, kandyz, katy, m, maya, mocha, gimhuay, silver, srimala, tormai, vanda,
+pangina
 ].sort((a, b) => a.getName().toLowerCase().localeCompare(b.getName().toLowerCase()));
+
+let allQueensCopy: Array<Queen> = [];

@@ -375,6 +375,7 @@ function lipSync() {
 	screen.clean();
 	screen.createHeader("It's time...");
 	screen.createBold("For you to lip-sync... for your lives! Good luck, and don't fuck it up.");
+	lsSong();
 	screen.createHorizontalLine();
 
 	screen.createBold("I've made my decision.");
@@ -382,7 +383,7 @@ function lipSync() {
 	let score1 = bottomQueens[0].lipsyncScore - bottomQueens[0].favoritism + bottomQueens[0].unfavoritism;
 	let score2 = bottomQueens[1].lipsyncScore - bottomQueens[0].favoritism + bottomQueens[0].unfavoritism;
 
-	if (score1 > 7 && score2 > 7 && randomNumber(0, 100) <= 50 && !doubleShantay && noDouble == false){
+	if (score1 > 7 && score2 > 7 && randomNumber(0, 100) <= 50 && !doubleShantay && noDouble == false && currentCast.length > 5){
 		screen.createBold("Condragulations, shantay you both stay!!");
 		bottomQueens[0].addToTrackRecord("BTM2");
 		bottomQueens[0].unfavoritism += 5;
@@ -391,7 +392,7 @@ function lipSync() {
 		bottomQueens[1].unfavoritism += 5;
 
 		doubleShantay = true;
-	} else if (score1 < 5 && score2 < 5 && randomNumber(0, 100) <= 10 && !doubleSashay && currentCast.length > 5 && noDouble == false) {
+	} else if (score1 < 4 && score2 < 4 && randomNumber(0, 100) <= 10 && !doubleSashay && currentCast.length > 5 && noDouble == false) {
 		screen.createBold("I'm sorry but none of you showed the fire it takes to stay. You must both... sashay away.");
 		doubleSashay = true;
 
@@ -446,6 +447,7 @@ function asLipSync() {
 
 	screen.createHeader("It's time...");
 	screen.createBold("For you to lip-sync... for your legacy! Good luck, and don't fuck it up.");
+	lsSong();
 	screen.createHorizontalLine();
 	screen.createBold("Ladies, I've made my decision...");
 
@@ -494,6 +496,7 @@ function lsaLipSync() {
 
 	screen.createBold("The lip-sync assassin is... " + assassin.getName() + "!");
 	screen.createParagraph("Now, it's time for you to lip-sync... for your legacy!");
+	lsSong();
 	screen.createHorizontalLine();
 
 	for (let i = 0; i < top2.length; i++) {

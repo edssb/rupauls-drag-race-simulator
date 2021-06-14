@@ -96,5 +96,9 @@ function reSimulate() {
     doubleShantay = false;
     doubleSashay = false;
 
+    //refill lip-sync songs and lsa
+    lsSongs = allLsSongs;
+    allQueens = allQueensCopy;
+
     newEpisode();
 }

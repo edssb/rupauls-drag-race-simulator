@@ -105,6 +105,7 @@ function startSimulation(challenge: string = "") {
             lipsync_assassin = true;
             allQueens = allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 8});
             allQueens = allQueens.filter(function (queen) {return currentCast.indexOf(queen) == -1});
+            allQueensCopy = [...allQueens];
         }
 
         /*if (select2.options[select2.selectedIndex].value == "s6-premiere")
@@ -119,8 +120,9 @@ function startSimulation(challenge: string = "") {
 
         if (currentCast.length == 3 && top4 || currentCast.length == 3 && all_stars)
             window.alert("Lip-Sync For The Crown and All Star formats needs at least 4 queens!");
-        else
+        else {
             newEpisode();
+        }
     }
 }
 

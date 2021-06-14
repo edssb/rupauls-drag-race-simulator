@@ -62,6 +62,7 @@ var isDesignChallenge: boolean = false;
 
 let rusicalCounter = false;
 let ballCounter = false;
+let makeoverCounter = false;
 
 let lastChallenge: string = '';
 
@@ -248,8 +249,10 @@ class DesignChallenge implements Challenge {
             "winter items.",
             "summer items."
         }
-        if (currentCast.length == 6)
+        if (currentCast.length == 6) {
             description!.innerHTML = "It's the makeover challenge! The queens will make everyday people their drag sisters!"
+            makeoverCounter = true;
+        }
         else
             description!.innerHTML = "The queens will do outfits with " + desc1[randomNumber(0, 8)];
     }
@@ -649,7 +652,7 @@ function createChallenge(challenges: Array<string>, miniChallengeScreen: Scene):
     else if (currentCast.length > 6 && randomNumber(0, 20) == 20 && !rusicalCounter)
         miniChallengeScreen.createButton("Proceed", "rusical()");
     //makeover
-    else if (currentCast.length == 6 && (top3 || top4) || currentCast.length == 6 && randomNumber(0, 15) == 15 && (all_stars || lipsync_assassin))
+    else if (currentCast.length == 6 && (top3 || top4) || currentCast.length == 6 && randomNumber(0, 15) == 15 && (all_stars || lipsync_assassin) && makeoverCounter == false)
         miniChallengeScreen.createButton("Proceed", "designChallenge()");
     //rumix
     else if (currentCast.length == 5 && top4)
