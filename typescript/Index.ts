@@ -40,12 +40,18 @@ function generateSpace() {
             castSelection!.appendChild(select);
             castSelection!.appendChild(br);
         }
+
+        let button = document.createElement("button");
+        button.setAttribute("onclick", "randomize()");
+        button.innerHTML = "Randomize";
+        castSelection!.append(button);
 }
 
 let top3: boolean = false;
 let top4: boolean = false;
 let all_stars: boolean = false;
 let lipsync_assassin: boolean = false;
+let team: boolean = false;
 
 function predefCast(cast: Array<Queen>, format: string) {
     currentCast = cast;
@@ -57,6 +63,8 @@ function predefCast(cast: Array<Queen>, format: string) {
         top4 = true;
     else if (format == "all-stars")
         all_stars = true;
+    else if (format == "team")
+        team = true;
     else if (format == "lipsync-assassin") {
         lipsync_assassin = true;
         allQueens = allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 9});
@@ -71,10 +79,30 @@ function predefCast(cast: Array<Queen>, format: string) {
     newEpisode();
 }
 
+let indexList: Array<number> = [];
+//randomize cast selection
+function randomize(): void {
+    for (let i = 0; i < document.getElementsByClassName("queenList").length; i++) {
+        let select: HTMLSelectElement = (<HTMLSelectElement>document.getElementById(i.toString()));
+
+        let index: number = randomNumber(0, select.options.length - 1);
+
+        while (indexList.indexOf(index) != -1) {
+            index = randomNumber(0, select.options.length - 1);
+        }
+
+        select.options.selectedIndex = index;
+    }
+
+    indexList = [];
+}
+
 function startSimulation(challenge: string = "") {
     //set challenge seasons
     if (challenge == "sweatshop")
         sweatshop = true;
+    if (challenge == "chaos")
+        chaos = true;
 
     //get selected names and compare them to the all queens list:
     for (let i = 0; i < document.getElementsByClassName("queenList").length; i++) {
@@ -101,6 +129,8 @@ function startSimulation(challenge: string = "") {
             top4 = true;
         else if (select.options[select.selectedIndex].value == "all-stars")
             all_stars = true;
+        else if (select.options[select.selectedIndex].value == "team")
+            team = true;
         else if (select.options[select.selectedIndex].value == "lipsync-assassin") {
             lipsync_assassin = true;
             allQueens = allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 8});
@@ -118,9 +148,16 @@ function startSimulation(challenge: string = "") {
         if ((<HTMLInputElement>document.getElementById("disableReturn")).checked == true)
             noReturn = true;
 
-        if (currentCast.length == 3 && top4 || currentCast.length == 3 && all_stars)
+        if (currentCast.length == 3 && top4 || currentCast.length == 3 && all_stars){
             window.alert("Lip-Sync For The Crown and All Star formats needs at least 4 queens!");
-        else {
+            top4 = false;
+            all_stars = false;
+            currentCast = [];
+        } else if (team == true && currentCast.length % 2 !== 0) {
+            window.alert("The team format needs an even amout of queens!");
+            currentCast = [];
+            team = false;
+        } else {
             newEpisode();
         }
     }

@@ -1,4 +1,4 @@
-let currentCast: Array<Queen> = [];
+let currentCast: Array<Queen|Team> = [];
 let eliminatedCast: Array<Queen> = [];
 let safeQueens: Array<Queen> = [];
 let topQueens: Array<Queen> = [];
@@ -27,6 +27,7 @@ let secondPremiereCast: Array<Queen> = [];
 
 //challenge seasons
 let sweatshop: boolean = false;
+let chaos: boolean = false;
 
 function newEpisode() {
     safeQueens = [];
@@ -44,14 +45,33 @@ function newEpisode() {
         queensRemainingScreen.createBold(currentCast[i].getName());
     }
 
-    if (currentCast.length > 4)
+    //chaos season
+    if (chaos == true) {
+        for (let i = 0; i < currentCast.length; i++) {
+            currentCast[i]._actingStat = randomNumber(0, 15);
+            currentCast[i]._comedyStat = randomNumber(0, 15);
+            currentCast[i]._danceStat = randomNumber(0, 15);
+            currentCast[i]._designStat = randomNumber(0, 15);
+            currentCast[i]._improvStat = randomNumber(0, 15);
+            currentCast[i]._lipsyncStat = randomNumber(0, 15);
+            currentCast[i]._runwayStat = randomNumber(0, 15);
+        }
+    }
+
+    if (currentCast.length == totalCastSize && team == true)
+        queensRemainingScreen.createButton("Proceed", "teamsScreen()");
+    else if (currentCast.length > 4)
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");
-    else if (currentCast.length == 4 && (top3 || lipsync_assassin))
+    else if (currentCast.length == 4 && (top3 || lipsync_assassin || team))
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");
     else if (currentCast.length == 4 && top4)
         queensRemainingScreen.createButton("Proceed", "finaleLS()")
     else if (currentCast.length == 4 && all_stars)
         queensRemainingScreen.createButton("Proceed", "finaleAS()");
+    else if (currentCast.length == 3 && team)
+        queensRemainingScreen.createButton("Proceed", "miniChallenge()");
+    else if (currentCast.length == 2 && team)
+        queensRemainingScreen.createButton("Proceed", "finaleTeam()");
     else
         queensRemainingScreen.createButton("Proceed", "finale()");
 

@@ -1,5 +1,46 @@
 function judging(): void {
-	if (currentCast.length > 13) {
+	if (currentCast.length > 5 && team) {
+		//add 2 teams to the top and 3 teams to the bottom
+		currentCast.sort((a, b) => (a.performanceScore - b.performanceScore));
+		topQueens.push(currentCast[0]);
+		topQueens.push(currentCast[1]);
+
+		bottomQueens.push(currentCast[currentCast.length - 1]);
+		bottomQueens.push(currentCast[currentCast.length - 2]);
+		bottomQueens.push(currentCast[currentCast.length - 3]);
+
+		judgingScreen();
+	} else if (currentCast.length == 5 && team) {
+		//add 2 teams to the top and 3 teams to the bottom
+		currentCast.sort((a, b) => (a.performanceScore - b.performanceScore));
+		topQueens.push(currentCast[0]);
+		topQueens.push(currentCast[1]);
+
+		bottomQueens.push(currentCast[currentCast.length - 1]);
+		bottomQueens.push(currentCast[currentCast.length - 2]);
+		bottomQueens.push(currentCast[currentCast.length - 3]);
+
+		teamWinAndBtm2();
+	} else if (currentCast.length == 4 && team) {
+		//add 2 teams to the top and 2 teams to the bottom
+		currentCast.sort((a, b) => (a.performanceScore - b.performanceScore));
+		topQueens.push(currentCast[0]);
+		topQueens.push(currentCast[1]);
+
+		bottomQueens.push(currentCast[currentCast.length - 1]);
+		bottomQueens.push(currentCast[currentCast.length - 2]);
+
+		teamWinAndBtm2();
+	} else if (currentCast.length == 3 && team) {
+		//add 1 team to the top and 2 teams to the bottom
+		currentCast.sort((a, b) => (a.performanceScore - b.performanceScore));
+		topQueens.push(currentCast[0]);
+
+		bottomQueens.push(currentCast[currentCast.length - 1]);
+		bottomQueens.push(currentCast[currentCast.length - 2]);
+		teamWinAndBtm2();
+	}
+	else if (currentCast.length > 13) {
 		//add 4 queens to the top and 4 queens to the bottom
 		currentCast.sort((a, b) => (a.performanceScore - b.performanceScore));
 		for (let i = 0; i < 4; i++) {
@@ -93,10 +134,19 @@ function judgingScreen() {
 	judgingScreen.createHeader("Judging!");
 	judgingScreen.createBold("Based on tonight's performances...");
 
-	for (let i = 0; i < topQueens.length; i++) {
-		judgingScreen.createBold(topQueens[i].getName());
-		judgingScreen.createBold(bottomQueens[i].getName());
+	if (team == true) {
+		judgingScreen.createBold(topQueens[0].getName());
+		judgingScreen.createBold(topQueens[1].getName());
+
+		judgingScreen.createBold(bottomQueens[0].getName());
+		judgingScreen.createBold(bottomQueens[1].getName());
+		judgingScreen.createBold(bottomQueens[2].getName());
 	}
+	else
+		for (let i = 0; i < topQueens.length; i++) {
+			judgingScreen.createBold(topQueens[i].getName());
+			judgingScreen.createBold(bottomQueens[i].getName());
+		}
 
 	judgingScreen.createBold("You are the tops and bottoms of the week.");
 	judgingScreen.createHorizontalLine();
@@ -108,7 +158,12 @@ function judgingScreen() {
 	for (let i = 0; i < currentCast.length; i++) 
 		if (topQueens.indexOf(currentCast[i]) == -1 && bottomQueens.indexOf(currentCast[i]) == -1) {
 			safeQueens!.innerHTML += currentCast[i].getName() + ", ";
-			currentCast[i].addToTrackRecord("SAFE");
+			if (team == false)
+				currentCast[i].addToTrackRecord("SAFE");
+			if (team == true) {
+				(currentCast as Array<Team>)[i].QueenA.addToTrackRecord("SAFE");
+				(currentCast as Array<Team>)[i].QueenB.addToTrackRecord("SAFE");
+			}
 		}
 
 	safeQueens!.innerHTML += "you are safe.";
@@ -119,6 +174,8 @@ function judgingScreen() {
 		judgingScreen.createButton("Proceed", "top2AndBtm()")
 	else if (lipsync_assassin)
 		judgingScreen.createButton("Proceed", "topAndBtm()");
+	else if (team)
+		judgingScreen.createButton("Proceed", "teamWinAndBtm2()");
 }
 
 function winAndBtm2() {
@@ -213,6 +270,56 @@ function winAndBtm2() {
 	btm2!.innerHTML += "I'm sorry my dears but you are up for elimination.";
 
 	screen.createButton("Proceed", "lipSync()")
+}
+
+function teamWinAndBtm2() {
+	let screen = new Scene();
+
+	screen.clean();
+	screen.createHeader("Bring back my All Stars!");
+	screen.createBold("Ladies, I've made some decisions...");
+
+	//sort the top queens now taking runway and favoritism in consideration:
+	for (let i = 0; i < topQueens.length; i++)
+		topQueens[i].performanceScore -= (topQueens[i].runwayScore - topQueens[i].favoritism);
+	topQueens.sort((a, b) => (a.performanceScore - b.performanceScore));
+
+	(topQueens as Array<Team>)[0].QueenA.addToTrackRecord("WIN");
+	(topQueens as Array<Team>)[0].QueenB.addToTrackRecord("WIN");
+
+	topQueens[0].favoritism += 5;
+
+	screen.createBold(topQueens[0].getName() + ", condragulations you're the winners of this week's challenge!");
+
+	if (topQueens.length > 1) {
+		(topQueens as Array<Team>)[1].QueenA.addToTrackRecord("HIGH");
+		(topQueens as Array<Team>)[1].QueenB.addToTrackRecord("HIGH");
+
+		screen.createParagraph(topQueens[1].getName() + ", good work this week, you're safe.");	
+	}
+
+	screen.createHorizontalLine();
+
+	if (bottomQueens.length > 2) {
+		screen.createParagraph(`${bottomQueens[0].getName()}, ${bottomQueens[1].getName()}, ${bottomQueens[2].getName()}, you're the bottoms of the week...`);
+
+		for (let i = 0; i < topQueens.length; i++)
+			bottomQueens[i].performanceScore -= (bottomQueens[i].runwayScore - bottomQueens[i].favoritism);
+		bottomQueens.sort((a, b) => (a.performanceScore - b.performanceScore));
+
+		(bottomQueens as Array<Team>)[0].QueenA.addToTrackRecord("LOW");
+		(bottomQueens as Array<Team>)[0].QueenB.addToTrackRecord("LOW");
+
+		bottomQueens[0].unfavoritism += 1
+
+		screen.createBold(bottomQueens[0].getName() + ", you are safe.");
+
+		bottomQueens.splice(0, 1);
+	}
+
+	screen.createBold(`${bottomQueens[0].getName()}, ${bottomQueens[1].getName()}, I'm sorry my dears but you are up for elimination.`)
+
+	screen.createButton("Proceed", "teamLipSync()");
 }
 
 function top2AndBtm() {
@@ -436,6 +543,51 @@ function lipSync() {
 		screen.createButton("Proceed", "newEpisode()");
 }
 
+function teamLipSync() {
+	let screen = new Scene();
+	screen.clean()
+	screen.createHeader("It's time...");
+	screen.createBold("For you to lip-sync... for your lives! Good luck and don't fuck it up.");
+
+	if (randomNumber(0, 100) <= 50)
+		(bottomQueens as Array<Team>)[0].lipsyncQueen = (bottomQueens as Array<Team>)[0].QueenA;
+	else
+		(bottomQueens as Array<Team>)[0].lipsyncQueen = (bottomQueens as Array<Team>)[0].QueenB;
+	
+	if (randomNumber(0, 100) <= 50)
+		(bottomQueens as Array<Team>)[1].lipsyncQueen = (bottomQueens as Array<Team>)[1].QueenA;
+	else
+		(bottomQueens as Array<Team>)[1].lipsyncQueen = (bottomQueens as Array<Team>)[1].QueenB;
+
+	screen.createBold(`[${(bottomQueens as Array<Team>)[0].lipsyncQueen.getName()} and ${(bottomQueens as Array<Team>)[1].lipsyncQueen.getName()} will be lip-syncing]`);
+
+	lsSong();
+
+	(bottomQueens as Array<Team>)[0].lipsyncQueen.getLipsync();
+	(bottomQueens as Array<Team>)[1].lipsyncQueen.getLipsync();
+
+	(bottomQueens as Array<Team>).sort((a, b) => (a.lipsyncQueen.lipsyncScore - a.favoritism + a.unfavoritism) - (b.lipsyncQueen.lipsyncScore - b.favoritism + b.unfavoritism));
+
+	screen.createHorizontalLine();
+
+	screen.createBold((bottomQueens as Array<Team>)[0].lipsyncQueen.getName() + ", shantay you stay.");
+	screen.createBold((bottomQueens as Array<Team>)[1].lipsyncQueen.getName() + ", you will always be an All Star, now, sashay away...");
+
+	(bottomQueens as Array<Team>)[0].QueenA.addToTrackRecord("BTM2");
+	(bottomQueens as Array<Team>)[0].QueenB.addToTrackRecord("BTM2");
+	(bottomQueens as Array<Team>)[0].unfavoritism += 3;
+
+	(bottomQueens as Array<Team>)[1].QueenA.addToTrackRecord("ELIM");
+	(bottomQueens as Array<Team>)[1].QueenB.addToTrackRecord("ELIM");
+
+	eliminatedCast.unshift((bottomQueens as Array<Team>)[1].QueenA);
+	eliminatedCast.unshift((bottomQueens as Array<Team>)[1].QueenB);
+
+	currentCast.splice(currentCast.indexOf(bottomQueens[1]), 1);
+
+	screen.createButton("Proceed", "newEpisode()");
+}
+
 function asLipSync() {
 	for (let i = 0; i < top2.length; i++) {
 		top2[i].getASLipsync();
@@ -451,24 +603,58 @@ function asLipSync() {
 	screen.createHorizontalLine();
 	screen.createBold("Ladies, I've made my decision...");
 
-	top2[0].favoritism += 5;
-	top2[0].addToTrackRecord("WIN");
+	if (top2[0].lipsyncScore == top2[1].lipsyncScore && top2[0].lipsyncScore > 7 && top2[1].lipsyncScore > 7 && currentCast.length > 5) {
+		screen.createBold("Condragulations, you're both winners baby!");
 
-	screen.createBold(top2[0].getName() + ", you're a winner, baby!");
+		top2[0].favoritism += 5;
+		top2[1].favoritism += 5;
 
-	top2[1].addToTrackRecord("TOP2");
-	top2[1].favoritism += 4;
+		top2[0].addToTrackRecord(" WIN");
+		top2[1].addToTrackRecord(" WIN");
 
-	screen.createParagraph(top2[1].getName() + ", you are safe.");
+		screen.createHorizontalLine();
 
-	screen.createHorizontalLine();
+		if (top2[0].lipstick == top2[1].lipstick) {
+			screen.createBold(`${top2[0].lipstick.getName()}, you will always be an All Star, now, sashay away...`);
 
-	screen.createBold(top2[0].lipstick.getName() + ", you will always be an All Star, now, sashay away...");
+			top2[0].lipstick.addToTrackRecord("ELIM");
+			eliminatedCast.unshift(top2[0].lipstick);
+			bottomQueens.splice(bottomQueens.indexOf(top2[0].lipstick), 1);
+			currentCast.splice(currentCast.indexOf(top2[0].lipstick), 1);
+		} else {
+			screen.createBold(`${top2[0].lipstick.getName()}, ${top2[1].lipstick.getName()}, you will always be an All Star, now, sashay away...`)
 
-	top2[0].lipstick.addToTrackRecord("ELIM");
-	eliminatedCast.unshift(top2[0].lipstick);
-	bottomQueens.splice(bottomQueens.indexOf(top2[0].lipstick), 1);
-	currentCast.splice(currentCast.indexOf(top2[0].lipstick), 1);
+			top2[0].lipstick.addToTrackRecord("ELIM");
+			eliminatedCast.unshift(top2[0].lipstick);
+			bottomQueens.splice(bottomQueens.indexOf(top2[0].lipstick), 1);
+			currentCast.splice(currentCast.indexOf(top2[0].lipstick), 1);
+
+			top2[1].lipstick.addToTrackRecord("ELIM");
+			eliminatedCast.unshift(top2[1].lipstick);
+			bottomQueens.splice(bottomQueens.indexOf(top2[1].lipstick), 1);
+			currentCast.splice(currentCast.indexOf(top2[1].lipstick), 1);
+		}
+	} else {
+		top2[0].favoritism += 5;
+		top2[0].addToTrackRecord("WIN");
+
+		screen.createBold(top2[0].getName() + ", you're a winner, baby!");
+
+		top2[1].addToTrackRecord("TOP2");
+		top2[1].favoritism += 4;
+
+		screen.createParagraph(top2[1].getName() + ", you are safe.");
+
+		screen.createHorizontalLine();
+
+		screen.createBold(top2[0].lipstick.getName() + ", you will always be an All Star, now, sashay away...");
+
+		top2[0].lipstick.addToTrackRecord("ELIM");
+		eliminatedCast.unshift(top2[0].lipstick);
+		bottomQueens.splice(bottomQueens.indexOf(top2[0].lipstick), 1);
+		currentCast.splice(currentCast.indexOf(top2[0].lipstick), 1);
+	}
+	
 
 	for (let i = 0; i < bottomQueens.length; i++) {
 		if (bottomQueens.length == 3)

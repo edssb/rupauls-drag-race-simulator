@@ -117,6 +117,20 @@ function finale() {
 	screen.createButton("Proceed", "runway()", "button2");
 }
 
+function finaleTeam() {
+	//sort queens by finale score:
+	for (let i = 0; i < currentCast.length; i ++) {
+		currentCast[i].getFinale()
+	}
+	currentCast.sort((a, b) => (b.finaleScore - a.finaleScore));
+
+	let screen = new Scene();
+	screen.clean();
+	screen.createHeader("The grande finale!");
+	screen.createParagraph("Our Top 4 will participate in a music video for RuPaul's newest single!");
+	screen.createButton("Proceed", "runway()", "button2");
+}
+
 function finaleJudging() {
 	let screen = new Scene();
 	screen.clean();
@@ -127,6 +141,38 @@ function finaleJudging() {
 	eliminatedCast.unshift(currentCast[2]);
 	currentCast.splice(2, 1);
 	screen.createHorizontalLine();
+
+	screen.createBold(currentCast[0].getName() + " and " + currentCast[1].getName() + ", this is your last chance to prove yourself. It's time for you to lipsync.. for the CROWN!!");
+	lsSong();
+	screen.createButton("Proceed", "finaleFinale()");
+}
+
+function finaleTeamJudging() {
+	let screen = new Scene();
+	screen.clean();
+	screen.createHeader("The final minutes...");
+	screen.createBold("Ladies, it's time to decide The Next Drag Superstar, and...");
+	screen.createBold(currentCast[1].getName() + ", I'm sorry my dears but it's not your time. I must ask you both to sashay away...");
+
+	screen.createHorizontalLine();
+
+	(currentCast as Array<Team>)[1].QueenA.addToTrackRecord("ELIMINATED");
+	(currentCast as Array<Team>)[1].QueenB.addToTrackRecord("ELIMINATED");
+
+	eliminatedCast.unshift((currentCast as Array<Team>)[1].QueenA);
+	eliminatedCast.unshift((currentCast as Array<Team>)[1].QueenB);
+
+	currentCast.splice(1, 1);
+
+	if (randomNumber(0, 100) <= 50) {
+		currentCast.push((currentCast as Array<Team>)[0].QueenA);
+		currentCast.push((currentCast as Array<Team>)[0].QueenB);
+	} else {
+		currentCast.push((currentCast as Array<Team>)[0].QueenB);
+		currentCast.push((currentCast as Array<Team>)[0].QueenA);
+	}
+
+	currentCast.splice(0, 1);
 
 	screen.createBold(currentCast[0].getName() + " and " + currentCast[1].getName() + ", this is your last chance to prove yourself. It's time for you to lipsync.. for the CROWN!!");
 	lsSong();

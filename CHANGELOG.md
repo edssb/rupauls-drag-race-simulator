@@ -2,6 +2,22 @@
 
 All notable changes to the simulator will be documented here!
 
+## Version 0.9.4 - 2021-06-22
+
+### Added
+
+- Added a button to randomize a cast (still a bit buggy but usable).
+- Top 2 Lip-Syncs in the All Stars Format can now have double wins
+- Added the Drag Race Down Under and Drag Race España queens.
+- Added All Stars 1's format.
+
+### Fixed
+
+- Fixed special challenges happening twice... ***AGAIN***.
+- Fixed bugs regarding returning queens.
+
+#
+
 ## Version 0.9.3-1 - 2021-06-14
 
 ### Added

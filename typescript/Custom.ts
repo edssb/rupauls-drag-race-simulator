@@ -64,6 +64,8 @@ function customStartSimulation() {
             top4 = true;
         else if (select.options[select.selectedIndex].value == "all-stars")
             all_stars = true;
+        else if (select.options[select.selectedIndex].value == "team")
+            team = true;
         else if (select.options[select.selectedIndex].value == "lipsync-assassin") {
             lipsync_assassin = true;
             allQueens = allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 8});

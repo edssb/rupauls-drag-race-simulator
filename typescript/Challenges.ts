@@ -249,9 +249,8 @@ class DesignChallenge implements Challenge {
             "winter items.",
             "summer items."
         }
-        if (currentCast.length == 6) {
+        if (currentCast.length == 6 && makeoverCounter == false && team == false) {
             description!.innerHTML = "It's the makeover challenge! The queens will make everyday people their drag sisters!"
-            makeoverCounter = true;
         }
         else
             description!.innerHTML = "The queens will do outfits with " + desc1[randomNumber(0, 8)];
@@ -278,8 +277,10 @@ function designChallenge(): void {
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     designChallengeCounter++;
     isDesignChallenge = true;
-    if (currentCast.length == 6)
+    if (currentCast.length == 6 && makeoverCounter == false && team == false) {
         episodeChallenges.push("Makeover");
+        makeoverCounter = true;
+    }
     else
         episodeChallenges.push("Design");
 }
@@ -597,7 +598,7 @@ function runway(): void {
 
     if (currentCast.length > 4)
         runwayScreen.createParagraph("The theme is: " + desc[randomNumber(0, 21)]);
-    else if (currentCast.length == 3 && top3 || currentCast.length == 5 && top4 || currentCast.length == 4 && all_stars)
+    else if (currentCast.length == 3 && top3 || currentCast.length == 5 && top4 || currentCast.length == 4 && all_stars || currentCast.length == 2 && team)
         runwayScreen.createParagraph("The theme is... best drag!");
 
     for (let i = 0; i < currentCast.length; i++) {
@@ -622,37 +623,41 @@ function runway(): void {
     }
     if (currentCast.length > 4)
         runwayScreen.createButton("Proceed", "judging()");
-    else if (currentCast.length == 4 && (top3 || lipsync_assassin))
+    else if (currentCast.length == 4 && (top3 || lipsync_assassin || team))
+        runwayScreen.createButton("Proceed", "judging()");
+    else if (currentCast.length == 3 && team)
         runwayScreen.createButton("Proceed", "judging()");
     else if (currentCast.length == 3 && (top3 || lipsync_assassin))
         runwayScreen.createButton("Proceed", "finaleJudging()");
     else if (currentCast.length == 4 && all_stars)
         runwayScreen.createButton("Proceed", "finaleASJudging()");
+    else if (currentCast.length == 2 && team)
+        runwayScreen.createButton("Proceed", "finaleTeamJudging()");
 }
 
 //helper functions
 
 function createChallenge(challenges: Array<string>, miniChallengeScreen: Scene): void {
     //first design challenge for normal seasons
-    if (currentCast.length == totalCastSize && top3 || currentCast.length == totalCastSize && top4 || sweatshop)
+    if (currentCast.length == totalCastSize && top3 || currentCast.length == totalCastSize && top4 || currentCast.length == totalCastSize && team ||sweatshop)
         miniChallengeScreen.createButton("Proceed", "designChallenge()")
     //talent show for all stars
     else if (currentCast.length == totalCastSize && (all_stars || lipsync_assassin))
         miniChallengeScreen.createButton("Proceed", "talentshow()");
     //snatch game
-    else if (totalCastSize >= 10 && currentCast.length == 9)
+    else if (totalCastSize >= 10 && currentCast.length == 9 || totalCastSize >= 6 && currentCast.length == 5 && team)
         miniChallengeScreen.createButton("Proceed", "snatchGame()");
     //the ball for the third competitive episode for lsftc seasons
     else if (currentCast.length == totalCastSize - 3 && top4 && !ballCounter)
         miniChallengeScreen.createButton("Proceed", "ball()");
     //same but if above condition doesn't apply (example: snatch game needs to happen before the ball)
-    else if (currentCast.length == totalCastSize - 4 && (top4 || (all_stars || lipsync_assassin) && randomNumber(0, 100) < 30) && !ballCounter)
+    else if (currentCast.length == totalCastSize - 4 && (top4 || (all_stars || lipsync_assassin) && randomNumber(0, 100) < 30) && !ballCounter || currentCast.length == 3 && team)
         miniChallengeScreen.createButton("Proceed", "ball()");
     //rusical
-    else if (currentCast.length > 6 && randomNumber(0, 20) == 20 && !rusicalCounter)
+    else if (currentCast.length > 6 && randomNumber(0, 20) == 20 && !rusicalCounter || currentCast.length > 5 && randomNumber(0, 20) == 20 && team && rusicalCounter == false)
         miniChallengeScreen.createButton("Proceed", "rusical()");
     //makeover
-    else if (currentCast.length == 6 && (top3 || top4) || currentCast.length == 6 && randomNumber(0, 15) == 15 && (all_stars || lipsync_assassin) && makeoverCounter == false)
+    else if (currentCast.length == 6 && (top3 || top4) && makeoverCounter == false || currentCast.length == 6 && randomNumber(0, 15) == 15 && (all_stars || lipsync_assassin) && makeoverCounter == false)
         miniChallengeScreen.createButton("Proceed", "designChallenge()");
     //rumix
     else if (currentCast.length == 5 && top4)

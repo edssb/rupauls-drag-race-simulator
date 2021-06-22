@@ -1,12 +1,12 @@
 class Queen {
-    private _name: string;
-    private _actingStat: number;
-    private _comedyStat: number;
-    private _danceStat: number;
-    private _designStat: number;
-    private _improvStat: number;
-    private _runwayStat: number;
-    private _lipsyncStat: number;
+    public _name: string;
+    public _actingStat: number;
+    public _comedyStat: number;
+    public _danceStat: number;
+    public _designStat: number;
+    public _improvStat: number;
+    public _runwayStat: number;
+    public _lipsyncStat: number;
 
     public trackRecord: Array<string> = [];
     public runwayScore: number = 0;
@@ -407,6 +407,34 @@ let vanda = new Queen("Vanda Miss Joaquim", 9, 8, 9, 7, 7, 11, 10);
 
 let drt_season2 = [angele, bandit, genie, kana, kandyz, katy, m, maya, mocha, gimhuay, silver, srimala, tormai, vanda];
 
+//DRAG RACE DOWN UNDER
+let anita = new Queen("Anita Wigl'it", 9, 9, 8, 7, 8, 7, 8);
+let art = new Queen("Art Simone", 5, 4, 5, 10, 4, 10, 2);
+let cocoj = new Queen("Coco Jumbo", 7, 6, 7, 6, 5, 8, 9);
+let elektra = new Queen("Elektra Shock", 8, 6, 7, 5, 4, 6, 10);
+let etc = new Queen("Etcetera Etcetera", 7, 8, 7, 6, 7, 8, 8);
+let jojo = new Queen("Jojo Zaho", 5, 5, 5, 5, 5, 6, 8);
+let karen = new Queen("Karen From Finance", 6, 6, 7, 7, 5, 7, 5);
+let kita = new Queen("Kita Mean", 8, 8, 7, 8, 9, 9, 10);
+let maxi = new Queen("Maxi Shield", 6, 7, 7, 9, 7, 8, 9);
+
+let drdu = [anita, art, cocoj, elektra, etc, jojo, karen, kita, maxi];
+
+//DRAG RACE ESPAÑA
+let arantxa = new Queen("Arantxa Castilla La Mancha", 8, 8, 7, 7, 4, 9, 9);
+let carmenf = new Queen("Carmen Farala", 8, 7, 9, 9, 5, 11, 9);
+let dovima = new Queen("Dovima Nurmi", 6, 5, 5, 4, 5, 8, 8);
+let drag = new Queen("Drag Vulcano", 6, 6, 5, 7, 7, 8, 6);
+let hugaceo = new Queen("Hugáceo Crujiente", 7, 6, 7, 11, 6, 8, 9);
+let inti = new Queen("Inti", 7, 7, 7, 7, 7, 12, 7);
+let killer = new Queen("Killer Queen", 7, 8, 6, 7, 9, 9, 7);
+let pupi = new Queen("Pupi Poisson", 8, 8, 8, 6, 9, 9, 9);
+let sagittaria = new Queen("Sagittaria", 7, 8, 9, 9, 8, 9, 8);
+let macarena = new Queen("The Macarena", 6, 7, 6, 5, 5, 7, 7);
+
+let dres = [arantxa, carmenf, dovima, drag, hugaceo, inti, killer, pupi, sagittaria, macarena];
+
+
 //SPECIAL
 
 let pangina = new Queen("Pangina Heals", 10, 10, 9, 12, 9, 13, 11);
@@ -434,6 +462,8 @@ anastarzia, boa, ilona, jimbo, juice, kiara, kyne, lemon, priyanka, rita, bobo, 
 chelsea, envy, janey, madamem, mama, megan, abby, patty, roem, sederginne,
 amadiva, annee, b, bunny, dearis, jaja, meannie, morrigan, natalia, petchra,
 angele, bandit, genie, kana, kandyz, katy, m, maya, mocha, gimhuay, silver, srimala, tormai, vanda,
+anita, art, cocoj, elektra, etc, jojo, karen, kita, maxi,
+arantxa, carmenf, dovima, drag, hugaceo, inti, killer, pupi, sagittaria, macarena,
 pangina
 ].sort((a, b) => a.getName().toLowerCase().localeCompare(b.getName().toLowerCase()));
 
