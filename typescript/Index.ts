@@ -53,7 +53,7 @@ let all_stars: boolean = false;
 let lipsync_assassin: boolean = false;
 let team: boolean = false;
 
-function predefCast(cast: Array<Queen>, format: string) {
+function predefCast(cast: Array<Queen>, format: string, premiere: string = '') {
     currentCast = cast;
     totalCastSize = cast.length;
 
@@ -70,13 +70,25 @@ function predefCast(cast: Array<Queen>, format: string) {
         allQueens = allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 9});
         allQueens = allQueens.filter(function (queen) {return currentCast.indexOf(queen) == -1});
     }
+
+    if (premiere == "s6-premiere")
+        s6Premiere = true;
+    else if (premiere == "s12-premiere")
+        s12Premiere = true;
+    else if (premiere == "porkchop")
+        porkchopPremiere = true;
     
     if ((<HTMLInputElement>document.getElementById("disableDouble")).checked == true)
         noDouble = true;
     if ((<HTMLInputElement>document.getElementById("disableReturn")).checked == true)
         noReturn = true;
 
-    newEpisode();
+    if (s6Premiere || s12Premiere)
+        doublePremiere();
+    else if (porkchopPremiere)
+        porkchopLipsyncs();
+    else
+        newEpisode();
 }
 
 let indexList: Array<number> = [];
@@ -121,7 +133,7 @@ function startSimulation(challenge: string = "") {
         window.alert("Please, only use one of each queen on your cast!");
     else {
         let select = (<HTMLSelectElement>document.getElementById("format"));
-        //let select2 = (<HTMLSelectElement>document.getElementById("premiere-format"));
+        let select2 = (<HTMLSelectElement>document.getElementById("premiere-format"));
 
         if (select.options[select.selectedIndex].value == "top3")
             top3 = true;
@@ -138,10 +150,12 @@ function startSimulation(challenge: string = "") {
             allQueensCopy = [...allQueens];
         }
 
-        /*if (select2.options[select2.selectedIndex].value == "s6-premiere")
+        if (select2.options[select2.selectedIndex].value == "s6-premiere")
             s6Premiere = true;
         else if (select2.options[select2.selectedIndex].value == "s12-premiere")
-            s12Premiere = true;*/
+            s12Premiere = true;
+        else if (select2.options[select2.selectedIndex].value == "porkchop")
+            porkchopPremiere = true;
 
         if ((<HTMLInputElement>document.getElementById("disableDouble")).checked == true)
             noDouble = true;
@@ -157,6 +171,22 @@ function startSimulation(challenge: string = "") {
             window.alert("The team format needs an even amout of queens!");
             currentCast = [];
             team = false;
+        } else if ((s6Premiere || s12Premiere || porkchopPremiere) && currentCast.length < 8) {
+            window.alert("Double Premiere formats needs at least 10 queens!")
+            s6Premiere = false;
+            s12Premiere = false;
+            porkchopPremiere = false;
+
+            top4 = false;
+            top3 = false;
+            lipsync_assassin = false;
+            all_stars = false;
+
+            currentCast = [];
+        } else if (s6Premiere || s12Premiere) {
+            doublePremiere();
+        } else if (porkchopPremiere) {
+            porkchopLipsyncs();
         } else {
             newEpisode();
         }
@@ -176,4 +206,22 @@ function duplicateQueens(cast: Array<Queen>) {
         valuesAlreadySeen.push(value);
     }
     return false;
+}
+
+function shuffle(array: Array<Queen>): Array<Queen> {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
 }

@@ -63,6 +63,7 @@ var isDesignChallenge: boolean = false;
 let rusicalCounter = false;
 let ballCounter = false;
 let makeoverCounter = false;
+let snatchCounter = false;
 
 let lastChallenge: string = '';
 
@@ -249,7 +250,7 @@ class DesignChallenge implements Challenge {
             "winter items.",
             "summer items."
         }
-        if (currentCast.length == 6 && makeoverCounter == false && team == false) {
+        if (currentCast.length == 6 && makeoverCounter == false && team == false && currentCast != firstCast && currentCast != secondCast) {
             description!.innerHTML = "It's the makeover challenge! The queens will make everyday people their drag sisters!"
         }
         else
@@ -277,7 +278,7 @@ function designChallenge(): void {
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     designChallengeCounter++;
     isDesignChallenge = true;
-    if (currentCast.length == 6 && makeoverCounter == false && team == false) {
+    if (currentCast.length == 6 && makeoverCounter == false && team == false && currentCast != firstCast && currentCast != secondCast) {
         episodeChallenges.push("Makeover");
         makeoverCounter = true;
     }
@@ -353,6 +354,7 @@ function snatchGame(): void {
 
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     isDesignChallenge = false;
+    snatchCounter = true;
     episodeChallenges.push("Snatch");
 }
 
@@ -639,13 +641,16 @@ function runway(): void {
 
 function createChallenge(challenges: Array<string>, miniChallengeScreen: Scene): void {
     //first design challenge for normal seasons
-    if (currentCast.length == totalCastSize && top3 || currentCast.length == totalCastSize && top4 || currentCast.length == totalCastSize && team ||sweatshop)
+    if (currentCast.length == totalCastSize && top3 && s6Premiere == false || currentCast.length == totalCastSize && top4 && s6Premiere == false || currentCast.length == totalCastSize && team ||sweatshop || currentCast == firstCast && s6Premiere || currentCast == secondCast && s6Premiere)
         miniChallengeScreen.createButton("Proceed", "designChallenge()")
+    //rumix challenge for s6 or porkchop premiere
+    else if (premiereCounter <= 2 && (s12Premiere || porkchopPremiere))
+        miniChallengeScreen.createButton("Proceed", "rumix()");
     //talent show for all stars
     else if (currentCast.length == totalCastSize && (all_stars || lipsync_assassin))
         miniChallengeScreen.createButton("Proceed", "talentshow()");
     //snatch game
-    else if (totalCastSize >= 10 && currentCast.length == 9 || totalCastSize >= 6 && currentCast.length == 5 && team)
+    else if (totalCastSize >= 10 && currentCast.length == 9 && !team && snatchCounter == false || totalCastSize >= 6 && currentCast.length == 5 && team)
         miniChallengeScreen.createButton("Proceed", "snatchGame()");
     //the ball for the third competitive episode for lsftc seasons
     else if (currentCast.length == totalCastSize - 3 && top4 && !ballCounter)

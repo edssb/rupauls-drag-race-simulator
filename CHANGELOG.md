@@ -2,6 +2,20 @@
 
 All notable changes to the simulator will be documented here!
 
+## Version 0.9.4.5 - 2021-07-06
+
+### Added
+
+- Added Season 6's, Season 12's and Season 13's premiere formats.
+- Added a button to randomize custom queens' stats.
+- Added a button to add ru-girls on your custom casts.
+
+### Fixed
+
+- Fixed not being able to simulate seasons with the teams format more than once.
+
+#
+
 ## Version 0.9.4 - 2021-06-22
 
 ### Added

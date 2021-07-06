@@ -61,6 +61,7 @@ var isDesignChallenge = false;
 var rusicalCounter = false;
 var ballCounter = false;
 var makeoverCounter = false;
+var snatchCounter = false;
 var lastChallenge = '';
 function miniChallenge() {
     var miniChallengeScreen = new Scene();
@@ -230,7 +231,7 @@ var DesignChallenge = /** @class */ (function () {
             desc1[desc1["winter items."] = 7] = "winter items.";
             desc1[desc1["summer items."] = 8] = "summer items.";
         })(desc1 || (desc1 = {}));
-        if (currentCast.length == 6 && makeoverCounter == false && team == false) {
+        if (currentCast.length == 6 && makeoverCounter == false && team == false && currentCast != firstCast && currentCast != secondCast) {
             description.innerHTML = "It's the makeover challenge! The queens will make everyday people their drag sisters!";
         }
         else
@@ -254,7 +255,7 @@ function designChallenge() {
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     designChallengeCounter++;
     isDesignChallenge = true;
-    if (currentCast.length == 6 && makeoverCounter == false && team == false) {
+    if (currentCast.length == 6 && makeoverCounter == false && team == false && currentCast != firstCast && currentCast != secondCast) {
         episodeChallenges.push("Makeover");
         makeoverCounter = true;
     }
@@ -322,6 +323,7 @@ function snatchGame() {
     challenge.rankPerformances();
     challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
     isDesignChallenge = false;
+    snatchCounter = true;
     episodeChallenges.push("Snatch");
 }
 var Rusical = /** @class */ (function () {
@@ -583,13 +585,16 @@ function runway() {
 //helper functions
 function createChallenge(challenges, miniChallengeScreen) {
     //first design challenge for normal seasons
-    if (currentCast.length == totalCastSize && top3 || currentCast.length == totalCastSize && top4 || currentCast.length == totalCastSize && team || sweatshop)
+    if (currentCast.length == totalCastSize && top3 && s6Premiere == false || currentCast.length == totalCastSize && top4 && s6Premiere == false || currentCast.length == totalCastSize && team || sweatshop || currentCast == firstCast && s6Premiere || currentCast == secondCast && s6Premiere)
         miniChallengeScreen.createButton("Proceed", "designChallenge()");
+    //rumix challenge for s6 or porkchop premiere
+    else if (premiereCounter <= 2 && (s12Premiere || porkchopPremiere))
+        miniChallengeScreen.createButton("Proceed", "rumix()");
     //talent show for all stars
     else if (currentCast.length == totalCastSize && (all_stars || lipsync_assassin))
         miniChallengeScreen.createButton("Proceed", "talentshow()");
     //snatch game
-    else if (totalCastSize >= 10 && currentCast.length == 9 || totalCastSize >= 6 && currentCast.length == 5 && team)
+    else if (totalCastSize >= 10 && currentCast.length == 9 && !team && snatchCounter == false || totalCastSize >= 6 && currentCast.length == 5 && team)
         miniChallengeScreen.createButton("Proceed", "snatchGame()");
     //the ball for the third competitive episode for lsftc seasons
     else if (currentCast.length == totalCastSize - 3 && top4 && !ballCounter)
@@ -670,7 +675,7 @@ function customStartSimulation() {
     currentCast = customCast;
     totalCastSize = currentCast.length;
     var select = document.getElementById("format");
-    //let select2 = (<HTMLSelectElement>document.getElementById("premiere-format"));
+    var select2 = document.getElementById("premiere-format");
     if (select.options[select.selectedIndex].value == "top3")
         top3 = true;
     else if (select.options[select.selectedIndex].value == "top4")
@@ -684,18 +689,157 @@ function customStartSimulation() {
         allQueens = allQueens.filter(function (queen) { return queen.getLipSyncStat() >= 8; });
         allQueens = allQueens.filter(function (queen) { return currentCast.indexOf(queen) == -1; });
     }
-    /*if (select2.options[select2.selectedIndex].value == "s6-premiere")
+    if (select2.options[select2.selectedIndex].value == "s6-premiere")
         s6Premiere = true;
     else if (select2.options[select2.selectedIndex].value == "s12-premiere")
-        s12Premiere = true;*/
+        s12Premiere = true;
+    else if (select2.options[select2.selectedIndex].value == "porkchop")
+        porkchopPremiere = true;
     if (document.getElementById("disableDouble").checked == true)
         noDouble = true;
     if (document.getElementById("disableReturn").checked == true)
         noReturn = true;
     if (currentCast.length == 3 && top4 || currentCast.length == 3 && all_stars)
         window.alert("Lip-Sync For The Crown and All Star formats needs at least 4 queens!");
+    else if ((s12Premiere || s6Premiere || porkchopPremiere) && currentCast.length < 10)
+        window.alert("You need at least 10 queens for a double premiere!");
+    else if (s12Premiere || s6Premiere)
+        doublePremiere();
+    else if (porkchopPremiere)
+        porkchopLipsyncs();
     else
         newEpisode();
+}
+function preQueens() {
+    var select = document.getElementById("preQueens");
+    for (var i = 0; i < allQueens.length; i++) {
+        var option = document.createElement("option");
+        option.innerHTML = allQueens[i].getName();
+        select.appendChild(option);
+    }
+}
+function addPreQueen() {
+    var select = document.getElementById("preQueens");
+    var value = select.options[select.selectedIndex].value;
+    for (var i = 0; i < allQueens.length; i++) {
+        if (value == allQueens[i].getName()) {
+            customCast.push(allQueens[i]);
+            var list = document.getElementById("cast");
+            var queen = document.createElement("option");
+            queen.text = allQueens[i].getName();
+            list.appendChild(queen);
+        }
+    }
+}
+function randomizeStats() {
+    var stats = document.getElementsByClassName("stats");
+    for (var i = 0; i < stats.length; i++) {
+        stats[i].value = randomNumber(0, 15).toString();
+    }
+}
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
+var premiereCounter = 0;
+var firstCast = [];
+var secondCast = [];
+function doublePremiere() {
+    if (premiereCounter == 0)
+        if (s6Premiere || s12Premiere) {
+            shuffle(currentCast);
+            firstCast = currentCast.splice(0, Math.floor(currentCast.length / 2));
+            secondCast = __spreadArray([], currentCast);
+        }
+    if (premiereCounter == 0) {
+        currentCast = firstCast;
+        for (var i = 0; i < secondCast.length; i++)
+            secondCast[i].addToTrackRecord("");
+        premiereCounter++;
+        newEpisode();
+    }
+    else if (premiereCounter == 1) {
+        currentCast = secondCast;
+        for (var i = 0; i < firstCast.length; i++)
+            firstCast[i].addToTrackRecord("");
+        premiereCounter++;
+        newEpisode();
+    }
+    else if (premiereCounter == 2) {
+        currentCast = __spreadArray(__spreadArray([], firstCast), secondCast);
+        premiereCounter++;
+        newEpisode();
+    }
+}
+function porkchopLipsyncs() {
+    var screen = new Scene();
+    screen.clean();
+    screen.createHeader("It's time...");
+    screen.createParagraph("After the queens enter the workroom, it's time for them to lip-sync... for their lives!");
+    for (var i = 0; i < Math.floor(totalCastSize / 2); i++) {
+        screen.createHorizontalLine();
+        var queen1 = currentCast[randomNumber(0, currentCast.length - 1)];
+        currentCast.splice(currentCast.indexOf(queen1), 1);
+        var queen2 = currentCast[randomNumber(0, currentCast.length - 1)];
+        currentCast.splice(currentCast.indexOf(queen2), 1);
+        if (currentCast.length == 1) {
+            var queen3 = currentCast[randomNumber(0, currentCast.length - 1)];
+            currentCast.splice(currentCast.indexOf(queen3), 1);
+            screen.createBold(queen1.getName() + ", " + queen2.getName() + " and " + queen3.getName() + " will lipsync...");
+            lsSong();
+            var lipSync_1 = [queen1, queen2, queen3];
+            for (var i_1 = 0; i_1 < lipSync_1.length; i_1++) {
+                lipSync_1[i_1].getASLipsync();
+            }
+            lipSync_1.sort(function (a, b) { return (b.lipsyncScore - a.lipsyncScore); });
+            screen.createBold(queen1.getName() + ", shantay you stay!");
+            screen.createBold(queen2.getName() + " and " + queen3.getName() + ", you're getting the porkchop...");
+            queen1.addToTrackRecord(" WIN ");
+            queen2.addToTrackRecord("LOSS");
+            queen3.addToTrackRecord("LOSS");
+            firstCast.push(queen1);
+            secondCast.push(queen2, queen3);
+        }
+        else {
+            screen.createBold(queen1.getName() + " and " + queen2.getName() + " will lipsync...");
+            lsSong();
+            var lipSync_2 = [queen1, queen2];
+            for (var i_2 = 0; i_2 < lipSync_2.length; i_2++) {
+                lipSync_2[i_2].getASLipsync();
+            }
+            lipSync_2.sort(function (a, b) { return (b.lipsyncScore - a.lipsyncScore); });
+            screen.createBold(queen1.getName() + ", shantay you stay!");
+            screen.createBold(queen2.getName() + ", you're getting the porkchop...");
+            queen1.addToTrackRecord(" WIN ");
+            queen2.addToTrackRecord("LOSS");
+            firstCast.push(queen1);
+            secondCast.push(queen2);
+        }
+    }
+    episodeChallenges.push("Porkchop");
+    screen.createButton("Proceed", "doublePremiere()");
+}
+function doublePremiereJudging() {
+    var screen = new Scene();
+    screen.clean();
+    screen.createHeader("Bring back my girls!");
+    screen.createBold("Ladies, I've made some decisions...");
+    screen.createBold(topQueens[0].getName() + ", " + topQueens[1].getName() + ", condragulations, you're the Top 2 of the week!");
+    screen.createParagraph("Nobody is going home tonight!");
+    screen.createHorizontalLine();
+    screen.createBold("The Top 2 will now lip-sync... for the win!");
+    lsSong();
+    for (var i = 0; i < topQueens.length; i++) {
+        topQueens[i].getASLipsync();
+    }
+    topQueens.sort(function (a, b) { return (b.lipsyncScore - a.lipsyncScore); });
+    screen.createBold(topQueens[0].getName() + ", you're a winner baby!");
+    topQueens[0].addToTrackRecord("WIN");
+    topQueens[0].favoritism += 5;
+    topQueens[1].addToTrackRecord("TOP2");
+    topQueens[0].favoritism += 2;
+    screen.createButton("Proceed", "doublePremiere()");
 }
 var currentCast = [];
 var eliminatedCast = [];
@@ -711,10 +855,9 @@ var noDouble = false;
 var noReturn = false;
 var s6Premiere = false;
 var s12Premiere = false;
+var porkchopPremiere = false;
 var firstPremiere = false;
 var secondPremiere = false;
-var firstPremiereCast = [];
-var secondPremiereCast = [];
 //challenge seasons
 var sweatshop = false;
 var chaos = false;
@@ -775,6 +918,10 @@ function reSimulate() {
     }
     currentCast.sort(function (a, b) { return a.getName().toLowerCase().localeCompare(b.getName().toLowerCase()); });
     eliminatedCast = [];
+    firstCast = [];
+    secondCast = [];
+    premiereCounter = 0;
+    totalCastSize = currentCast.length;
     //clean track records
     for (var i = 0; i < currentCast.length; i++) {
         currentCast[i].trackRecord = [];
@@ -797,7 +944,12 @@ function reSimulate() {
     //refill lip-sync songs and lsa
     lsSongs = allLsSongs;
     allQueens = allQueensCopy;
-    newEpisode();
+    if (s6Premiere || s12Premiere)
+        doublePremiere();
+    else if (porkchopPremiere)
+        porkchopLipsyncs();
+    else
+        newEpisode();
 }
 var firstLS = [];
 var secondLS = [];
@@ -1062,6 +1214,12 @@ function contestantProgress() {
         else if (placement.innerHTML == "RTRN") {
             placement.setAttribute("style", "font-weight: bold; background-color: orange;");
         }
+        else if (placement.innerHTML == " WIN ") {
+            placement.setAttribute("style", "background-color: lightgreen;");
+        }
+        else if (placement.innerHTML == "LOSS") {
+            placement.setAttribute("style", "background-color: orange;");
+        }
         winner.appendChild(placement);
     }
     trackRecords.appendChild(winner);
@@ -1119,6 +1277,12 @@ function contestantProgress() {
             else if (placement.innerHTML == "RTRN") {
                 placement.setAttribute("style", "font-weight: bold; background-color: orange;");
             }
+            else if (placement.innerHTML == " WIN ") {
+                placement.setAttribute("style", "background-color: lightgreen;");
+            }
+            else if (placement.innerHTML == "LOSS") {
+                placement.setAttribute("style", "background-color: orange;");
+            }
             contestant.appendChild(placement);
         }
         trackRecords.appendChild(contestant);
@@ -1128,11 +1292,6 @@ function contestantProgress() {
     screen.createHorizontalLine();
     screen.createButton("Back to main page", "location.reload()");
 }
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
-};
 var totalCastSize;
 function randomNumber(min, max) {
     var randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -1175,7 +1334,8 @@ var top4 = false;
 var all_stars = false;
 var lipsync_assassin = false;
 var team = false;
-function predefCast(cast, format) {
+function predefCast(cast, format, premiere) {
+    if (premiere === void 0) { premiere = ''; }
     currentCast = cast;
     totalCastSize = cast.length;
     if (format == "top3")
@@ -1191,11 +1351,22 @@ function predefCast(cast, format) {
         allQueens = allQueens.filter(function (queen) { return queen.getLipSyncStat() >= 9; });
         allQueens = allQueens.filter(function (queen) { return currentCast.indexOf(queen) == -1; });
     }
+    if (premiere == "s6-premiere")
+        s6Premiere = true;
+    else if (premiere == "s12-premiere")
+        s12Premiere = true;
+    else if (premiere == "porkchop")
+        porkchopPremiere = true;
     if (document.getElementById("disableDouble").checked == true)
         noDouble = true;
     if (document.getElementById("disableReturn").checked == true)
         noReturn = true;
-    newEpisode();
+    if (s6Premiere || s12Premiere)
+        doublePremiere();
+    else if (porkchopPremiere)
+        porkchopLipsyncs();
+    else
+        newEpisode();
 }
 var indexList = [];
 //randomize cast selection
@@ -1232,7 +1403,7 @@ function startSimulation(challenge) {
         window.alert("Please, only use one of each queen on your cast!");
     else {
         var select = document.getElementById("format");
-        //let select2 = (<HTMLSelectElement>document.getElementById("premiere-format"));
+        var select2 = document.getElementById("premiere-format");
         if (select.options[select.selectedIndex].value == "top3")
             top3 = true;
         else if (select.options[select.selectedIndex].value == "top4")
@@ -1247,10 +1418,12 @@ function startSimulation(challenge) {
             allQueens = allQueens.filter(function (queen) { return currentCast.indexOf(queen) == -1; });
             allQueensCopy = __spreadArray([], allQueens);
         }
-        /*if (select2.options[select2.selectedIndex].value == "s6-premiere")
+        if (select2.options[select2.selectedIndex].value == "s6-premiere")
             s6Premiere = true;
         else if (select2.options[select2.selectedIndex].value == "s12-premiere")
-            s12Premiere = true;*/
+            s12Premiere = true;
+        else if (select2.options[select2.selectedIndex].value == "porkchop")
+            porkchopPremiere = true;
         if (document.getElementById("disableDouble").checked == true)
             noDouble = true;
         if (document.getElementById("disableReturn").checked == true)
@@ -1265,6 +1438,23 @@ function startSimulation(challenge) {
             window.alert("The team format needs an even amout of queens!");
             currentCast = [];
             team = false;
+        }
+        else if ((s6Premiere || s12Premiere || porkchopPremiere) && currentCast.length < 8) {
+            window.alert("Double Premiere formats needs at least 10 queens!");
+            s6Premiere = false;
+            s12Premiere = false;
+            porkchopPremiere = false;
+            top4 = false;
+            top3 = false;
+            lipsync_assassin = false;
+            all_stars = false;
+            currentCast = [];
+        }
+        else if (s6Premiere || s12Premiere) {
+            doublePremiere();
+        }
+        else if (porkchopPremiere) {
+            porkchopLipsyncs();
         }
         else {
             newEpisode();
@@ -1284,8 +1474,34 @@ function duplicateQueens(cast) {
     }
     return false;
 }
+function shuffle(array) {
+    var _a;
+    var currentIndex = array.length, randomIndex;
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        // And swap it with the current element.
+        _a = [
+            array[randomIndex], array[currentIndex]
+        ], array[currentIndex] = _a[0], array[randomIndex] = _a[1];
+    }
+    return array;
+}
 function judging() {
-    if (currentCast.length > 5 && team) {
+    if ((s12Premiere || porkchopPremiere) && premiereCounter <= 2) {
+        //add 2 queens to the top and the rest is safe
+        currentCast.sort(function (a, b) { return (a.performanceScore - b.performanceScore); });
+        topQueens.push(currentCast[0]);
+        topQueens.push(currentCast[1]);
+        for (var i = 0; i < currentCast.length; i++) {
+            if (topQueens.indexOf(currentCast[i]) == -1)
+                currentCast[i].addToTrackRecord("SAFE");
+        }
+        doublePremiereJudging();
+    }
+    else if (currentCast.length > 5 && team) {
         //add 2 teams to the top and 3 teams to the bottom
         currentCast.sort(function (a, b) { return (a.performanceScore - b.performanceScore); });
         topQueens.push(currentCast[0]);
@@ -1705,7 +1921,9 @@ function lipSync() {
         eliminatedCast.unshift(bottomQueens[1]);
         currentCast.splice(currentCast.indexOf(bottomQueens[1]), 1);
     }
-    if (CheckForReturning() == true && noReturn == false)
+    if ((s6Premiere || s12Premiere || porkchopPremiere) == true && premiereCounter < 3)
+        screen.createButton("Proceed", "doublePremiere()");
+    else if (CheckForReturning() == true && noReturn == false)
         screen.createButton("Proceed", "returningQueenScreen()");
     else
         screen.createButton("Proceed", "newEpisode()");
@@ -1802,7 +2020,10 @@ function asLipSync() {
             bottomQueens[i].addToTrackRecord("BTM2");
         bottomQueens[i].unfavoritism += 3;
     }
-    screen.createButton("Proceed", "newEpisode()");
+    if ((s6Premiere || s12Premiere || porkchopPremiere) == true && premiereCounter < 3)
+        screen.createButton("Proceed", "doublePremiere()");
+    else
+        screen.createButton("Proceed", "newEpisode()");
 }
 function lsaLipSync() {
     var screen = new Scene();
@@ -1849,7 +2070,10 @@ function lsaLipSync() {
         bottomQueens[i].unfavoritism += 2;
         bottomQueens[i].votes = 0;
     }
-    screen.createButton("Proceed", "newEpisode()");
+    if ((s6Premiere || s12Premiere || porkchopPremiere) == true && premiereCounter < 3)
+        screen.createButton("Proceed", "doublePremiere()");
+    else
+        screen.createButton("Proceed", "newEpisode()");
 }
 var Queen = /** @class */ (function () {
     function Queen(name, acting, comedy, dance, design, improv, runway, lipsync) {

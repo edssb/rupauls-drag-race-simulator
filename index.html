@@ -20,12 +20,13 @@
         
         <p id="castSelection"></p>
 
-        <!-- <p>Select your premiere format: </p>
+        <p>Select your premiere format: </p>
         <select id="premiere-format">
             <option>Normal premiere</option>
             <option value="s6-premiere">Double Premiere</option>
             <option value="s12-premiere">Double Premiere (No Elimination)</option>
-        </select> -->
+            <option value="porkchop">Porkchop Premiere</option>
+        </select>
             
         <p>Select your finale format: </p>
         <select id="format">
@@ -72,10 +73,7 @@
             </p>
             </p>
             <p>
-                <a href="https://ko-fi.com/rupaulssimulator" id="inblock" target="_blank">Buy me a coffee!</a>
-            </p>
-            <p>
-                <big>Version number: 0.9.4</big>
+                <big>Version number: 0.9.4.5</big>
             </p>
         </div>
     </div>
@@ -84,6 +82,16 @@
         <p><small>This simulator was created by edssb/JustALittleKiller</small></p>
         <p><small>If you find any bugs or have feedback, you can talk to me on  <a href="https://www.reddit.com/user/JustALittleKiller" target="_blank">Reddit</a> or open an issue on <a href="https://github.com/edssb/rupauls-drag-race-simulator" target="_blank">the GitHub page</a></small></p>
     </div>
+
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+    <script>
+    kofiWidgetOverlay.draw('rupaulssimulator', {
+        'type': 'floating-chat',
+        'floating-chat.donateButton.text': 'Tip Me',
+        'floating-chat.donateButton.background-color': '#5bc0de',
+        'floating-chat.donateButton.text-color': '#323842'
+    });
+    </script>
 </body>
 
 <script src="javascript/index.js"></script>

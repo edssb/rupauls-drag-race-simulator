@@ -18,12 +18,10 @@ let noReturn: boolean = false;
 
 let s6Premiere: boolean = false;
 let s12Premiere: boolean = false;
+let porkchopPremiere: boolean = false;
 
 let firstPremiere: boolean = false;
 let secondPremiere: boolean = false;
-
-let firstPremiereCast: Array<Queen> = [];
-let secondPremiereCast: Array<Queen> = [];
 
 //challenge seasons
 let sweatshop: boolean = false;
@@ -95,6 +93,10 @@ function reSimulate() {
     
     currentCast.sort((a, b) => a.getName().toLowerCase().localeCompare(b.getName().toLowerCase()));
     eliminatedCast = [];
+    firstCast = [];
+    secondCast = [];
+    premiereCounter = 0;
+    totalCastSize = currentCast.length;
 
     //clean track records
     for (let i = 0; i < currentCast.length; i++) {
@@ -120,5 +122,10 @@ function reSimulate() {
     lsSongs = allLsSongs;
     allQueens = allQueensCopy;
 
-    newEpisode();
+    if (s6Premiere || s12Premiere)
+        doublePremiere();
+    else if (porkchopPremiere)
+        porkchopLipsyncs();
+    else
+        newEpisode();
 }

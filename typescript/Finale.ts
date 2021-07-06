@@ -312,6 +312,10 @@ function contestantProgress() {
 			placement.setAttribute("style", "font-weight: bold; background-color: black; color: white;");
 		} else if (placement.innerHTML == "RTRN") {
 			placement.setAttribute("style", "font-weight: bold; background-color: orange;");
+		}else if (placement.innerHTML == " WIN ") {
+			placement.setAttribute("style", "background-color: lightgreen;");
+		}else if (placement.innerHTML == "LOSS") {
+			placement.setAttribute("style", "background-color: orange;");
 		}
 		
 		winner.appendChild(placement);
@@ -363,6 +367,10 @@ function contestantProgress() {
 				placement.setAttribute("style", "font-weight: bold; background-color: black; color: white;");
 			} else if (placement.innerHTML == "RTRN") {
 				placement.setAttribute("style", "font-weight: bold; background-color: orange;");
+			} else if (placement.innerHTML == " WIN ") {
+				placement.setAttribute("style", "background-color: lightgreen;");
+			}else if (placement.innerHTML == "LOSS") {
+				placement.setAttribute("style", "background-color: orange;");
 			}
 			contestant.appendChild(placement);
 		}

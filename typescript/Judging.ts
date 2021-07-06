@@ -1,5 +1,18 @@
 function judging(): void {
-	if (currentCast.length > 5 && team) {
+	if ((s12Premiere || porkchopPremiere) && premiereCounter <= 2) {
+		//add 2 queens to the top and the rest is safe
+		currentCast.sort((a, b) => (a.performanceScore - b.performanceScore));
+		topQueens.push(currentCast[0]);
+		topQueens.push(currentCast[1]);
+
+		for (let i = 0; i < currentCast.length; i++) {
+			if (topQueens.indexOf(currentCast[i]) == -1)
+				currentCast[i].addToTrackRecord("SAFE"); 
+		}
+
+		doublePremiereJudging();
+	}
+	else if (currentCast.length > 5 && team) {
 		//add 2 teams to the top and 3 teams to the bottom
 		currentCast.sort((a, b) => (a.performanceScore - b.performanceScore));
 		topQueens.push(currentCast[0]);
@@ -537,7 +550,9 @@ function lipSync() {
 		currentCast.splice(currentCast.indexOf(bottomQueens[1]), 1);
 	}
 
-	if (CheckForReturning() == true && noReturn == false)
+	if ((s6Premiere || s12Premiere || porkchopPremiere) == true && premiereCounter < 3)
+		screen.createButton("Proceed", "doublePremiere()");
+	else if (CheckForReturning() == true && noReturn == false)
 		screen.createButton("Proceed", "returningQueenScreen()")
 	else
 		screen.createButton("Proceed", "newEpisode()");
@@ -667,7 +682,10 @@ function asLipSync() {
 		bottomQueens[i].unfavoritism += 3;
 	}
 
-	screen.createButton("Proceed", "newEpisode()");
+	if ((s6Premiere || s12Premiere || porkchopPremiere) == true && premiereCounter < 3)
+		screen.createButton("Proceed", "doublePremiere()");
+	else
+		screen.createButton("Proceed", "newEpisode()");
 }
 
 function lsaLipSync() {
@@ -726,5 +744,8 @@ function lsaLipSync() {
 		bottomQueens[i].votes = 0;
 	}
 
-	screen.createButton("Proceed", "newEpisode()");
+	if ((s6Premiere || s12Premiere || porkchopPremiere) == true && premiereCounter < 3)
+		screen.createButton("Proceed", "doublePremiere()");
+	else
+		screen.createButton("Proceed", "newEpisode()");
 }
