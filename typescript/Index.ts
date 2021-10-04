@@ -27,24 +27,43 @@ function generateSpace() {
             let select = document.createElement("select");
             select.setAttribute("class", "queenList")
             select.setAttribute("id", i.toString());
+            select.setAttribute("onchange", "setImage()");
+
+            let img = document.createElement("img");
+            img.setAttribute("class", "images");
+            img.setAttribute("id", "image" + i.toString());
+
+            let p = document.createElement("p");
+            p.appendChild(img);
             
             for (let k = 0; k < allQueens.length; k++) {
                 let option = document.createElement("option");
                 option.innerHTML = allQueens[k].getName();
+                option.value = allQueens[k].image;
 
                 select.add(option);
             }
             
+            select.selectedIndex = randomNumber(0, allQueens.length - 1);
+
             let br = document.createElement("br");
 
+            castSelection!.appendChild(p);
             castSelection!.appendChild(select);
             castSelection!.appendChild(br);
         }
+    setImage();
+}
 
-        let button = document.createElement("button");
-        button.setAttribute("onclick", "randomize()");
-        button.innerHTML = "Randomize";
-        castSelection!.append(button);
+function setImage(): void {
+    let images: HTMLCollection = document.getElementsByClassName("images");
+
+    for (let i = 0; i < images.length; i++) {
+        let img: HTMLImageElement = (<HTMLImageElement>document.getElementById("image" + i.toString()));
+        let select: HTMLSelectElement = (<HTMLSelectElement>document.getElementById(i.toString())); 
+
+        img.src = select.options[select.selectedIndex].value;
+    }
 }
 
 let top3: boolean = false;

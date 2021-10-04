@@ -38,15 +38,18 @@ class MiniChallenge implements Challenge {
     }
 
     rankPerformances(): void {
-        let result = document.querySelector("b#mcWinner");
-        let winner = currentCast[randomNumber(0, currentCast.length - 1)].getName();
+        let screen: Scene = new Scene();
+        let winner = currentCast[randomNumber(0, currentCast.length - 1)];
 
         if (totalCastSize >= 10 && currentCast.length == 7) {
-            result!.innerHTML = winner + " won the reading challenge!";
+            screen.createImage(winner.image, "royalblue");
+            screen.createBold(`${winner.getName()} won the reading challenge!`);
         } else if (totalCastSize >= 10 && currentCast.length == 5) {
-            result!.innerHTML = winner + " won the puppet challenge!";
+            screen.createImage(winner.image, "royalblue");
+            screen.createBold(`${winner.getName()} won the puppet challenge!`);
         } else {
-            result!.innerHTML = winner + " won the mini-challenge!";
+            screen.createImage(winner.image, "royalblue");
+            screen.createBold(`${winner.getName()} won the mini-challenge!`);
         }
     } 
 }
@@ -74,7 +77,6 @@ function miniChallenge(): void {
     miniChallengeScreen.createHeader("Mini-challenge!");
     miniChallengeScreen.createParagraph("", "Description");
     miniChallengeScreen.createHorizontalLine();
-    miniChallengeScreen.createBold("", "mcWinner");
 
     let challenge = new MiniChallenge();
     challenge.generateDescription();
@@ -143,7 +145,7 @@ function actingChallenge(): void {
     challenge.generateDescription();
     challenge.rankPerformances();
 
-    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    queensPerformances();
     actingChallengeCounter++;
     isDesignChallenge = false;
     episodeChallenges.push("Acting");
@@ -191,7 +193,7 @@ function comedyChallenge(): void {
     challenge.generateDescription();
     challenge.rankPerformances();
 
-    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    queensPerformances();
     comedyChallengeCounter++;
     isDesignChallenge = false;
     episodeChallenges.push("Comedy");
@@ -229,7 +231,7 @@ function danceChallenge(): void {
     challenge.generateDescription();
     challenge.rankPerformances();
 
-    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    queensPerformances();
     danceChallengeCounter++;
     isDesignChallenge = false;
     episodeChallenges.push("Dance");
@@ -275,9 +277,9 @@ function designChallenge(): void {
     challenge.generateDescription();
     challenge.rankPerformances();
 
-    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
-    designChallengeCounter++;
     isDesignChallenge = true;
+    queensPerformances();
+    designChallengeCounter++;
     if (currentCast.length == 6 && makeoverCounter == false && team == false && currentCast != firstCast && currentCast != secondCast) {
         episodeChallenges.push("Makeover");
         makeoverCounter = true;
@@ -320,7 +322,7 @@ function improvChallenge(): void {
     challenge.generateDescription();
     challenge.rankPerformances();
 
-    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    queensPerformances();
     improvChallengeCounter++;
     isDesignChallenge = false;
     episodeChallenges.push("Improv");
@@ -352,7 +354,7 @@ function snatchGame(): void {
     challenge.generateDescription();
     challenge.rankPerformances();
 
-    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    queensPerformances();
     isDesignChallenge = false;
     snatchCounter = true;
     episodeChallenges.push("Snatch");
@@ -390,7 +392,7 @@ function rusical(): void {
     challenge.generateDescription();
     challenge.rankPerformances();
 
-    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    queensPerformances();
     isDesignChallenge = false;
     episodeChallenges.push("Rusical");
 }
@@ -444,7 +446,7 @@ function ball(): void {
     challenge.generateDescription();
     challenge.rankPerformances();
 
-    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    queensPerformances();
     isDesignChallenge = true;
     ballCounter = true;
     episodeChallenges.push("Ball");
@@ -478,7 +480,7 @@ function rumix(): void {
     challenge.generateDescription();
     challenge.rankPerformances();
 
-    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    queensPerformances();
     isDesignChallenge = false;
     episodeChallenges.push("Rumix");
 }
@@ -505,59 +507,27 @@ function talentshow(): void {
     let challenge = new TalentShow();
     challenge.generateDescription();
     challenge.rankPerformances();
-
-    challengeScreen.createButton("Proceed", "queensPerformances()", "button1");
+    
     isDesignChallenge = true;
+    queensPerformances();
     episodeChallenges.push("Talent");
 }
 
 //performance:
 function queensPerformances(): void {
-    //remove description button:
-    let button1 = document.querySelector("button#button1");
-    button1!.remove();
-
     let performanceScreen = new Scene();
     performanceScreen.createHorizontalLine();
     performanceScreen.createBigText("Queens' performances...");
 
-    performanceScreen.createBold("", "excellent");
-    performanceScreen.createBold("", "good");
-    performanceScreen.createBold("", "ok");
-    performanceScreen.createBold("", "bad");
-    performanceScreen.createBold("", "horrible");
+    let slay: Array<Queen> = currentCast.filter(function (queen) {return queen.performanceScore < 6});
+    let great: Array<Queen> = currentCast.filter(function (queen) {return queen.performanceScore >= 6 && queen.performanceScore < 16});
+    let good: Array<Queen> = currentCast.filter(function (queen) {return queen.performanceScore >= 16 && queen.performanceScore < 26});
+    let bad: Array<Queen> = currentCast.filter(function (queen) {return queen.performanceScore >= 26 && queen.performanceScore < 31});
+    let flop: Array<Queen> = currentCast.filter(function (queen) {return queen.performanceScore >= 31 && queen.performanceScore < 36});
 
-    let excellent = document.querySelector("b#excellent");
-    let good = document.querySelector("b#good");
-    let ok = document.querySelector("b#ok");
-    let bad = document.querySelector("b#bad");
-    let horrible = document.querySelector("b#horrible");
+    createPerformanceDesc(slay, great, good, bad, flop);
 
-    for (let i = 0; i < currentCast.length; i++) {
-        if (currentCast[i].performanceScore < 6)
-            excellent!.innerHTML += currentCast[i].getName() + ", ";
-        else if (currentCast[i].performanceScore >= 6 && currentCast[i].performanceScore < 16)
-            good!.innerHTML += currentCast[i].getName() + ", ";
-        else if (currentCast[i].performanceScore >= 16 && currentCast[i].performanceScore < 26)
-            ok!.innerHTML += currentCast[i].getName() + ", ";
-        else if (currentCast[i].performanceScore >= 26 && currentCast[i].performanceScore < 31)
-            bad!.innerHTML += currentCast[i].getName() + ", ";
-        else if (currentCast[i].performanceScore >= 31 && currentCast[i].performanceScore < 36)
-            horrible!.innerHTML += currentCast[i].getName() + ", ";
-    }
-    
-    if (excellent!.innerHTML != '')
-        excellent!.innerHTML += "slayed the challenge!";
-    if (good!.innerHTML != '')
-        good!.innerHTML += "did great!";
-    if (ok!.innerHTML != '')
-        ok!.innerHTML += "did ok.";
-    if (bad!.innerHTML != '')
-        bad!.innerHTML += "did bad...";
-    if (horrible!.innerHTML != '')
-        horrible!.innerHTML += "flopped the challenge...";
-
-    if (isDesignChallenge)
+    if (isDesignChallenge == true || episodeChallenges[episodeChallenges.length - 1] == "Design")
         performanceScreen.createButton("Proceed", "judging()");
     else
         performanceScreen.createButton("Proceed", "runway()", "button2");
@@ -567,9 +537,10 @@ function queensPerformances(): void {
 
 function runway(): void {
     let runwayScreen = new Scene();
+    runwayScreen.createHorizontalLine();
     let button2 = document.querySelector("button#button2");
     button2!.remove();
-    runwayScreen.createHeader("Runway!");
+    runwayScreen.createBigText("Runway!");
 
     enum desc {
         "feathers.",
@@ -603,26 +574,16 @@ function runway(): void {
     else if (currentCast.length == 3 && top3 || currentCast.length == 5 && top4 || currentCast.length == 4 && all_stars || currentCast.length == 2 && team)
         runwayScreen.createParagraph("The theme is... best drag!");
 
-    for (let i = 0; i < currentCast.length; i++) {
+    for (let i = 0; i < currentCast.length; i++)
         currentCast[i].getRunway();
 
-        if (currentCast[i].runwayScore < 6) {
-            runwayScreen.createParagraph(currentCast[i].getName() + " had an amazing runway!");
-            currentCast[i].runwayScore = 10;
-        }
-		else if (currentCast[i].runwayScore < 16 && currentCast[i].runwayScore >= 6) {
-		    runwayScreen.createParagraph(currentCast[i].getName() + " had a great runway!");
-            currentCast[i].runwayScore = 5;
-        }
-		else if (currentCast[i].runwayScore < 26 && currentCast[i].runwayScore >= 16) {
-			runwayScreen.createParagraph(currentCast[i].getName() + " had an ok runway.");
-            currentCast[i].runwayScore = 0;
-        }
-        else {
-            runwayScreen.createParagraph(currentCast[i].getName() + " had a bad runway...");
-            currentCast[i].runwayScore = -3;
-        }
-    }
+    let slay: Array<Queen> = currentCast.filter(function (queen) {return queen.runwayScore < 6});
+    let great: Array<Queen> = currentCast.filter(function (queen) {return queen.runwayScore >= 6 && queen.runwayScore < 16});
+    let good: Array<Queen> = currentCast.filter(function (queen) {return queen.runwayScore >= 16 && queen.runwayScore < 26});
+    let bad: Array<Queen> = currentCast.filter(function (queen) {return queen.runwayScore >= 26});
+
+    createRunwayDesc(slay, great, good, bad);
+
     if (currentCast.length > 4)
         runwayScreen.createButton("Proceed", "judging()");
     else if (currentCast.length == 4 && (top3 || lipsync_assassin || team))
@@ -639,6 +600,7 @@ function runway(): void {
 
 //helper functions
 
+////create next challenge
 function createChallenge(challenges: Array<string>, miniChallengeScreen: Scene): void {
     //first design challenge for normal seasons
     if (currentCast.length == totalCastSize && top3 && s6Premiere == false || currentCast.length == totalCastSize && top4 && s6Premiere == false || currentCast.length == totalCastSize && team ||sweatshop || currentCast == firstCast && s6Premiere || currentCast == secondCast && s6Premiere)
@@ -682,5 +644,139 @@ function createChallenge(challenges: Array<string>, miniChallengeScreen: Scene):
             lastChallenge = currentChallenge;
             miniChallengeScreen.createButton("Proceed", currentChallenge);
         }
+    }
+}
+
+////create performance descriptions
+function createPerformanceDesc(slay: Queen[], great: Queen[], good: Queen[], bad: Queen[], flop: Queen[]): void {
+    let screen: Scene = new Scene();
+
+    if (slay.length !== 0) {
+        for (let i = 0; i < slay.length; i++) 
+            screen.createImage(slay[i].image, "darkblue");
+        
+        screen.createBold("", "slay");
+
+        let slayText: HTMLElement = <HTMLElement>document.getElementById("slay");
+
+        for (let i = 0; i < slay.length; i++)
+            slayText.innerHTML += `${slay[i].getName()}, `;
+        slayText.innerHTML += "slayed the challenge!";
+    }
+
+    if (great.length !== 0) {
+        for (let i = 0; i < great.length; i++)
+            screen.createImage(great[i].image, "royalblue");
+        
+        screen.createBold("", "great");
+
+        let greatText: HTMLElement = <HTMLElement>document.getElementById("great");
+
+        for (let i = 0; i < great.length; i++)
+            greatText.innerHTML += `${great[i].getName()}, `;
+        greatText.innerHTML += "had a great performance!";
+    }
+
+    if (good.length !== 0) {
+        for (let i = 0; i < good.length; i++)
+            screen.createImage(good[i].image);
+        
+        screen.createBold("", "good");
+
+        let goodText: HTMLElement = <HTMLElement>document.getElementById("good");
+
+        for (let i = 0; i < good.length; i++)
+            goodText.innerHTML += `${good[i].getName()}, `;
+        goodText.innerHTML += "had a good performance.";
+    }
+
+    if (bad.length !== 0) {
+        for (let i = 0; i < bad.length; i++)
+            screen.createImage(bad[i].image, "pink");
+        
+        screen.createBold("", "bad");
+
+        let badText: HTMLElement = <HTMLElement>document.getElementById("bad");
+
+        for (let i = 0; i < bad.length; i++)
+            badText.innerHTML += `${bad[i].getName()}, `;
+        badText.innerHTML += "had a bad performance...";
+    }
+
+    if (flop.length !== 0) {
+        for (let i = 0; i < flop.length; i++)
+            screen.createImage(flop[i].image, "tomato");
+        
+        screen.createBold("", "flop");
+
+        let flopText: HTMLElement = <HTMLElement>document.getElementById("flop");
+
+        for (let i = 0; i < flop.length; i++)
+            flopText.innerHTML += `${flop[i].getName()}, `;
+        flopText.innerHTML += "flopped the challenge...";
+    }
+}
+
+function createRunwayDesc(slay: Queen[], great: Queen[], good: Queen[], bad: Queen[]): void {
+    let screen: Scene = new Scene();
+
+    if (slay.length !== 0) {
+        for (let i = 0; i < slay.length; i++) {
+            screen.createImage(slay[i].image, "darkblue");
+            slay[i].runwayScore = 10;
+        }
+        
+        screen.createBold("", "slayR");
+
+        let slayText: HTMLElement = <HTMLElement>document.getElementById("slayR");
+
+        for (let i = 0; i < slay.length; i++)
+            slayText.innerHTML += `${slay[i].getName()}, `;
+        slayText.innerHTML += "slayed the runway!";
+    }
+
+    if (great.length !== 0) {
+        for (let i = 0; i < great.length; i++) {
+            screen.createImage(great[i].image, "royalblue");
+            great[i].runwayScore = 5;
+        }
+        
+        screen.createBold("", "greatR");
+
+        let greatText: HTMLElement = <HTMLElement>document.getElementById("greatR");
+
+        for (let i = 0; i < great.length; i++)
+            greatText.innerHTML += `${great[i].getName()}, `;
+        greatText.innerHTML += "had a great runway!";
+    }
+
+    if (good.length !== 0) {
+        for (let i = 0; i < good.length; i++) {
+            screen.createImage(good[i].image);
+            good[i].runwayScore = 0;
+        }
+        
+        screen.createBold("", "goodR");
+
+        let goodText: HTMLElement = <HTMLElement>document.getElementById("goodR");
+
+        for (let i = 0; i < good.length; i++)
+            goodText.innerHTML += `${good[i].getName()}, `;
+        goodText.innerHTML += "had a good runway.";
+    }
+
+    if (bad.length !== 0) {
+        for (let i = 0; i < bad.length; i++) {
+            screen.createImage(bad[i].image, "pink");
+            bad[i].runwayScore = -3;
+        }
+        
+        screen.createBold("", "badR");
+
+        let badText: HTMLElement = <HTMLElement>document.getElementById("badR");
+
+        for (let i = 0; i < bad.length; i++)
+            badText.innerHTML += `${bad[i].getName()}, `;
+        badText.innerHTML += "had a bad runway...";
     }
 }

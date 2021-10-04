@@ -47,7 +47,10 @@ function porkchopLipsyncs(): void {
         if (currentCast.length == 1) {
             let queen3 = currentCast[randomNumber(0, currentCast.length - 1)];
             currentCast.splice(currentCast.indexOf(queen3), 1);
-        
+            
+            screen.createImage(queen1.image, "royalblue");
+            screen.createImage(queen2.image, "royalblue");
+            screen.createImage(queen3.image, "royalblue");
             screen.createBold(`${queen1.getName()}, ${queen2.getName()} and ${queen3.getName()} will lipsync...`);
             lsSong();
             let lipSync = [queen1, queen2, queen3];
@@ -56,8 +59,15 @@ function porkchopLipsyncs(): void {
                 lipSync[i].getASLipsync();
             }
             lipSync.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
-    
+
+            queen1 = lipSync[0];
+            queen2 = lipSync[1];
+            queen3 = lipSync[2];
+            
+            screen.createImage(queen1.image, "green");
             screen.createBold(`${queen1.getName()}, shantay you stay!`);
+            screen.createImage(queen2.image, "orange");
+            screen.createImage(queen3.image, "orange");
             screen.createBold(`${queen2.getName()} and ${queen3.getName()}, you're getting the porkchop...`);
 
             queen1.addToTrackRecord(" WIN ");
@@ -67,6 +77,8 @@ function porkchopLipsyncs(): void {
             firstCast.push(queen1);
             secondCast.push(queen2, queen3);
         } else { 
+            screen.createImage(queen1.image, "royalblue");
+            screen.createImage(queen2.image, "royalblue");
             screen.createBold(`${queen1.getName()} and ${queen2.getName()} will lipsync...`);
             lsSong();
 
@@ -77,7 +89,12 @@ function porkchopLipsyncs(): void {
             }
             lipSync.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
 
+            queen1 = lipSync[0];
+            queen2 = lipSync[1];
+
+            screen.createImage(queen1.image, "green");
             screen.createBold(`${queen1.getName()}, shantay you stay!`);
+            screen.createImage(queen2.image, "orange");
             screen.createBold(`${queen2.getName()}, you're getting the porkchop...`);
 
             queen1.addToTrackRecord(" WIN ");
@@ -101,6 +118,8 @@ function doublePremiereJudging() {
 
 	screen.createBold("Ladies, I've made some decisions...");
 
+    screen.createImage(topQueens[0].image, "cyan");
+    screen.createImage(topQueens[1].image, "cyan");
     screen.createBold(`${topQueens[0].getName()}, ${topQueens[1].getName()}, condragulations, you're the Top 2 of the week!`);
     screen.createParagraph("Nobody is going home tonight!");
     screen.createHorizontalLine();
@@ -113,6 +132,7 @@ function doublePremiereJudging() {
     }
     topQueens.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
 
+    screen.createImage(topQueens[0].image, "royalblue");
     screen.createBold(`${topQueens[0].getName()}, you're a winner baby!`);
 
     topQueens[0].addToTrackRecord("WIN");

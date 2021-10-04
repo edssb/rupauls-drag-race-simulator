@@ -1,6 +1,5 @@
-//checa por retornantes:
 function CheckForReturning(): boolean {
-    if (eliminatedCast.length == 0 && currentCast.length > totalCastSize - 3 && currentCast.length < 6)
+    if (eliminatedCast.length == 0 || currentCast.length > totalCastSize - 3 || currentCast.length < 6)
         return false;
     else {
         if (doubleSashay == false) {

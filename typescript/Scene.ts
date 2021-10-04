@@ -6,14 +6,16 @@ class Scene {
     }
     
     public createHeader(text: string): void {
-        let header = document.createElement("h1");
-        header.innerHTML = text;
-        this._MainBlock.appendChild(header);
+        let title: HTMLElement = <HTMLElement>document.getElementById("MainTitle");
+
+        title.innerHTML = text;
     }
     public createBigText(text: string): void {
         let big = document.createElement("big");
+        let p: HTMLElement = document.createElement("p");
         big.innerHTML = text;
-        this._MainBlock.appendChild(big);
+        p.appendChild(big)
+        this._MainBlock.appendChild(p);
     }
     public createParagraph(text: string, id: string = '') {
         let p = document.createElement("p");
@@ -41,5 +43,13 @@ class Scene {
     public createHorizontalLine() {
         let hr = document.createElement("hr");
         this._MainBlock.appendChild(hr);
+    }
+    public createImage(source: string, color: string = "black"): void {
+        let image: HTMLImageElement = document.createElement("img");
+        
+        image.src = source;
+        image.setAttribute("style", `border-color: ${color}`);
+
+        this._MainBlock.appendChild(image);
     }
 }

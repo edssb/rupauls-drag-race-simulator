@@ -4,36 +4,53 @@ html {
     height: 100%;
 }
 
-* {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #4D759E;
+    background-image: url(../image/All\ Stars\ Blue.png);
+    background-attachment: fixed;
+    text-align: center;
 }
 
-body {
-    background-color: #4d759e;
-    background-image: linear-gradient(to bottom right, #4d759e, #607e9c, #72869b);
-    height: 100%;
-    margin: 0;
-    background-repeat: 0;
-    background-attachment: fixed;
+#MainTitle {
+    background-color: rgba(245, 222, 179, 0.450);
+    margin-left: 400px;
+    margin-right: 400px;
+    text-decoration: underline;
+    border-radius: 30px;
+    border: 3px solid black;
+    color: #4a5c6d;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.322);
 }
 
 #MainBlock {
-    text-align: center;
-    margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.726);
-    border-radius: 20px;
-    box-shadow: 10px 10px 20px #00000091;
-    width: 900px;
-    padding: 5px;
-    margin-top: 15px;
-}
-
-h1 {
-    color: #FB928E;
+    background-color: rgba(245, 222, 179, 0.450);
+    margin-left: 100px;
+    margin-right: 100px;
+    border-radius: 30px;
+    border: 3px solid black;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.322);
 }
 
 h2 {
-    color: #6684a0;
+    text-decoration: dotted;
+    color: darkslateblue;
+}
+
+a {
+    font-size: 25px;
+    color: darkslateblue;
+}
+
+img {
+    border-radius: 60px;
+    border: 3px solid;
+    border-color: black;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+h1 {
+    color: darkslateblue;
 }
 
 big {
@@ -53,6 +70,16 @@ table, th, td, tr {
     border-collapse: collapse;
     text-align: center;
     padding: 3px;
+}
+
+input, button, select {
+    border: 2px solid;
+    border-color: darkslateblue;
+    border-radius: 15px;
+}
+
+button {
+    margin-bottom: 5px;
 }
 
 #inblock {

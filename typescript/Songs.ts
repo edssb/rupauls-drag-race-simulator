@@ -322,7 +322,25 @@ let allLsSongs: Array<string> = [
     "Chandelier by SIA",
     "Comme Des Garçon by Rina Sawayama",
     "See You Again by Miley Cyrus",
-    "Spice Up Your Life by Spice Girls"
+    "Spice Up Your Life by Spice Girls",
+    "Tears Dry On Their Own by Amy Winehouse",
+    "Power by Little Mix",
+    "Miss You Much by Janet Jackson",
+    "Rain On Me By Lady Gaga ft. Ariana Grande",
+    "Stupid Love by Lady Gaga",
+    "Levitating by Dua Lipa",
+    "Vagina by CupcakKe",
+    "Wildest Dreams by Taylor Swift",
+    "good 4 u by Olivia Rodrigo",
+    "Telephone by Lady Gaga ft. Beyoncé",
+    "Physical by Dua Lipa",
+    "Conqueror by Estelle",
+    "Triste com T by Pabllo Vittar",
+    "Dance Again by Jenifer Lopez",
+    "Brutal by Olivia Rodrigo",
+    "Oh No! by MARINA",
+    "How You Like That by BLACKPINK",
+    "Focus by Ariana Grande"
 ]
 
 let lsSongs = [...allLsSongs];
