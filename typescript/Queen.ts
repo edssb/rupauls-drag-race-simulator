@@ -21,7 +21,7 @@ class Queen {
     public lipstick: Queen;
     public votes: number = 0;
 
-    constructor(name: string, acting: number, comedy: number, dance: number, design: number, improv: number, runway: number, lipsync: number, image?: string) {
+    constructor(name: string, acting: number, comedy: number, dance: number, design: number, improv: number, runway: number, lipsync: number, image: string = "noimage") {
         this._name = name;
         this._actingStat = acting;
         this._comedyStat = comedy;
@@ -30,7 +30,10 @@ class Queen {
         this._improvStat = improv;
         this._runwayStat = runway;
         this._lipsyncStat = lipsync;
-        this.image = "image/queens/" + image + ".webp";
+        if (image == "noimage")
+            this.image = "image/queens/noimage.jpg";
+        else
+            this.image = "image/queens/" + image + ".webp";
     }
 
     private _calculateScores(min: number, max: number, stat: number = 0): number {
@@ -326,8 +329,8 @@ let crystaluk = new Queen("Crystal", 6, 5, 7, 9, 4, 8, 6, "Crystal");
 let divina = new Queen("Divina De Campo", 8, 6, 7, 12, 9, 9, 9, "Divina");
 let gothy = new Queen("Gothy Kendall", 4, 5, 4, 3, 5, 8, 4, "Gothy");
 let scaredy = new Queen("Scaredy Kat", 3, 5, 6, 4, 4, 6, 4, "Scaredy");
-let sumting = new Queen("Sum‏‏‎ Tin Wong", 9, 9, 7, 8, 9, 8, 8, "Sum");
-let viv = new Queen("The‎‎‎‎‎‎‎‎‏‏‎‎ Vivienne", 10, 12, 9,  12, 12, 10, 11, "TVivienne");
+let sumting = new Queen("Sum Tin Wong", 9, 9, 7, 8, 9, 8, 8, "Sum");
+let viv = new Queen("The Vivienne", 10, 12, 9,  12, 12, 10, 11, "TVivienne");
 let vinegar = new Queen("Vinegar Strokes", 7, 7, 7, 4, 4, 6, 7, "Vinegar");
 
 let uk_season1 = [baga, blu, cheryl, crystaluk, divina, gothy, scaredy, sumting, viv, vinegar];
@@ -375,6 +378,22 @@ let rita = new Queen("Rita Baga", 10, 9, 5, 10, 9, 12, 13, "Rita");
 let bobo = new Queen("Scarlett BoBo", 9, 9, 9, 9, 9, 10, 12, "Scarlett");
 let tynomi = new Queen("Tynomi Banks", 5, 7, 7, 8, 5, 9, 12, "Tynomi");
 let can_season1 = [anastarzia, boa, ilona, jimbo, juice, kiara, kyne, lemon, priyanka, rita, bobo, tynomi];
+
+//CAN SEASON 2
+let adriana  = new Queen("Adriana", 9, 7, 7, 7, 8, 8, 5, "Adriana");
+let beth = new Queen("Beth", 5, 5, 6, 4, 6, 5, 6, "Beth");
+let eve = new Queen("Eve 6000", 5, 5, 5, 4, 5, 7, 7, "Eve");
+let giametric = new Queen("Gia Metric", 8, 7, 7, 4, 6, 7, 7, "Giametric");
+let icesis = new Queen("Icesis Couture", 6, 7, 4, 10, 7, 9, 8, "Icesis");
+let kendall = new Queen("Kendall Gender", 8, 9, 8, 4, 7, 8, 8, "Kendall");
+let kimoraA = new Queen("Kimora Amour", 6, 5, 5, 6, 7, 7, 5, "KimoraA")
+let oceane = new Queen("Océane Aqua-Black", 6, 7, 5, 7, 7, 7, 6, "Oceane");
+let pythia = new Queen("Pythia", 8, 6, 9, 8, 7, 8, 6, "Pythia");
+let stephanie = new Queen("Stephanie Prince", 7, 6, 6, 8, 5, 5, 6, "Stephanie");
+let suki = new Queen("Suki Doll", 7, 7, 7, 9, 7, 9, 5, "Suki");
+let synthia = new Queen("Synthia Kiss", 8, 5, 5, 7, 5, 7, 8, "Synthia");
+let can_season2 = [adriana, beth, eve, giametric, icesis, kendall, kimoraA, oceane, pythia, stephanie, suki, synthia];
+
 
 //DRAG RACE HOLLAND
 let chelsea = new Queen("Chelsea Boy", 8, 9, 6, 9, 9, 11, 5, "Chelsea");
@@ -464,6 +483,16 @@ let macarena = new Queen("The Macarena", 6, 7, 6, 5, 5, 7, 7, "Macarena");
 
 let dres = [arantxa, carmenf, dovima, drag, hugaceo, inti, killer, pupi, sagittaria, macarena];
 
+//DRAG RACE ITALIA
+let ava = new Queen("Ava Hangar", 6, 6, 5, 5, 5, 6, 6, "Ava");
+let divinity = new Queen("Divinity", 6, 6, 8, 7, 7, 8, 7, "Divinity");
+let elecktra = new Queen("Elecktra Bionic", 7, 7, 7, 7, 7, 7, 7, "Elecktra");
+let enorma = new Queen("Enorma Jean", 7, 7, 6, 6, 5, 7, 6, "Enorma");
+let farida = new Queen("Farida Kant", 7, 7, 7, 7, 7, 7, 7, "Farida");
+let ivana = new Queen("Ivana Vamp", 6, 5, 6, 8, 6, 6, 5, "Ivana");
+let riche = new Queen("Le Riche", 7, 6, 6, 7, 7, 6, 8, "Riche");
+let luquisha = new Queen ("Luquisha Lubamba", 6, 6, 7, 8, 7, 8, 9, "Luquisha");
+let italia = [ava, divinity, elecktra, enorma, farida, ivana, riche, luquisha];
 
 //SPECIAL
 
@@ -472,6 +501,20 @@ let pangina = new Queen("Pangina Heals", 10, 10, 9, 12, 9, 13, 11);
 let international_as = [baga, blu, cheryl, janey, jimbo, jujubee, lemon, monique, pangina];
 
 //all possible queens:
+let allCustomQueens: Array<Queen> = [];
+if (localStorage.getItem("customQueens") != null)
+    allCustomQueens = JSON.parse(localStorage.getItem("customQueens") || "{}");
+
+let customLength: number = allCustomQueens.length;
+
+for (let i = 0; i < customLength; i++) {
+    let queen: Queen = new Queen('', 0, 0, 0, 0, 0, 0, 0, '');
+    Object.assign(queen, allCustomQueens[i]);
+    allCustomQueens.push(queen);
+}
+
+allCustomQueens.splice(0, customLength);
+
 let allQueens: Array<Queen> = [
 akashia, bebe, jade, ninaf, ongina, rebecca, shannel, tammie, victoria,
 jessica, jujubee, morgan, mystique, nicole, pandora, raven, sahara, shangela, sonique, tatianna, tyra,
@@ -496,7 +539,9 @@ amadiva, annee, b, bunny, dearis, jaja, meannie, morrigan, natalia, petchra,
 angele, bandit, genie, kana, kandyz, katy, m, maya, mocha, gimhuay, silver, srimala, tormai, vanda,
 anita, art, cocoj, elektra, etc, jojo, karen, kita, maxi,
 arantxa, carmenf, dovima, drag, hugaceo, inti, killer, pupi, sagittaria, macarena,
+adriana, beth, eve, giametric, icesis, kendall, kimoraA, oceane, pythia, stephanie, suki, synthia,
+ava, divinity, elecktra, enorma, farida, ivana, riche, luquisha,
 pangina
-].sort((a, b) => a.getName().toLowerCase().localeCompare(b.getName().toLowerCase()));
+].concat(allCustomQueens).sort((a, b) => a.getName().toLowerCase().localeCompare(b.getName().toLowerCase()));
 
 let allQueensCopy: Array<Queen> = [];

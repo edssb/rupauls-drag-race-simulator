@@ -627,7 +627,7 @@ function lipSync() {
 
 	if ((s6Premiere || s12Premiere || porkchopPremiere) == true && premiereCounter < 3)
 		screen.createButton("Proceed", "doublePremiere()");
-	else if (CheckForReturning() == true && noReturn == false)
+	else if (CheckForReturning() == true)
 		screen.createButton("Proceed", "returningQueenScreen()")
 	else
 		screen.createButton("Proceed", "newEpisode()");
@@ -649,6 +649,8 @@ function teamLipSync() {
 	else
 		(bottomQueens as Array<Team>)[1].lipsyncQueen = (bottomQueens as Array<Team>)[1].QueenB;
 
+	screen.createImage((bottomQueens as Array<Team>)[0].lipsyncQueen.image);
+	screen.createImage((bottomQueens as Array<Team>)[1].lipsyncQueen.image);
 	screen.createBold(`[${(bottomQueens as Array<Team>)[0].lipsyncQueen.getName()} and ${(bottomQueens as Array<Team>)[1].lipsyncQueen.getName()} will be lip-syncing]`);
 
 	lsSong();
@@ -660,7 +662,9 @@ function teamLipSync() {
 
 	screen.createHorizontalLine();
 
+	screen.createImage((bottomQueens as Array<Team>)[0].lipsyncQueen.image, "pink");
 	screen.createBold((bottomQueens as Array<Team>)[0].lipsyncQueen.getName() + ", shantay you stay.");
+	screen.createImage((bottomQueens as Array<Team>)[1].lipsyncQueen.image, "red");
 	screen.createBold((bottomQueens as Array<Team>)[1].lipsyncQueen.getName() + ", you will always be an All Star, now, sashay away...");
 
 	(bottomQueens as Array<Team>)[0].QueenA.addToTrackRecord("BTM2");
@@ -675,7 +679,10 @@ function teamLipSync() {
 
 	currentCast.splice(currentCast.indexOf(bottomQueens[1]), 1);
 
-	screen.createButton("Proceed", "newEpisode()");
+	if (CheckForReturning() == true)
+		screen.createButton("Proceed", "returningQueenScreen()")
+	else
+		screen.createButton("Proceed", "newEpisode()");
 }
 
 function asLipSync() {
@@ -767,6 +774,8 @@ function asLipSync() {
 
 	if ((s6Premiere || s12Premiere || porkchopPremiere) == true && premiereCounter < 3)
 		screen.createButton("Proceed", "doublePremiere()");
+	else if (CheckForReturning() == true)
+		screen.createButton("Proceed", "returningQueenScreen()")
 	else
 		screen.createButton("Proceed", "newEpisode()");
 }
@@ -834,6 +843,8 @@ function lsaLipSync() {
 
 	if ((s6Premiere || s12Premiere || porkchopPremiere) == true && premiereCounter < 3)
 		screen.createButton("Proceed", "doublePremiere()");
+	else if (CheckForReturning() == true)
+		screen.createButton("Proceed", "returningQueenScreen()")
 	else
 		screen.createButton("Proceed", "newEpisode()");
 }

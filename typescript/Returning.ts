@@ -1,24 +1,23 @@
+let randomReturn: boolean = false;
+let voteReturn: boolean = false;
+let rurupalooza: boolean = false;
+let smackdown: boolean = false;
+
 function CheckForReturning(): boolean {
-    if (eliminatedCast.length == 0 || currentCast.length > totalCastSize - 3 || currentCast.length < 6)
-        return false;
-    else {
-        if (doubleSashay == false) {
-            if (randomNumber(0, 100) <= 5 && returningQueen == false) {
-                returningQueen = true;
-                return true;
-            }
-    
-            return false;
-    
-        } else {
-            if (randomNumber(0, 100) <= 85 && returningQueen == false) {
-                returningQueen = true;
-                return true;
-            }
-    
-            return false;
+    if ((randomReturn || voteReturn) == true && currentCast.length < totalCastSize - 3 && returningQueen == false && eliminatedCast.length > 0) {
+        if (randomNumber(0, 100) < 5 * episodeCount || currentCast.length == 4) {
+            returningQueen = true;
+            return true;
         }
+        return false;
     }
+
+    if (smackdown && currentCast.length == 4 && (all_stars || top4 || lipsync_assassin) && returningQueen == false || smackdown && currentCast.length == 3 && returningQueen == false) {
+        returningQueen = true;
+        return true;
+    }
+
+    return false;
 }
 
 function returningQueenScreen(): void {
@@ -27,15 +26,17 @@ function returningQueenScreen(): void {
 
     screen.createHeader("A lovely surprise...");
 
-    if (randomNumber(0, 100) <= 50)
+    if (randomReturn)
         queenReturns();
-    else
+    if (voteReturn)
         queenReturnsVote();
+    if (smackdown)
+        lipsyncSmackdown();
     
     screen.createButton("Proceed", "newEpisode()");
 }
 
-function queenReturns() {
+function queenReturns(): void {
     let screen = new Scene();
 
     screen.createParagraph("I've decided that one of my queens have gone a bit too soon... I'd like to welcome back...");
@@ -48,7 +49,7 @@ function queenReturns() {
     screen.createBold(queen.getName());
 }
 
-function queenReturnsVote() {
+function queenReturnsVote(): void {
     let screen = new Scene();
 
     screen.createParagraph("I've decided that one of my quens deserve a second chance... you'll vote for which of the eliminated queens will come back!");
@@ -74,4 +75,57 @@ function queenReturnsVote() {
 
     currentCast.push(queen);
     eliminatedCast.splice(eliminatedCast.indexOf(queen), 1);
+}
+
+function lipsyncSmackdown(): void {
+    let screen: Scene = new Scene();
+
+    screen.createBold("All eliminated queens will return for a lip-sync smackdown tournament!");
+    
+    let currentWinner: Queen = eliminatedCast[eliminatedCast.length - 1];
+    let lipsync: Array<Queen> = [currentWinner, eliminatedCast[eliminatedCast.length - 2]];
+
+    for (let i = eliminatedCast.length - 2; i >= 0; i--) {
+        screen.createHorizontalLine();
+        screen.createImage(lipsync[0].image);
+        screen.createImage(lipsync[1].image);
+        screen.createParagraph(`${lipsync[0].getName()} and ${lipsync[1].getName()} will lip-sync`);
+        lsSong();
+        currentWinner = smackdownLS(lipsync);
+
+        screen.createImage(currentWinner.image, "royalblue");
+        if (i - 1 >= 0)
+            screen.createBold(`${currentWinner.getName()}, condragulations, you'll proceed to the next stage!`);
+        else
+            screen.createBold(`${currentWinner.getName()}, condragulations, you can return to the competition!`);
+        
+        screen.createImage(lipsync[1].image, "orange");
+        screen.createParagraph(`${lipsync[1].getName()}, thank you for participating, now sashay away...`);
+
+        if (i - 1 < 0)
+            break
+        else {
+            lipsync = [currentWinner, eliminatedCast[i - 1]];
+        }
+    }
+
+    currentWinner.addToTrackRecord("WIN");
+    eliminatedCast.splice(eliminatedCast.indexOf(currentWinner), 1);    
+
+    episodeChallenges.push("Smackdown");
+    for (let i = 0; i < currentCast.length; i++)
+        currentCast[i].addToTrackRecord("SAFE");
+    currentCast.push(currentWinner);
+
+    for (let i = 0; i < eliminatedCast.length; i++)
+        eliminatedCast[i].addToTrackRecord("LOSS");
+}
+
+function smackdownLS(queens: Array<Queen>): Queen {
+    for (let i = 0; i < queens.length; i++) {
+        queens[i].getASLipsync();
+    }
+    queens.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
+
+    return queens[0];
 }

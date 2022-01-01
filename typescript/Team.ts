@@ -70,6 +70,8 @@ function teamsScreen(): void {
 
         let team = new Team(QueenA, QueenB);
 
+        screen.createImage(QueenA.image);
+        screen.createImage(QueenB.image);
         screen.createBold(`${QueenA.getName()} and ${QueenB.getName()} formed ${team.getName()}!`);
 
         teamList.push(team);

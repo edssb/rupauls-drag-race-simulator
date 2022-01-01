@@ -219,7 +219,7 @@ function finaleFinale() {
 	currentCast[1].addToTrackRecord("RUNNER UP");
 	eliminatedCast.unshift(currentCast[1]);
 	currentCast.splice(1, 1);
-	if (all_stars) {
+	if (all_stars || lipsync_assassin) {
 		currentCast[1].addToTrackRecord("RUNNER UP");
 		eliminatedCast.unshift(currentCast[1]);
 		currentCast.splice(1, 1);

@@ -1,6 +1,4 @@
-let customCast: Array<Queen> = [];
-
-function addQueen() {
+function addQueen(): void {
     let name: string = (<HTMLInputElement>document.getElementById("queenName")).value;
     let acting: number = (<HTMLInputElement>document.getElementById("actingStat")).valueAsNumber;
     let comedy: number = (<HTMLInputElement>document.getElementById("comedyStat")).valueAsNumber;
@@ -19,108 +17,56 @@ function addQueen() {
         return;
     }
 
-    for (let i = 0; i < customCast.length; i++) {
-        if (name == customCast[i].getName()) {
-            window.alert("Don't use queens with the same name!");
-            return;
-        }
-    }
+    let customQueen: Queen = new Queen(name, acting, comedy, dance, design, improv, runway, lipsync);
+    
+    let sameName: boolean = false;
 
-    customCast.push(new Queen(name, acting, comedy, dance, design, improv, runway, lipsync));
-
-    let list = document.getElementById("cast");
-    let queen = document.createElement("option");
-    queen.text = name;
-    list!.appendChild(queen);
-}
-
-function removeQueen() {
-    let list: HTMLSelectElement = (<HTMLSelectElement>document.getElementById("cast"));
-    let queen: string = list.options[list.selectedIndex].value;
-
-    for (let i = 0; i < customCast.length; i++) {
-        if (queen == customCast[i].getName())
-            customCast.splice(customCast.indexOf(customCast[i]), 1);
-    }
-
-    list.options[list.selectedIndex].remove();
-}
-
-function customStartSimulation() {
-    if (customCast.length == 0) {
-        window.alert("Your cast is empty!")
-        return;
-    }
-
-    currentCast = customCast;
-    totalCastSize = currentCast.length;
-
-    let select = (<HTMLSelectElement>document.getElementById("format"));
-    let select2 = (<HTMLSelectElement>document.getElementById("premiere-format"));
-
-        if (select.options[select.selectedIndex].value == "top3")
-            top3 = true;
-        else if (select.options[select.selectedIndex].value == "top4")
-            top4 = true;
-        else if (select.options[select.selectedIndex].value == "all-stars")
-            all_stars = true;
-        else if (select.options[select.selectedIndex].value == "team")
-            team = true;
-        else if (select.options[select.selectedIndex].value == "lipsync-assassin") {
-            lipsync_assassin = true;
-            allQueens = allQueens.filter(function (queen) {return queen.getLipSyncStat() >= 8});
-            allQueens = allQueens.filter(function (queen) {return currentCast.indexOf(queen) == -1});
+    for (let i = 0; i < allCustomQueens.length; i++)
+        if (allCustomQueens[i].getName() == customQueen.getName()) {
+            window.alert(`There's already a queen with the name ${customQueen.getName()}! Please use another name.`)
+            sameName = true;
+            break;
         }
 
-        if (select2.options[select2.selectedIndex].value == "s6-premiere")
-            s6Premiere = true;
-        else if (select2.options[select2.selectedIndex].value == "s12-premiere")
-            s12Premiere = true;
-        else if (select2.options[select2.selectedIndex].value == "porkchop")
-            porkchopPremiere = true;
+    if (sameName == false) {
+        allCustomQueens.push(customQueen);
 
-        if ((<HTMLInputElement>document.getElementById("disableDouble")).checked == true)
-            noDouble = true;
-        if ((<HTMLInputElement>document.getElementById("disableReturn")).checked == true)
-            noReturn = true;
+        let announce: HTMLElement = <HTMLElement>document.getElementById("announce-new");
+        announce.innerHTML = `${customQueen.getName()} added to the queen list!`;
 
-        if (currentCast.length == 3 && top4 || currentCast.length == 3 && all_stars) 
-            window.alert("Lip-Sync For The Crown and All Star formats needs at least 4 queens!");
-        else if ((s12Premiere || s6Premiere || porkchopPremiere) && currentCast.length < 10) 
-            window.alert("You need at least 10 queens for a double premiere!");        
-        else if (s12Premiere || s6Premiere)
-            doublePremiere();
-        else if (porkchopPremiere)
-            porkchopLipsyncs();
-        else
-            newEpisode();
+        localStorage.setItem("customQueens", JSON.stringify(allCustomQueens));
+        
+        setTimeout(() => {
+            document.location.reload();
+        }, 1500);
+    }
+        
 }
 
-function preQueens(): void {
-    let select = <HTMLSelectElement>document.getElementById("preQueens");
-
-    for (let i = 0; i < allQueens.length; i++)
-    {
-        let option = document.createElement("option");
-        option.innerHTML = allQueens[i].getName();
+function customQueenSelectList(): void {
+    let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("custom-remove");
+    
+    for (let i = 0; i < allCustomQueens.length; i++) {
+        let option: HTMLOptionElement = <HTMLOptionElement>document.createElement("option");
+        option.innerHTML = allCustomQueens[i].getName();
+        option.value = i.toString();
         select.appendChild(option);
     }
 }
 
-function addPreQueen(): void {
-    let select = <HTMLSelectElement>document.getElementById("preQueens");
-    let value = select.options[select.selectedIndex].value;
+function removeCustomQueen(): void {
+    let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById("custom-remove");
+    let index: number = parseInt(select.options[select.selectedIndex].value);
 
-    for (let i = 0; i < allQueens.length; i++) {
-        if (value == allQueens[i].getName()) {
-            customCast.push(allQueens[i]);
+    let announce: HTMLElement = <HTMLElement>document.getElementById("announce-remove");
+    announce.innerHTML = `${allCustomQueens[index].getName()} removed from the queen list!`;
+    allCustomQueens.splice(index, 1);
 
-            let list = document.getElementById("cast");
-            let queen = document.createElement("option");
-            queen.text = allQueens[i].getName();
-            list!.appendChild(queen);
-        }
-    }
+    localStorage.setItem("customQueens", JSON.stringify(allCustomQueens));
+
+    setTimeout(() => {
+        document.location.reload();
+    }, 1500);
 }
 
 function randomizeStats(): void {

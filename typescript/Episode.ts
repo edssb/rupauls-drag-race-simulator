@@ -15,7 +15,6 @@ let episodeCount: number = 0;
 let returningQueen: boolean = false;
 
 let noDouble: boolean = false;
-let noReturn: boolean = false;
 
 let s6Premiere: boolean = false;
 let s12Premiere: boolean = false;
@@ -54,11 +53,11 @@ function newEpisode() {
         queensRemainingScreen.createButton("Proceed", "teamsScreen()");
     else if (currentCast.length > 4)
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");
-    else if (currentCast.length == 4 && (top3 || lipsync_assassin || team))
+    else if (currentCast.length == 4 && (top3 || team))
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");
     else if (currentCast.length == 4 && top4)
         queensRemainingScreen.createButton("Proceed", "finaleLS()")
-    else if (currentCast.length == 4 && all_stars)
+    else if (currentCast.length == 4 && (all_stars || lipsync_assassin))
         queensRemainingScreen.createButton("Proceed", "finaleAS()");
     else if (currentCast.length == 3 && team)
         queensRemainingScreen.createButton("Proceed", "miniChallenge()");

@@ -28,6 +28,14 @@
             <option value="s12-premiere">Double Premiere (No Elimination)</option>
             <option value="porkchop">Porkchop Premiere</option>
         </select>
+
+        <p>Select your returning format: </p>
+        <select id="returning">
+            <option>None</option>
+            <option value="random">Random queen returns</option>
+            <option value="votes">Remaining queens vote</option>
+            <option value="smackdown">Lip-Sync Smackdown</option>
+        </select>
             
         <p>Select your finale format: </p>
         <select id="format">
@@ -41,7 +49,6 @@
         <p><button onclick="startSimulation()">Simulate now!</button></p>
         
         <input type="checkbox" id="disableDouble"> Disable double shantays and sashays
-        <input type="checkbox" id="disableReturn"> Disable queens returning
 
         <hr>
 

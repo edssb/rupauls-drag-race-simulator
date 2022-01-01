@@ -340,7 +340,23 @@ let allLsSongs: Array<string> = [
     "Brutal by Olivia Rodrigo",
     "Oh No! by MARINA",
     "How You Like That by BLACKPINK",
-    "Focus by Ariana Grande"
+    "Focus by Ariana Grande",
+    "Stronger by Christina Aguillera",
+    "Domino by Jessie J",
+    "Salute by Little Mix",
+    "Scandalous by Mis-Teeq",
+    "Friday by Rebecca Black",
+    "Fantasy by Mariah Carey",
+    "All I Want For Christmas Is You by Mariah Carey",
+    "Raspberry Beret by Prince",
+    "Why Worry by Set It Off",
+    "Sweet Melody by Little Mix",
+    "Bittersweet by Fantasia",
+    "She Wolf by Shakira",
+    "Blame It On The Edit by RuPaul",
+    "Big Spender by Shirley Bassey",
+    "Turning Tables by Adele",
+    "How I Feel About You by Miranda Cosgrove"
 ]
 
 let lsSongs = [...allLsSongs];

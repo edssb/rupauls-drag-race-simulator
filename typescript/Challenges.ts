@@ -40,17 +40,8 @@ class MiniChallenge implements Challenge {
     rankPerformances(): void {
         let screen: Scene = new Scene();
         let winner = currentCast[randomNumber(0, currentCast.length - 1)];
-
-        if (totalCastSize >= 10 && currentCast.length == 7) {
-            screen.createImage(winner.image, "royalblue");
-            screen.createBold(`${winner.getName()} won the reading challenge!`);
-        } else if (totalCastSize >= 10 && currentCast.length == 5) {
-            screen.createImage(winner.image, "royalblue");
-            screen.createBold(`${winner.getName()} won the puppet challenge!`);
-        } else {
-            screen.createImage(winner.image, "royalblue");
-            screen.createBold(`${winner.getName()} won the mini-challenge!`);
-        }
+        screen.createImage(winner.image, "royalblue");
+        screen.createBold(`${winner.getName()} won the mini-challenge!`);
     } 
 }
 
@@ -76,10 +67,8 @@ function miniChallenge(): void {
     miniChallengeScreen.clean();
     miniChallengeScreen.createHeader("Mini-challenge!");
     miniChallengeScreen.createParagraph("", "Description");
-    miniChallengeScreen.createHorizontalLine();
 
     let challenge = new MiniChallenge();
-    challenge.generateDescription();
     challenge.rankPerformances();
 
     //deal with maxi chalenges:
@@ -571,7 +560,7 @@ function runway(): void {
 
     if (currentCast.length > 4)
         runwayScreen.createParagraph("The theme is: " + desc[randomNumber(0, 21)]);
-    else if (currentCast.length == 3 && top3 || currentCast.length == 5 && top4 || currentCast.length == 4 && all_stars || currentCast.length == 2 && team)
+    else if (currentCast.length == 3 && top3 || currentCast.length == 5 && top4 || currentCast.length == 4 && (all_stars || lipsync_assassin) || currentCast.length == 2 && team)
         runwayScreen.createParagraph("The theme is... best drag!");
 
     for (let i = 0; i < currentCast.length; i++)
@@ -586,13 +575,13 @@ function runway(): void {
 
     if (currentCast.length > 4)
         runwayScreen.createButton("Proceed", "judging()");
-    else if (currentCast.length == 4 && (top3 || lipsync_assassin || team))
+    else if (currentCast.length == 4 && (top3 || team))
         runwayScreen.createButton("Proceed", "judging()");
     else if (currentCast.length == 3 && team)
         runwayScreen.createButton("Proceed", "judging()");
-    else if (currentCast.length == 3 && (top3 || lipsync_assassin))
+    else if (currentCast.length == 3 && (top3))
         runwayScreen.createButton("Proceed", "finaleJudging()");
-    else if (currentCast.length == 4 && all_stars)
+    else if (currentCast.length == 4 && (all_stars || lipsync_assassin))
         runwayScreen.createButton("Proceed", "finaleASJudging()");
     else if (currentCast.length == 2 && team)
         runwayScreen.createButton("Proceed", "finaleTeamJudging()");
@@ -627,10 +616,10 @@ function createChallenge(challenges: Array<string>, miniChallengeScreen: Scene):
     else if (currentCast.length == 6 && (top3 || top4) && makeoverCounter == false || currentCast.length == 6 && randomNumber(0, 15) == 15 && (all_stars || lipsync_assassin) && makeoverCounter == false)
         miniChallengeScreen.createButton("Proceed", "designChallenge()");
     //rumix
-    else if (currentCast.length == 5 && top4)
+    else if (currentCast.length == 5 && top4 && (!smackdown || returningQueen == true))
         miniChallengeScreen.createButton("Proceed", "rumix()");
     //ball for top3 seasons
-    else if (currentCast.length == 4 && top3)
+    else if (currentCast.length == 4 && top3 && !ballCounter)
         miniChallengeScreen.createButton("Proceed", "ball()");
     //if no conditions apply, create random challenge
     else {
