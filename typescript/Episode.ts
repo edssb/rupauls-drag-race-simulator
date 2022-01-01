@@ -94,6 +94,8 @@ function reSimulate() {
     onTop4Finale = false;
     totalCastSize = currentCast.length;
 
+    returningQueen = false;
+
     //clean track records
     for (let i = 0; i < currentCast.length; i++) {
         currentCast[i].trackRecord = [];
